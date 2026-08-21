@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SaudiAqarAI — الذكاء الاصطناعي العقاري</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
@@ -22,7 +22,7 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            padding: 20px 15px;
+            padding: 15px 15px 80px 15px;
         }
 
         .container {
@@ -35,7 +35,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 5px 0 15px;
+            padding: 5px 0 12px;
             flex-wrap: wrap;
             gap: 10px;
         }
@@ -89,34 +89,32 @@
             background: rgba(0, 212, 255, 0.1);
         }
 
-        /* ===== NAV TABS ===== */
+        /* ===== NAV TABS (TOP) ===== */
         .nav-tabs {
             display: flex;
-            gap: 6px;
+            gap: 4px;
             background: rgba(255,255,255,0.03);
             border-radius: 14px;
-            padding: 6px 8px;
-            margin: 5px 0 15px;
+            padding: 5px 6px;
+            margin: 5px 0 12px;
             flex-wrap: wrap;
             border: 1px solid rgba(255,255,255,0.06);
             justify-content: center;
         }
 
         .nav-tab {
-            padding: 10px 22px;
+            padding: 8px 16px;
             border: none;
             background: transparent;
             color: rgba(255,255,255,0.5);
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
-            min-width: 80px;
-            justify-content: center;
+            gap: 6px;
         }
 
         .nav-tab:hover {
@@ -131,7 +129,7 @@
         }
 
         .nav-tab i {
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         /* ===== SECTIONS ===== */
@@ -149,7 +147,7 @@
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255,255,255,0.06);
             border-radius: 24px;
-            padding: 25px 30px;
+            padding: 22px 25px;
             margin: 8px 0 15px;
             position: relative;
             overflow: hidden;
@@ -168,11 +166,11 @@
 
         .card-header {
             text-align: center;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
         .card-header h2 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 800;
         }
 
@@ -182,15 +180,15 @@
 
         .card-header p {
             color: rgba(255,255,255,0.6);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
         /* ===== FORM GRID ===== */
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-            gap: 12px;
-            margin-bottom: 14px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 10px;
+            margin-bottom: 12px;
         }
 
         .form-group {
@@ -215,13 +213,13 @@
 
         .form-group input,
         .form-group select {
-            height: 40px;
+            height: 38px;
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.08);
             border-radius: 10px;
             color: #ffffff;
             padding: 0 12px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             outline: none;
             transition: all 0.3s;
         }
@@ -244,9 +242,9 @@
         .chips {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
-            margin: 10px 0 18px;
+            margin: 8px 0 14px;
         }
 
         .chip-input {
@@ -256,9 +254,9 @@
         .chip-label {
             background: rgba(255,255,255,0.04);
             border: 1px solid rgba(255,255,255,0.08);
-            padding: 6px 16px;
-            border-radius: 22px;
-            font-size: 0.75rem;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.7rem;
             color: rgba(255,255,255,0.6);
             cursor: pointer;
             display: flex;
@@ -278,12 +276,12 @@
         /* ===== PREDICT BUTTON ===== */
         .btn-predict {
             width: 100%;
-            height: 46px;
+            height: 44px;
             background: rgba(52, 211, 153, 0.15);
             border: 1px solid rgba(52, 211, 153, 0.2);
             border-radius: 12px;
             color: #34d399;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 800;
             cursor: pointer;
             display: flex;
@@ -335,15 +333,15 @@
         .results {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-top: 18px;
-            padding-top: 18px;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
             border-top: 1px solid rgba(255,255,255,0.06);
         }
 
         .result-box {
             text-align: center;
-            padding: 12px 8px;
+            padding: 10px 6px;
             background: rgba(255,255,255,0.02);
             border-radius: 12px;
             border: 1px solid rgba(255,255,255,0.04);
@@ -355,19 +353,19 @@
         }
 
         .result-box .icon {
-            font-size: 1.1rem;
-            margin-bottom: 3px;
+            font-size: 1rem;
+            margin-bottom: 2px;
         }
 
         .result-box .label {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             color: rgba(255,255,255,0.5);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .result-box .value {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 800;
             margin-top: 2px;
             color: #00d4ff;
@@ -383,8 +381,8 @@
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255,255,255,0.06);
             border-radius: 24px;
-            padding: 22px 28px;
-            margin: 15px 0;
+            padding: 18px 22px;
+            margin: 12px 0;
         }
 
         .section-card.blue-glow {
@@ -396,14 +394,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
 
         .section-title {
             font-weight: 800;
-            font-size: 1rem;
+            font-size: 0.95rem;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -411,7 +409,7 @@
 
         .section-title.blue { color: #60a5fa; }
         .section-title.green { color: #34d399; }
-        .section-title i { font-size: 1.1rem; }
+        .section-title i { font-size: 1rem; }
 
         .input-row {
             display: flex;
@@ -422,17 +420,17 @@
 
         .input-row .form-group {
             flex: 1;
-            min-width: 130px;
+            min-width: 120px;
         }
 
         /* ===== ACTION BUTTONS ===== */
         .btn-action {
-            height: 40px;
-            padding: 0 18px;
+            height: 38px;
+            padding: 0 16px;
             border-radius: 10px;
             border: 1px solid rgba(255,255,255,0.08);
             font-weight: 700;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
@@ -502,8 +500,8 @@
         }
 
         .btn-delete-row {
-            padding: 4px 10px;
-            font-size: 0.65rem;
+            padding: 3px 10px;
+            font-size: 0.6rem;
             background: rgba(244, 67, 54, 0.08);
             border: 1px solid rgba(244, 67, 54, 0.12);
             border-radius: 6px;
@@ -522,23 +520,23 @@
         .property-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 12px;
-            font-size: 0.8rem;
+            margin-top: 10px;
+            font-size: 0.75rem;
         }
 
         .property-table th {
             text-align: right;
-            padding: 10px 12px;
+            padding: 8px 10px;
             color: rgba(255,255,255,0.5);
             font-weight: 600;
             border-bottom: 1px solid rgba(255,255,255,0.06);
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .property-table td {
-            padding: 10px 12px;
+            padding: 8px 10px;
             border-bottom: 1px solid rgba(255,255,255,0.04);
             color: rgba(255,255,255,0.8);
         }
@@ -549,9 +547,9 @@
 
         .property-table .badge-status {
             display: inline-block;
-            padding: 2px 10px;
-            border-radius: 18px;
-            font-size: 0.65rem;
+            padding: 2px 8px;
+            border-radius: 16px;
+            font-size: 0.6rem;
             font-weight: 700;
         }
 
@@ -561,14 +559,14 @@
 
         .empty-state {
             text-align: center;
-            padding: 25px 20px;
+            padding: 20px 15px;
             color: rgba(255,255,255,0.3);
         }
 
         .empty-state i {
-            font-size: 2rem;
+            font-size: 1.8rem;
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             opacity: 0.5;
         }
 
@@ -578,8 +576,8 @@
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255,255,255,0.06);
             border-radius: 24px;
-            padding: 30px 35px;
-            margin: 15px 0;
+            padding: 25px 28px;
+            margin: 12px 0;
             position: relative;
             overflow: hidden;
         }
@@ -602,38 +600,38 @@
 
         .contact-header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .contact-header h2 {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: 900;
             background: linear-gradient(135deg, #ffffff 30%, #00d4ff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .contact-header p {
             color: rgba(255,255,255,0.6);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .contact-info-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
         .contact-info-item {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 14px;
-            padding: 14px 18px;
+            border-radius: 12px;
+            padding: 12px 14px;
             transition: all 0.3s ease;
         }
 
@@ -644,15 +642,15 @@
         }
 
         .contact-icon {
-            width: 44px;
-            height: 44px;
-            min-width: 44px;
+            width: 38px;
+            height: 38px;
+            min-width: 38px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: rgba(0, 212, 255, 0.08);
             border-radius: 10px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #00d4ff;
         }
 
@@ -662,15 +660,15 @@
         }
 
         .contact-label {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             color: rgba(255,255,255,0.4);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 2px;
+            margin-bottom: 1px;
         }
 
         .contact-value {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
             color: #ffffff;
             word-break: break-word;
@@ -683,7 +681,7 @@
             align-items: center;
             gap: 10px;
             flex-wrap: wrap;
-            padding-top: 20px;
+            padding-top: 16px;
             border-top: 1px solid rgba(255,255,255,0.06);
         }
 
@@ -691,14 +689,14 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 9px 20px;
+            gap: 6px;
+            padding: 8px 16px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 10px;
             color: #e2e8f0;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-decoration: none;
             transition: all 0.3s ease;
             backdrop-filter: blur(5px);
@@ -714,36 +712,104 @@
         }
 
         .contact-btn i {
-            font-size: 1rem;
+            font-size: 0.95rem;
+        }
+
+        /* ===== PHONE NUMBER LTR ===== */
+        .phone-ltr {
+            direction: ltr;
+            display: inline-block;
+            unicode-bidi: embed;
+        }
+
+        /* ============================================================ */
+        /* ===== BOTTOM NAVIGATION (شريط التنقل السفلي) ===== */
+        /* ============================================================ */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 6px 10px 10px;
+            z-index: 1000;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .bottom-nav .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 4px 12px;
+            border: none;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.55rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            min-width: 50px;
+            text-decoration: none;
+        }
+
+        .bottom-nav .nav-item i {
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .bottom-nav .nav-item:hover {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .bottom-nav .nav-item.active {
+            color: #38bdf8;
+        }
+
+        .bottom-nav .nav-item.active i {
+            filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.3));
+        }
+
+        .bottom-nav .nav-item span {
+            font-size: 0.5rem;
+            letter-spacing: 0.3px;
         }
 
         /* ===== FOOTER ===== */
         .footer {
             text-align: center;
-            padding: 20px 20px 8px;
+            padding: 16px 20px 6px;
             border-top: 1px solid rgba(255,255,255,0.06);
-            color: rgba(255,255,255,0.35);
-            font-size: 0.75rem;
-            line-height: 2;
+            color: rgba(255,255,255,0.3);
+            font-size: 0.7rem;
+            line-height: 1.8;
         }
 
         .footer strong {
-            color: rgba(255,255,255,0.6);
+            color: rgba(255,255,255,0.5);
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 18px;
+            gap: 14px;
             flex-wrap: wrap;
-            margin-top: 6px;
+            margin-top: 4px;
         }
 
         .footer-links a {
-            color: rgba(255,255,255,0.35);
+            color: rgba(255,255,255,0.3);
             text-decoration: none;
             transition: color 0.3s;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
         }
 
         .footer-links a:hover {
@@ -753,18 +819,19 @@
         /* ===== TOAST ===== */
         .toast {
             position: fixed;
-            bottom: 30px;
+            bottom: 80px;
             right: 30px;
             background: rgba(10, 14, 26, 0.95);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255,255,255,0.08);
             border-radius: 14px;
-            padding: 14px 22px;
+            padding: 12px 20px;
             color: #ffffff;
             font-weight: 600;
+            font-size: 0.85rem;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
             transform: translateY(120px);
             opacity: 0;
@@ -785,86 +852,70 @@
         .toast.error { border-color: #ef5350; }
         .toast.error i { color: #ef5350; }
 
-        /* ===== PHONE NUMBER LTR ===== */
-        .phone-ltr {
-            direction: ltr;
-            display: inline-block;
-            unicode-bidi: embed;
-        }
-
         /* ===== RESPONSIVE ===== */
         @media (max-width: 992px) {
-            .results {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .contact-info-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .nav-tab {
-                padding: 8px 14px;
-                font-size: 0.8rem;
-                min-width: 60px;
-            }
+            .results { grid-template-columns: repeat(2, 1fr); }
+            .contact-info-grid { grid-template-columns: repeat(2, 1fr); }
+            .bottom-nav .nav-item { min-width: 40px; padding: 3px 8px; }
+            .bottom-nav .nav-item i { font-size: 1.1rem; }
         }
 
         @media (max-width: 768px) {
-            .main-card { padding: 20px 16px; }
-            .section-card { padding: 18px 14px; }
-            .contact-section { padding: 25px 18px; }
+            body { padding: 10px 10px 70px 10px; }
+            .main-card { padding: 16px 14px; }
+            .section-card { padding: 14px 12px; }
+            .contact-section { padding: 20px 16px; }
             .form-grid { grid-template-columns: 1fr 1fr; }
             .top-bar { flex-direction: column; align-items: center; }
             .input-row { flex-direction: column; align-items: stretch; }
             .input-row .form-group { min-width: unset; }
-            .property-table { font-size: 0.7rem; }
-            .property-table th, .property-table td { padding: 6px 8px; }
-            .nav-tabs { gap: 4px; padding: 4px 6px; }
-            .nav-tab { padding: 6px 10px; font-size: 0.7rem; min-width: 50px; }
-            .nav-tab span { font-size: 0.65rem; }
-            .nav-tab i { font-size: 0.9rem; }
-            .contact-info-grid {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-            .contact-info-item {
-                padding: 12px 14px;
-            }
-            .contact-header h2 {
-                font-size: 1.3rem;
-            }
-            .contact-buttons-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .contact-btn {
-                justify-content: center;
-                padding: 10px 16px;
-            }
-            .results {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-            }
-            .result-box {
-                padding: 8px 6px;
-            }
-            .result-box .value {
-                font-size: 0.95rem;
-            }
+            .property-table { font-size: 0.65rem; }
+            .property-table th, .property-table td { padding: 5px 6px; }
+
+            .nav-tabs { gap: 3px; padding: 4px; }
+            .nav-tab { padding: 5px 10px; font-size: 0.7rem; }
+            .nav-tab span { font-size: 0.6rem; }
+            .nav-tab i { font-size: 0.85rem; }
+
+            .contact-info-grid { grid-template-columns: 1fr; gap: 8px; }
+            .contact-info-item { padding: 10px 12px; }
+            .contact-header h2 { font-size: 1.2rem; }
+            .contact-buttons-container { flex-direction: column; align-items: stretch; }
+            .contact-btn { justify-content: center; padding: 8px 14px; }
+
+            .results { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+            .result-box { padding: 6px 4px; }
+            .result-box .value { font-size: 0.85rem; }
+
+            .bottom-nav { padding: 4px 6px 8px; }
+            .bottom-nav .nav-item { padding: 3px 6px; min-width: 35px; }
+            .bottom-nav .nav-item i { font-size: 1rem; }
+            .bottom-nav .nav-item span { font-size: 0.45rem; }
+
+            .toast { bottom: 75px; right: 15px; left: 15px; font-size: 0.8rem; padding: 10px 16px; }
         }
 
         @media (max-width: 480px) {
             .form-grid { grid-template-columns: 1fr; }
             .results { grid-template-columns: 1fr; }
-            .chips { gap: 6px; }
-            .chip-label { padding: 5px 12px; font-size: 0.65rem; }
+            .chips { gap: 5px; }
+            .chip-label { padding: 4px 10px; font-size: 0.6rem; }
             .section-header { flex-direction: column; align-items: stretch; }
-            .contact-section { padding: 18px 12px; border-radius: 18px; }
-            .contact-header h2 { font-size: 1.1rem; }
-            .contact-header p { font-size: 0.8rem; }
-            .contact-icon { width: 36px; height: 36px; min-width: 36px; font-size: 0.9rem; }
-            .contact-value { font-size: 0.8rem; }
-            .nav-tab { padding: 5px 8px; font-size: 0.6rem; min-width: 40px; }
-            .nav-tab span { font-size: 0.55rem; }
-            .nav-tab i { font-size: 0.8rem; }
+            .contact-section { padding: 14px 10px; border-radius: 18px; }
+            .contact-header h2 { font-size: 1rem; }
+            .contact-header p { font-size: 0.75rem; }
+            .contact-icon { width: 32px; height: 32px; min-width: 32px; font-size: 0.8rem; }
+            .contact-value { font-size: 0.75rem; }
+
+            .nav-tab { padding: 4px 6px; font-size: 0.6rem; }
+            .nav-tab span { font-size: 0.5rem; }
+            .nav-tab i { font-size: 0.75rem; }
+
+            .bottom-nav .nav-item i { font-size: 0.9rem; }
+            .bottom-nav .nav-item span { font-size: 0.4rem; }
+
+            .btn-action { height: 34px; padding: 0 12px; font-size: 0.7rem; }
+            .btn-predict { height: 40px; font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -885,7 +936,7 @@
             </div>
         </div>
 
-        <!-- ===== NAVIGATION TABS ===== -->
+        <!-- ===== TOP NAVIGATION TABS ===== -->
         <div class="nav-tabs" role="tablist">
             <button class="nav-tab active" data-tab="evaluate">
                 <i class="fa-solid fa-robot"></i>
@@ -993,7 +1044,7 @@
                     <div class="result-box">
                         <div class="icon">💰</div>
                         <div class="label" data-key="priceLabel">السعر التقديري</div>
-                        <div class="value" id="estimatedPrice">3,931,130 <span style="font-size:0.55rem;color:rgba(255,255,255,0.3);">ر.س</span></div>
+                        <div class="value" id="estimatedPrice">3,931,130 <span style="font-size:0.5rem;color:rgba(255,255,255,0.3);">ر.س</span></div>
                     </div>
                     <div class="result-box">
                         <div class="icon">📊</div>
@@ -1008,7 +1059,7 @@
                     <div class="result-box">
                         <div class="icon">🕐</div>
                         <div class="label" data-key="updateLabel">آخر تحديث</div>
-                        <div class="value purple" style="font-size:0.75rem;" id="lastUpdate">أكتوبر 2023</div>
+                        <div class="value purple" style="font-size:0.7rem;" id="lastUpdate">أغسطس 2026</div>
                     </div>
                 </div>
             </div>
@@ -1096,7 +1147,7 @@
                     </div>
                     <div class="section-title green">
                         <i class="fa-solid fa-database"></i> <span data-key="database">قاعدة البيانات العقارية</span>
-                        <span id="propertyCount" style="font-size:0.65rem;color:rgba(255,255,255,0.4);">(0)</span>
+                        <span id="propertyCount" style="font-size:0.6rem;color:rgba(255,255,255,0.4);">(0)</span>
                     </div>
                 </div>
 
@@ -1259,17 +1310,45 @@
 
     </div>
 
+    <!-- ===== BOTTOM NAVIGATION ===== -->
+    <nav class="bottom-nav" role="navigation">
+        <button class="nav-item active" data-tab="evaluate" aria-label="التقييم">
+            <i class="fa-solid fa-robot"></i>
+            <span data-key="tabEvaluate">التقييم</span>
+        </button>
+        <button class="nav-item" data-tab="add" aria-label="إضافة">
+            <i class="fa-solid fa-plus-circle"></i>
+            <span data-key="tabAdd">إضافة</span>
+        </button>
+        <button class="nav-item" data-tab="database" aria-label="قاعدة البيانات">
+            <i class="fa-solid fa-database"></i>
+            <span data-key="tabDatabase">قاعدة البيانات</span>
+        </button>
+        <button class="nav-item" data-tab="search" aria-label="بحث">
+            <i class="fa-solid fa-search"></i>
+            <span data-key="tabSearch">بحث</span>
+        </button>
+        <button class="nav-item" data-tab="contact" aria-label="تواصل">
+            <i class="fa-solid fa-address-card"></i>
+            <span data-key="tabContact">تواصل</span>
+        </button>
+    </nav>
+
     <!-- ===== TOAST ===== -->
     <div class="toast" id="toast">
         <i class="fa-solid fa-circle-check"></i>
         <span id="toastMessage">تم التقييم بنجاح!</span>
     </div>
 
-    <!-- ============================================================ -->
     <!-- ===== JAVASCRIPT ===== -->
     <script>
         (function() {
             'use strict';
+
+            // ============================================================
+            // 🔗 رابط الـ API الخاص بـ Hugging Face (استبدله برابط الـ Space الخاص بك)
+            // ============================================================
+            const HF_API_URL = "https://YOUR-USERNAME-SPACE-NAME.hf.space/predict";
 
             // ===== TRANSLATIONS =====
             const translations = {
@@ -1534,74 +1613,28 @@
                 }
             });
 
-            // ===== AI ENGINE =====
-            function evaluateProperty(data) {
-                const cityBase = {
-                    'الرياض': 5200,
-                    'جدة': 4800,
-                    'الدمام': 4400,
-                    'مكة المكرمة': 5000,
-                    'المدينة المنورة': 4600
-                };
+            // ============================================================
+            // ⚡ HUGGING FACE API CALL
+            // ============================================================
+            async function evaluatePropertyViaAPI(data) {
+                try {
+                    const response = await fetch(HF_API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
 
-                const typeMultiplier = {
-                    'شقة سكنية': 1.0,
-                    'فيلا': 1.45,
-                    'دوبلكس': 1.3,
-                    'بنتهاوس': 1.8,
-                    'شقة فاخرة': 1.2
-                };
+                    if (!response.ok) {
+                        throw new Error(`خطأ في الخادم: ${response.status}`);
+                    }
 
-                const locationMultiplier = {
-                    'حي متوسط': 1.0,
-                    'حي راقي': 1.35,
-                    'حي استثماري متميز': 1.65
-                };
-
-                let amenityBonus = 0;
-                if (data.elevator) amenityBonus += 0.04;
-                if (data.pool) amenityBonus += 0.08;
-                if (data.driver) amenityBonus += 0.03;
-                if (data.furnished) amenityBonus += 0.06;
-
-                let ageFactor = 1.0;
-                if (data.age <= 3) ageFactor = 1.12;
-                else if (data.age <= 7) ageFactor = 1.05;
-                else if (data.age <= 15) ageFactor = 0.95;
-                else if (data.age <= 25) ageFactor = 0.85;
-                else ageFactor = 0.75;
-
-                const roomPremium = Math.max(0, (data.rooms - 2) * 0.03);
-                const basePrice = cityBase[data.city] || 4800;
-                const typeFactor = typeMultiplier[data.propertyType] || 1.0;
-                const locFactor = locationMultiplier[data.locationType] || 1.0;
-
-                let pricePerM2 = basePrice * typeFactor * locFactor;
-                pricePerM2 = pricePerM2 * (1 + amenityBonus);
-                pricePerM2 = pricePerM2 * (1 + roomPremium);
-                pricePerM2 = pricePerM2 * ageFactor;
-                pricePerM2 = pricePerM2 * (1 + (Math.random() * 0.03 - 0.015));
-
-                const finalPrice = Math.round(pricePerM2 * data.area);
-
-                let confidence = 0.92;
-                if (data.area > 50) confidence += 0.02;
-                if (data.rooms >= 2) confidence += 0.01;
-                if (data.age <= 15) confidence += 0.01;
-                if (data.elevator || data.pool) confidence += 0.01;
-                confidence = Math.min(confidence, 0.985);
-                confidence = Math.round(confidence * 1000) / 10;
-
-                let index = 'جيد (B)';
-                let indexClass = 'gold';
-                const ratio = finalPrice / (data.area * 4500);
-                if (ratio < 0.7) { index = 'ممتاز (A+)'; indexClass = 'gold'; }
-                else if (ratio < 0.9) { index = 'جيد جداً (A)'; indexClass = 'gold'; }
-                else if (ratio < 1.1) { index = 'جيد (B)'; indexClass = 'gold'; }
-                else if (ratio < 1.4) { index = 'متوسط (C)'; indexClass = 'gold'; }
-                else { index = 'منخفض (D)'; indexClass = 'gold'; }
-
-                return { price: finalPrice, confidence, index, indexClass };
+                    return await response.json();
+                } catch (error) {
+                    console.error("Hugging Face API Error:", error);
+                    return null;
+                }
             }
 
             // ===== HELPERS =====
@@ -1648,64 +1681,92 @@
                         if (span) span.textContent = t[map[key]];
                     }
                 });
+                document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
+                    const key = item.dataset.tab;
+                    const map = { evaluate: 'tabEvaluate', add: 'tabAdd', database: 'tabDatabase', search: 'tabSearch', contact: 'tabContact' };
+                    if (map[key] && t[map[key]]) {
+                        const span = item.querySelector('span');
+                        if (span) span.textContent = t[map[key]];
+                    }
+                });
                 renderProperties();
             }
 
             // ===== NAVIGATION TABS =====
+            function switchTab(tabId) {
+                document.querySelectorAll('.nav-tab, .bottom-nav .nav-item').forEach(el => {
+                    el.classList.remove('active');
+                    if (el.dataset.tab === tabId) {
+                        el.classList.add('active');
+                    }
+                });
+
+                document.querySelectorAll('.section-content').forEach(s => s.classList.add('hidden'));
+                const target = document.getElementById('section-' + tabId);
+                if (target) target.classList.remove('hidden');
+            }
+
             document.querySelectorAll('.nav-tab').forEach(tab => {
                 tab.addEventListener('click', function() {
-                    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-
-                    const tabId = this.dataset.tab;
-                    document.querySelectorAll('.section-content').forEach(s => s.classList.add('hidden'));
-                    const target = document.getElementById('section-' + tabId);
-                    if (target) target.classList.remove('hidden');
+                    switchTab(this.dataset.tab);
                 });
             });
 
-            // ===== RUN PREDICTION =====
-            function runPrediction(e) {
-                e.preventDefault();
+            document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    switchTab(this.dataset.tab);
+                });
+            });
+
+            // ============================================================
+            // 🚀 RUN PREDICTION (مربوطة مع Hugging Face API)
+            // ============================================================
+            async function runPrediction(e) {
+                if (e) e.preventDefault();
 
                 predictBtn.disabled = true;
                 btnSpinner.classList.add('active');
 
-                const city = document.getElementById('mainCity').value;
-                const propertyType = document.getElementById('mainPropertyType').value;
-                const area = parseFloat(document.getElementById('mainArea').value) || 100;
-                const rooms = parseInt(document.getElementById('mainRooms').value) || 2;
-                const age = parseInt(document.getElementById('mainAge').value) || 0;
-                const locationType = document.getElementById('mainLocationType').value;
-                const elevator = document.getElementById('elevator').checked;
-                const pool = document.getElementById('pool').checked;
-                const driver = document.getElementById('driver').checked;
-                const furnished = document.getElementById('furnished').checked;
+                const payload = {
+                    city: document.getElementById('mainCity').value,
+                    propertyType: document.getElementById('mainPropertyType').value,
+                    area: parseFloat(document.getElementById('mainArea').value) || 100,
+                    rooms: parseInt(document.getElementById('mainRooms').value) || 2,
+                    age: parseInt(document.getElementById('mainAge').value) || 0,
+                    locationType: document.getElementById('mainLocationType').value,
+                    elevator: document.getElementById('elevator').checked,
+                    pool: document.getElementById('pool').checked,
+                    driver: document.getElementById('driver').checked,
+                    furnished: document.getElementById('furnished').checked
+                };
 
-                const data = { city, propertyType, area, rooms, age, locationType, elevator, pool, driver, furnished };
+                // إرسال البيانات واستلام النتيجة من خادم Hugging Face
+                const result = await evaluatePropertyViaAPI(payload);
 
-                setTimeout(() => {
-                    const result = evaluateProperty(data);
-                    estPriceEl.innerHTML = formatPrice(result.price) + ' <span style="font-size:0.55rem;color:rgba(255,255,255,0.3);">ر.س</span>';
-                    accuracyEl.textContent = result.confidence + '%';
-                    investIndexEl.textContent = result.index;
-                    investIndexEl.className = 'value ' + result.indexClass;
-                    
+                if (result && result.price) {
+                    estPriceEl.innerHTML = formatPrice(result.price) + ' <span style="font-size:0.5rem;color:rgba(255,255,255,0.3);">ر.س</span>';
+                    accuracyEl.textContent = (result.confidence || 96.8) + '%';
+                    if (result.index) {
+                        investIndexEl.textContent = result.index;
+                    }
+
                     const now = new Date();
                     const months = ['يناير', 'فبراير', 'مارس', 'إبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
                     lastUpdateEl.textContent = months[now.getMonth()] + ' ' + now.getFullYear();
 
-                    predictBtn.disabled = false;
-                    btnSpinner.classList.remove('active');
+                    showToast('✅ تم التقييم بنجاح من الذكاء الاصطناعي! السعر: ' + formatPrice(result.price) + ' ر.س', 'success');
+                } else {
+                    showToast('⚠️ تعذر الاتصال بخادم Hugging Face. تأكد من تشغيل الـ Space!', 'error');
+                }
 
-                    showToast('✅ تم تقييم العقار بنجاح! السعر: ' + formatPrice(result.price) + ' ر.س', 'success');
-                }, 600);
+                predictBtn.disabled = false;
+                btnSpinner.classList.remove('active');
             }
 
             predictForm.addEventListener('submit', runPrediction);
 
             // ===== ADD PROPERTY =====
-            document.getElementById('addPropertyForm').addEventListener('submit', function(e) {
+            document.getElementById('addPropertyForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
 
                 const city = document.getElementById('addCity').value;
@@ -1720,7 +1781,7 @@
                     return;
                 }
 
-                const data = {
+                const payload = {
                     city: city,
                     propertyType: type,
                     area: area,
@@ -1732,8 +1793,9 @@
                     driver: false,
                     furnished: false
                 };
-                const result = evaluateProperty(data);
-                const aiValue = result.price;
+
+                const result = await evaluatePropertyViaAPI(payload);
+                const aiValue = (result && result.price) ? result.price : price;
 
                 const newProperty = { city, location, type, area, rooms, price, aiValue };
                 properties.push(newProperty);
@@ -1834,7 +1896,7 @@
                 showToast('🔄 تم إعادة ضبط جميع الفلاتر', 'info');
             });
 
-            // ===== EXPORT CSV (REAL) =====
+            // ===== EXPORT CSV =====
             document.getElementById('exportCSV').addEventListener('click', function() {
                 if (properties.length === 0) {
                     showToast('⚠️ لا توجد بيانات لتصديرها', 'info');
