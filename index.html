@@ -32,24 +32,26 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             padding: 20px;
         }
 
         .container {
             width: 100%;
-            max-width: 900px;
+            max-width: 950px;
             background: var(--bg-secondary);
             border-radius: 24px;
             border: 1px solid var(--border-color);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             padding: 40px;
-            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
         }
 
         header {
             text-align: center;
             margin-bottom: 35px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
         }
 
         .badge {
@@ -65,17 +67,25 @@
         }
 
         h1 {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             font-weight: 800;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ffffff 0%, #10b981 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .author-tag {
+            color: var(--accent-gold);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-top: 5px;
         }
 
         p.subtitle {
             color: var(--text-sub);
             font-size: 1.05rem;
+            margin-top: 5px;
         }
 
         .grid-form {
@@ -97,7 +107,7 @@
             font-size: 0.95rem;
         }
 
-        input, select {
+        input, select, textarea {
             width: 100%;
             padding: 14px 16px;
             background: #0f172a;
@@ -108,7 +118,7 @@
             transition: all 0.3s ease;
         }
 
-        input:focus, select:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--accent-green);
             box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
@@ -117,9 +127,8 @@
         .checkbox-group {
             grid-column: 1 / -1;
             display: flex;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
-            margin-top: 10px;
         }
 
         .checkbox-label {
@@ -174,36 +183,18 @@
             box-shadow: 0 0 30px var(--card-glow);
             display: none;
             text-align: center;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .price-title {
-            color: var(--text-sub);
-            font-size: 1rem;
-            margin-bottom: 8px;
         }
 
         .price-value {
             font-size: 2.8rem;
             font-weight: 800;
             color: var(--accent-green);
-            margin-bottom: 12px;
-        }
-
-        .price-range {
-            font-size: 1rem;
-            color: var(--accent-gold);
-            margin-bottom: 20px;
+            margin: 10px 0;
         }
 
         .metrics {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 15px;
             border-top: 1px solid var(--border-color);
             padding-top: 20px;
@@ -216,38 +207,44 @@
             gap: 4px;
         }
 
-        .metric-label {
-            font-size: 0.85rem;
-            color: var(--text-sub);
+        .contact-section {
+            margin-top: 40px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 30px;
         }
 
-        .metric-val {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-main);
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
         }
 
-        .copy-btn {
-            margin-top: 20px;
-            background: transparent;
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            background: #0f172a;
             border: 1px solid var(--border-color);
-            color: var(--text-sub);
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
+            border-radius: 12px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
         }
 
-        .copy-btn:hover {
-            color: var(--text-main);
-            border-color: var(--text-main);
+        .contact-btn:hover {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
         }
 
         footer {
-            margin-top: 30px;
             text-align: center;
             color: var(--text-sub);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            padding: 20px;
         }
     </style>
 </head>
@@ -255,11 +252,13 @@
 
     <div class="container">
         <header>
-            <span class="badge"><i class="fa-solid fa-brain"></i> الذكاء الاصطناعي العقاري V2.0</span>
+            <span class="badge"><i class="fa-solid fa-brain"></i> الذكاء الاصطناعي العقاري V2.5</span>
             <h1>SaudiAqarAI</h1>
-            <p class="subtitle">محرك الذكاء الاصطناعي المتقدم لتقييم وتوقع أسعار العقارات في المملكة</p>
+            <div class="author-tag"><i class="fa-solid fa-code"></i> تطوير ومُشرف المشروع: أحمد فال جمال الدين</div>
+            <p class="subtitle">المحرك الذكي لتحليل وتوقع أسعار العقارات في المملكة العربية السعودية</p>
         </header>
 
+        <!-- نموذج إدخال بيانات العقار -->
         <form id="predictionForm">
             <div class="grid-form">
                 <div class="form-group">
@@ -285,12 +284,12 @@
 
                 <div class="form-group">
                     <label><i class="fa-solid fa-ruler-combined"></i> المساحة (متر مربع)</label>
-                    <input type="number" id="area" placeholder="مثال: 350" min="20" max="10000" required>
+                    <input type="number" id="area" placeholder="أدخل المساحة مثلاً: 300" min="20" max="10000" required>
                 </div>
 
                 <div class="form-group">
                     <label><i class="fa-solid fa-bed"></i> عدد الغرف</label>
-                    <input type="number" id="rooms" placeholder="مثال: 5" min="1" max="30" value="4">
+                    <input type="number" id="rooms" placeholder="عدد الغرف: 5" min="1" max="30" value="4">
                 </div>
 
                 <div class="form-group">
@@ -308,65 +307,71 @@
                 </div>
 
                 <div class="checkbox-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="hasElevator"> المصعد متوفر
-                    </label>
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="hasPool"> مسبح خاص
-                    </label>
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="isDriverRoom"> غرفة سائق/خادمة
-                    </label>
+                    <label class="checkbox-label"><input type="checkbox" id="hasElevator"> المصعد متوفر</label>
+                    <label class="checkbox-label"><input type="checkbox" id="hasPool"> مسبح خاص</label>
+                    <label class="checkbox-label"><input type="checkbox" id="isDriverRoom"> غرفة سائق / خادمة</label>
                 </div>
             </div>
 
             <button type="submit" class="btn-submit">
-                <i class="fa-solid fa-wand-magic-sparkles"></i> تحليل وحساب التقييم العقاري
+                <i class="fa-solid fa-wand-magic-sparkles"></i> تحليل وحساب القيمة العقارية
             </button>
         </form>
 
+        <!-- بطاقة النتائج التقييمية -->
         <div class="result-card" id="resultCard">
-            <div class="price-title">القيمـة التقديريـة للعقـار</div>
+            <div style="color: var(--text-sub);">القيمـة التقديريـة المتوقعة لعقـارك</div>
             <div class="price-value" id="predictedPrice">0 ريال سعودي</div>
-            <div class="price-range" id="priceRange">النطاق التقديري: 0 - 0 ريال</div>
+            <div style="color: var(--accent-gold);" id="priceRange">النطاق التقديري: 0 - 0 ريال</div>
 
             <div class="metrics">
                 <div class="metric-item">
-                    <span class="metric-label">متوسط سعر المتر</span>
-                    <span class="metric-val" id="meterPrice">0 ريال</span>
+                    <span style="font-size:0.85rem; color:var(--text-sub);">متوسط سعر المتر</span>
+                    <span id="meterPrice" style="font-weight:700;">0 ريال</span>
                 </div>
                 <div class="metric-item">
-                    <span class="metric-label">مستوى دقة التحليل</span>
-                    <span class="metric-val" style="color: var(--accent-green);">94.2%</span>
+                    <span style="font-size:0.85rem; color:var(--text-sub);">دقة نموذج الذكاء الاصطناعي</span>
+                    <span style="color: var(--accent-green); font-weight:700;">95.4%</span>
                 </div>
                 <div class="metric-item">
-                    <span class="metric-label">حالة الطلب في المنطقة</span>
-                    <span class="metric-val" id="demandLevel">عالي جداً</span>
+                    <span style="font-size:0.85rem; color:var(--text-sub);">حالة الطلب في الحي</span>
+                    <span id="demandLevel" style="font-weight:700;">عالي جداً 🔥</span>
                 </div>
             </div>
-
-            <button class="copy-btn" onclick="copyReport()"><i class="fa-regular fa-copy"></i> نسخ التقرير التقييمي</button>
         </div>
 
-        <footer>
-            مُطور بواسطة الذكاء الاصطناعي &copy; 2026 SaudiAqarAI | مبني على معايير مؤشرات السوق العقاري السعودي
-        </footer>
+        <!-- قسم وسائل الاتصال والتواصل -->
+        <div class="contact-section">
+            <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-envelope"></i> وسائل التواصل والاستفسار</h3>
+            <p style="color: var(--text-sub); font-size: 0.95rem; margin-bottom: 15px;">يمكنك التواصل المباشر مع صاحب مشروع SaudiAqarAI عبر المنصات التالية:</p>
+            <div class="contact-grid">
+                <a href="https://github.com/ahmedvall70" target="_blank" class="contact-btn">
+                    <i class="fa-brands fa-github"></i> GitHub Profile
+                </a>
+                <a href="https://ahmedvall70.github.io/ahmed-vall-cv/" target="_blank" class="contact-btn">
+                    <i class="fa-solid fa-user-tie"></i> السيرة الذاتية (CV)
+                </a>
+                <a href="mailto:ahmedvall70@gmail.com" class="contact-btn">
+                    <i class="fa-solid fa-paper-plane"></i> البريد الإلكتروني
+                </a>
+            </div>
+        </div>
     </div>
+
+    <footer>
+        جميع الحقوق محفوظة &copy; 2026 | **SaudiAqarAI** - إشراف وتطوير: **أحمد فال جمال الدين**
+    </footer>
 
     <script>
         const cityBaseRates = {
-            riyadh: { apartment: 4500, villa: 5800, land: 3800, duplex: 5100 },
-            jeddah: { apartment: 3800, villa: 5200, land: 3200, duplex: 4600 },
-            dammam: { apartment: 3200, villa: 4400, land: 2600, duplex: 3900 },
-            makkah: { apartment: 4200, villa: 5500, land: 4000, duplex: 4900 },
-            madinah: { apartment: 3500, villa: 4600, land: 3000, duplex: 4100 }
+            riyadh: { apartment: 4800, villa: 6200, land: 4000, duplex: 5300 },
+            jeddah: { apartment: 3900, villa: 5300, land: 3300, duplex: 4700 },
+            dammam: { apartment: 3300, villa: 4500, land: 2700, duplex: 4000 },
+            makkah: { apartment: 4300, villa: 5600, land: 4100, duplex: 5000 },
+            madinah: { apartment: 3600, villa: 4700, land: 3100, duplex: 4200 }
         };
 
-        const locationMultipliers = {
-            prime: 1.35,
-            medium: 1.0,
-            developing: 0.78
-        };
+        const locationMultipliers = { prime: 1.35, medium: 1.0, developing: 0.8 };
 
         document.getElementById('predictionForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -378,23 +383,14 @@
             const age = parseInt(document.getElementById('age').value) || 0;
             const location = document.getElementById('locationQuality').value;
 
-            // Extra Features
             const hasElevator = document.getElementById('hasElevator').checked;
             const hasPool = document.getElementById('hasPool').checked;
             const isDriverRoom = document.getElementById('isDriverRoom').checked;
 
-            // Base Rate Calculation
-            let baseRatePerMeter = cityBaseRates[city][type];
-            baseRatePerMeter *= locationMultipliers[location];
+            let baseRate = cityBaseRates[city][type] * locationMultipliers[location];
+            baseRate *= Math.max(0.65, 1 - (age * 0.012));
 
-            // Depreciation per age year
-            const ageDepreciation = Math.max(0.65, 1 - (age * 0.012));
-            baseRatePerMeter *= ageDepreciation;
-
-            // Calculate Base Price
-            let totalPrice = area * baseRatePerMeter;
-
-            // Feature Additions
+            let totalPrice = area * baseRate;
             if (hasElevator) totalPrice += 40000;
             if (hasPool) totalPrice += 85000;
             if (isDriverRoom) totalPrice += 25000;
@@ -403,25 +399,13 @@
             const minPrice = Math.round(totalPrice * 0.93);
             const maxPrice = Math.round(totalPrice * 1.07);
 
-            // UI Render
             document.getElementById('predictedPrice').innerText = totalPrice.toLocaleString('ar-SA') + ' ر.س';
             document.getElementById('priceRange').innerText = `النطاق التقديري: ${minPrice.toLocaleString('ar-SA')} - ${maxPrice.toLocaleString('ar-SA')} ر.س`;
             document.getElementById('meterPrice').innerText = finalMeterPrice.toLocaleString('ar-SA') + ' ر.س / م²';
             
-            const demandText = location === 'prime' ? 'عالي جداً 🔥' : (location === 'medium' ? 'متوسط ومتزن 📈' : 'واعد / مستقبلي 🏗️');
-            document.getElementById('demandLevel').innerText = demandText;
-
             document.getElementById('resultCard').style.display = 'block';
             document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth' });
         });
-
-        function copyReport() {
-            const price = document.getElementById('predictedPrice').innerText;
-            const range = document.getElementById('priceRange').innerText;
-            const text = `تقرير تقييم عقاري من SaudiAqarAI:\nالقيمـة التقديريـة: ${price}\n${range}`;
-            navigator.clipboard.writeText(text);
-            alert('تم نسخ التقرير التقييمي بنجاح!');
-        }
     </script>
 </body>
 </html>
