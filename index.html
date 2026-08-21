@@ -22,7 +22,7 @@
             font-family: 'Tajawal', sans-serif;
         }
 
-        /* ===== BACKGROUND WITH MAGICAL GLOW ===== */
+        /* ===== FLEXBOX LAYOUT FOR STICKY FOOTER ===== */
         body {
             background: #070a14;
             background-image: 
@@ -33,14 +33,18 @@
             color: #ffffff;
             min-height: 100vh;
             display: flex;
-            justify-content: center;
-            padding: 15px 15px 80px 15px;
+            flex-direction: column;
+            padding: 15px 15px 85px 15px;
             overflow-x: hidden;
         }
 
         .container {
             max-width: 1200px;
             width: 100%;
+            margin: 0 auto;
+            flex: 1; /* PUSHES FOOTER TO BOTTOM */
+            display: flex;
+            flex-direction: column;
         }
 
         /* ===== TOP BAR ===== */
@@ -104,7 +108,7 @@
             box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
         }
 
-        /* ===== NAV TABS (GLASSMORPHISM) ===== */
+        /* ===== NAV TABS ===== */
         .nav-tabs {
             display: flex;
             gap: 6px;
@@ -128,7 +132,7 @@
             font-size: 0.8rem;
             border-radius: 12px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -137,7 +141,6 @@
         .nav-tab:hover {
             color: #ffffff;
             background: rgba(255,255,255,0.08);
-            transform: translateY(-1px);
         }
 
         .nav-tab.active {
@@ -151,6 +154,21 @@
         .section-content { display: block; }
         .section-content.hidden { display: none; }
 
+        /* ===== GUIDANCE HINT BOX ===== */
+        .guidance-box {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(124, 77, 255, 0.08));
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            border-radius: 12px;
+            padding: 10px 16px;
+            margin-top: 10px;
+            font-size: 0.78rem;
+            color: #38bdf8;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
         /* ===== MAIN CARD ===== */
         .main-card {
             background: rgba(18, 24, 43, 0.55);
@@ -161,7 +179,6 @@
             margin: 8px 0 15px;
             position: relative;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-            overflow: hidden;
         }
 
         .main-card::before {
@@ -174,20 +191,9 @@
             background: linear-gradient(90deg, #00d4ff, #7c4dff, #00e676);
         }
 
-        .card-header {
-            text-align: center;
-            margin-bottom: 18px;
-        }
-
-        .card-header h2 {
-            font-size: 1.45rem;
-            font-weight: 800;
-        }
-
-        .card-header p {
-            color: rgba(255,255,255,0.6);
-            font-size: 0.82rem;
-        }
+        .card-header { text-align: center; margin-bottom: 18px; }
+        .card-header h2 { font-size: 1.45rem; font-weight: 800; }
+        .card-header p { color: rgba(255,255,255,0.6); font-size: 0.82rem; }
 
         /* ===== FORM GRID ===== */
         .form-grid {
@@ -197,25 +203,9 @@
             margin-bottom: 14px;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .form-group label {
-            font-size: 0.72rem;
-            color: rgba(255,255,255,0.65);
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .form-group label i {
-            color: #00d4ff;
-            font-size: 0.8rem;
-        }
+        .form-group { display: flex; flex-direction: column; gap: 5px; }
+        .form-group label { font-size: 0.72rem; color: rgba(255,255,255,0.65); font-weight: 700; display: flex; align-items: center; gap: 6px; }
+        .form-group label i { color: #00d4ff; font-size: 0.8rem; }
 
         .form-group input,
         .form-group select {
@@ -237,22 +227,11 @@
             box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
         }
 
-        .form-group select option {
-            background: #0f172a;
-            color: #fff;
-        }
+        .form-group select option { background: #0f172a; color: #fff; }
 
         /* ===== CHIPS ===== */
-        .chips {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin: 10px 0 16px;
-        }
-
+        .chips { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 10px 0 16px; }
         .chip-input { display: none; }
-
         .chip-label {
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(255,255,255,0.1);
@@ -265,12 +244,6 @@
             align-items: center;
             gap: 6px;
             transition: all 0.3s ease;
-            user-select: none;
-        }
-
-        .chip-label:hover {
-            border-color: rgba(0, 212, 255, 0.4);
-            color: #fff;
         }
 
         .chip-input:checked + .chip-label {
@@ -280,7 +253,7 @@
             box-shadow: 0 0 15px rgba(52, 211, 153, 0.2);
         }
 
-        /* ===== MAP CONTAINER ===== */
+        /* ===== MAP ===== */
         #aqarMap {
             width: 100%;
             height: 230px;
@@ -290,7 +263,7 @@
             z-index: 1;
         }
 
-        /* ===== PREDICT BUTTON (NEON GLOW) ===== */
+        /* ===== PREDICT BUTTON ===== */
         .btn-predict {
             width: 100%;
             height: 48px;
@@ -305,20 +278,18 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
             box-shadow: 0 0 20px rgba(52, 211, 153, 0.15);
         }
 
         .btn-predict:hover {
             background: linear-gradient(135deg, rgba(52, 211, 153, 0.35), rgba(0, 212, 255, 0.35));
             box-shadow: 0 0 30px rgba(52, 211, 153, 0.4);
-            transform: translateY(-2px);
             color: #ffffff;
         }
 
         .spinner-box { display: none; align-items: center; gap: 10px; }
         .spinner-box.active { display: flex; }
-
         .spinner-dot {
             width: 16px;
             height: 16px;
@@ -327,7 +298,6 @@
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
-
         @keyframes spin { to { transform: rotate(360deg); } }
 
         /* ===== RESULTS ===== */
@@ -348,24 +318,13 @@
             border: 1px solid rgba(255,255,255,0.05);
         }
 
-        .result-box .label {
-            font-size: 0.65rem;
-            color: rgba(255,255,255,0.5);
-            text-transform: uppercase;
-        }
-
-        .result-box .value {
-            font-size: 1.05rem;
-            font-weight: 800;
-            margin-top: 4px;
-            color: #00d4ff;
-        }
-
+        .result-box .label { font-size: 0.65rem; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+        .result-box .value { font-size: 1.05rem; font-weight: 800; margin-top: 4px; color: #00d4ff; }
         .result-box .value.green { color: #34d399; }
         .result-box .value.gold { color: #fbbf24; }
         .result-box .value.purple { color: #a78bfa; }
 
-        /* ===== SECTION CARDS & CHARTS ===== */
+        /* ===== ENHANCED ACTION BUTTONS ===== */
         .section-card {
             background: rgba(18, 24, 43, 0.55);
             backdrop-filter: blur(20px);
@@ -376,103 +335,70 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.3);
         }
 
-        .chart-container {
-            position: relative;
-            margin-top: 15px;
-            max-height: 250px;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 14px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .section-title {
-            font-weight: 800;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
+        .chart-container { position: relative; margin-top: 15px; max-height: 250px; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+        .section-title { font-weight: 800; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
         .section-title.blue { color: #60a5fa; }
         .section-title.green { color: #34d399; }
 
-        .input-row {
-            display: flex;
-            gap: 10px;
-            align-items: flex-end;
-            flex-wrap: wrap;
-        }
+        .input-row { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
+        .input-row .form-group { flex: 1; min-width: 120px; }
 
-        .input-row .form-group {
-            flex: 1;
-            min-width: 120px;
-        }
-
-        /* ===== ACTION BUTTONS ===== */
+        /* VIBRANT ACTION BUTTONS STYLES */
         .btn-action {
-            height: 40px;
-            padding: 0 18px;
+            height: 42px;
+            padding: 0 20px;
             border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.1);
-            font-weight: 700;
-            font-size: 0.78rem;
+            font-weight: 800;
+            font-size: 0.8rem;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 8px;
             transition: all 0.3s ease;
-            background: rgba(255,255,255,0.04);
-            color: #e2e8f0;
+            backdrop-filter: blur(10px);
         }
 
-        .btn-action:hover {
-            transform: translateY(-2px);
-            color: #ffffff;
+        .btn-action:hover { transform: translateY(-2px); }
+
+        .btn-action.primary {
+            background: rgba(56, 189, 248, 0.2);
+            border: 1px solid #38bdf8;
+            color: #38bdf8;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
         }
+        .btn-action.primary:hover { background: rgba(56, 189, 248, 0.35); box-shadow: 0 0 25px rgba(56, 189, 248, 0.4); color: #fff; }
 
-        .btn-action.primary { background: rgba(56, 189, 248, 0.15); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8; }
-        .btn-action.primary:hover { box-shadow: 0 0 15px rgba(56, 189, 248, 0.3); }
-
-        .btn-action.success { background: rgba(52, 211, 153, 0.15); border-color: rgba(52, 211, 153, 0.3); color: #34d399; }
-        .btn-action.success:hover { box-shadow: 0 0 15px rgba(52, 211, 153, 0.3); }
-
-        .btn-action.purple { background: rgba(139, 92, 246, 0.15); border-color: rgba(139, 92, 246, 0.3); color: #a78bfa; }
-        .btn-action.purple:hover { box-shadow: 0 0 15px rgba(139, 92, 246, 0.3); }
-
-        .btn-action.danger { background: rgba(244, 67, 54, 0.12); border-color: rgba(244, 67, 54, 0.3); color: #ef5350; }
-        .btn-action.danger:hover { box-shadow: 0 0 15px rgba(244, 67, 54, 0.3); }
-
-        /* ===== PROPERTY TABLE ===== */
-        .property-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 12px;
-            font-size: 0.78rem;
+        .btn-action.success {
+            background: rgba(52, 211, 153, 0.2);
+            border: 1px solid #34d399;
+            color: #34d399;
+            box-shadow: 0 0 15px rgba(52, 211, 153, 0.2);
         }
+        .btn-action.success:hover { background: rgba(52, 211, 153, 0.35); box-shadow: 0 0 25px rgba(52, 211, 153, 0.4); color: #fff; }
 
-        .property-table th {
-            text-align: inherit;
-            padding: 10px 12px;
-            color: rgba(255,255,255,0.5);
-            font-weight: 600;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            font-size: 0.68rem;
-            text-transform: uppercase;
+        .btn-action.purple {
+            background: rgba(167, 139, 250, 0.2);
+            border: 1px solid #a78bfa;
+            color: #a78bfa;
+            box-shadow: 0 0 15px rgba(167, 139, 250, 0.2);
         }
+        .btn-action.purple:hover { background: rgba(167, 139, 250, 0.35); box-shadow: 0 0 25px rgba(167, 139, 250, 0.4); color: #fff; }
 
-        .property-table td {
-            padding: 10px 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            color: rgba(255,255,255,0.85);
+        .btn-action.danger {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #ef4444;
+            color: #ef4444;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
         }
+        .btn-action.danger:hover { background: rgba(239, 68, 68, 0.35); box-shadow: 0 0 25px rgba(239, 68, 68, 0.4); color: #fff; }
 
-        /* ===== CONTACT & INNOVITION BUTTONS ===== */
+        /* ===== TABLES ===== */
+        .property-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.78rem; }
+        .property-table th { text-align: inherit; padding: 10px 12px; color: rgba(255,255,255,0.5); font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.68rem; text-transform: uppercase; }
+        .property-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.04); color: rgba(255,255,255,0.85); }
+
+        /* ===== CONTACT & INNOVISION BUTTONS ===== */
         .contact-section {
             background: rgba(18, 24, 43, 0.55);
             backdrop-filter: blur(20px);
@@ -480,36 +406,12 @@
             border-radius: 24px;
             padding: 28px 30px;
             margin: 12px 0;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
         }
 
-        .contact-info-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 14px;
-            margin-bottom: 22px;
-        }
+        .contact-info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 22px; }
+        .contact-info-item { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 14px 16px; }
+        .contact-buttons-container { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.08); }
 
-        .contact-info-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 14px;
-            padding: 14px 16px;
-        }
-
-        .contact-buttons-container {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            padding-top: 18px;
-            border-top: 1px solid rgba(255,255,255,0.08);
-        }
-
-        /* MAGICAL BUTTONS STYLING */
         .contact-btn {
             display: inline-flex;
             align-items: center;
@@ -522,36 +424,21 @@
             font-size: 0.82rem;
             font-weight: 700;
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
 
-        .contact-btn:hover {
-            transform: translateY(-3px);
-            color: #ffffff;
-        }
-
-        .contact-btn.whatsapp:hover {
-            background: rgba(37, 211, 102, 0.2);
-            border-color: #25D366;
-            box-shadow: 0 0 20px rgba(37, 211, 102, 0.35);
-        }
-
-        .contact-btn.cv:hover {
-            background: rgba(56, 189, 248, 0.2);
-            border-color: #38bdf8;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
-        }
-
-        /* RESTORED & GLOWING INNOVISION BUTTON */
+        .contact-btn:hover { transform: translateY(-3px); }
+        .contact-btn.whatsapp:hover { background: rgba(37, 211, 102, 0.2); border-color: #25D366; box-shadow: 0 0 20px rgba(37, 211, 102, 0.35); }
+        .contact-btn.cv:hover { background: rgba(56, 189, 248, 0.2); border-color: #38bdf8; box-shadow: 0 0 20px rgba(56, 189, 248, 0.35); }
+        
         .contact-btn.innovision {
-            background: linear-gradient(135deg, rgba(124, 77, 255, 0.15), rgba(0, 212, 255, 0.15));
-            border-color: rgba(124, 77, 255, 0.4);
+            background: linear-gradient(135deg, rgba(124, 77, 255, 0.2), rgba(0, 212, 255, 0.2));
+            border-color: rgba(124, 77, 255, 0.5);
             color: #a78bfa;
         }
 
         .contact-btn.innovision:hover {
-            background: linear-gradient(135deg, rgba(124, 77, 255, 0.35), rgba(0, 212, 255, 0.35));
+            background: linear-gradient(135deg, rgba(124, 77, 255, 0.4), rgba(0, 212, 255, 0.4));
             border-color: #a78bfa;
             color: #ffffff;
             box-shadow: 0 0 25px rgba(124, 77, 255, 0.5);
@@ -559,13 +446,24 @@
 
         .phone-ltr { direction: ltr; display: inline-block; unicode-bidi: embed; }
 
-        /* ===== BOTTOM NAV ===== */
+        /* ===== FIXED FOOTER (AT BOTTOM OF FLEX FLOW) ===== */
+        .footer {
+            text-align: center;
+            padding: 22px 20px 10px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.4);
+            font-size: 0.72rem;
+            margin-top: auto; /* DYNAMICALLY STICKS TO BOTTOM */
+            width: 100%;
+        }
+
+        /* ===== BOTTOM FIXED NAV ===== */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(7, 10, 20, 0.92);
+            background: rgba(7, 10, 20, 0.94);
             backdrop-filter: blur(20px);
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
@@ -591,16 +489,13 @@
 
         .bottom-nav .nav-item.active { color: #38bdf8; }
 
-        /* ===== FOOTER ===== */
-        .footer { text-align: center; padding: 18px 20px 6px; border-top: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.35); font-size: 0.72rem; }
-
-        /* ===== TOAST ===== */
+        /* ===== DYNAMIC TOAST ===== */
         .toast {
             position: fixed;
             bottom: 85px;
             right: 30px;
             background: rgba(15, 23, 42, 0.95);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
             border-radius: 14px;
             padding: 12px 22px;
             color: #ffffff;
@@ -610,7 +505,7 @@
             gap: 10px;
             transform: translateY(120px);
             opacity: 0;
-            transition: all 0.5s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 999;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
@@ -656,6 +551,12 @@
                 <div class="card-header">
                     <h2><i class="fa-solid fa-robot"></i> <span data-key="cardTitle">الذكاء الاصطناعي العقاري</span></h2>
                     <p data-key="cardSub">محرك تنبؤي ذكي لتقييم أسعار العقارات في المملكة العربية السعودية</p>
+                    
+                    <!-- GUIDANCE HINT ADDED -->
+                    <div class="guidance-box">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span>يمكنك تغيير المدخلات (المدينة، المساحة، الغرف، إلخ) لملاحظة تغير التقييم فوراً!</span>
+                    </div>
                 </div>
 
                 <form id="predictForm">
@@ -791,8 +692,8 @@
                 <div class="section-header">
                     <div style="display: flex; gap: 8px;">
                         <button class="btn-action success" id="exportPDF"><i class="fa-solid fa-file-pdf"></i> PDF</button>
-                        <button class="btn-action" id="exportCSV"><i class="fa-solid fa-table"></i> CSV</button>
-                        <button class="btn-action danger" id="clearDatabase"><i class="fa-solid fa-trash"></i> مسح</button>
+                        <button class="btn-action primary" id="exportCSV"><i class="fa-solid fa-table"></i> CSV</button>
+                        <button class="btn-action danger" id="clearDatabase"><i class="fa-solid fa-trash"></i> مسح الكل</button>
                     </div>
                     <div class="section-title green"><i class="fa-solid fa-chart-line"></i> تحليلات وقاعدة البيانات العقارية <span id="propertyCount">(0)</span></div>
                 </div>
@@ -835,7 +736,7 @@
             </div>
         </div>
 
-        <!-- ===== CONTACT SECTION (INNOVISION RESTORED) ===== -->
+        <!-- ===== CONTACT SECTION ===== -->
         <div class="section-content hidden" id="section-contact">
             <div class="contact-section">
                 <div class="contact-info-grid">
@@ -846,20 +747,19 @@
                 <div class="contact-buttons-container">
                     <a href="https://wa.me/97474736271" target="_blank" class="contact-btn whatsapp"><i class="fa-brands fa-whatsapp"></i> واتساب</a>
                     <a href="https://ahmedvall70.github.io/ahmed-vall-cv/" target="_blank" class="contact-btn cv"><i class="fa-solid fa-file-pdf"></i> السيرة الذاتية</a>
-                    <!-- RESTORED INNOVISION BUTTON -->
                     <a href="https://ahmedvall70.github.io/Innovision/" target="_blank" class="contact-btn innovision"><i class="fa-solid fa-rocket"></i> Innovision Hub</a>
                 </div>
             </div>
         </div>
 
-        <!-- ===== FOOTER ===== -->
+        <!-- ===== FOOTER (STAYS AT THE VERY BOTTOM ALWAYS) ===== -->
         <div class="footer">
             جميع الحقوق محفوظة © 2026 | <strong>SaudiAqarAI</strong> - إشراف وتطوير: <strong>أحمد فال جمال الدين سيدنا</strong>
         </div>
 
     </div>
 
-    <!-- BOTTOM NAV -->
+    <!-- BOTTOM FIXED NAV -->
     <nav class="bottom-nav">
         <button class="nav-item active" data-tab="evaluate"><i class="fa-solid fa-robot"></i><span>التقييم</span></button>
         <button class="nav-item" data-tab="add"><i class="fa-solid fa-plus-circle"></i><span>إضافة</span></button>
@@ -868,8 +768,11 @@
         <button class="nav-item" data-tab="contact"><i class="fa-solid fa-address-card"></i><span>تواصل</span></button>
     </nav>
 
-    <!-- TOAST -->
-    <div class="toast" id="toast"><i class="fa-solid fa-circle-check"></i><span id="toastMessage">تم بنجاح!</span></div>
+    <!-- TOAST NOTIFICATION WITH CUSTOM MESSAGES -->
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-circle-check" id="toastIcon" style="color:#34d399;"></i>
+        <span id="toastMessage">تم بنجاح!</span>
+    </div>
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -887,6 +790,20 @@
                 'مكة المكرمة': [21.3891, 39.8579],
                 'المدينة المنورة': [24.5247, 39.5692]
             };
+
+            /* ===== CUSTOM TOAST FUNCTION ===== */
+            function showToast(message, icon = 'fa-circle-check', color = '#34d399') {
+                const toast = document.getElementById('toast');
+                const toastMsg = document.getElementById('toastMessage');
+                const toastIcon = document.getElementById('toastIcon');
+
+                toastMsg.textContent = message;
+                toastIcon.className = 'fa-solid ' + icon;
+                toastIcon.style.color = color;
+
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
+            }
 
             function initMap() {
                 map = L.map('aqarMap').setView(cityCoords['الرياض'], 11);
@@ -943,6 +860,24 @@
 
             document.querySelectorAll('.nav-tab, .bottom-nav .nav-item').forEach(el => {
                 el.addEventListener('click', function() { switchTab(this.dataset.tab); });
+            });
+
+            /* ===== EVENT LISTENERS FOR CUSTOM MESSAGES ===== */
+            document.getElementById('addPropertyForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                showToast('تم إضافة العقار وتقييمه بنجاح!', 'fa-circle-check', '#34d399');
+            });
+
+            document.getElementById('exportPDF').addEventListener('click', function() {
+                showToast('تم تصدير ملف PDF بنجاح!', 'fa-file-pdf', '#34d399');
+            });
+
+            document.getElementById('exportCSV').addEventListener('click', function() {
+                showToast('تم تصدير ملف CSV بنجاح!', 'fa-file-csv', '#38bdf8');
+            });
+
+            document.getElementById('clearDatabase').addEventListener('click', function() {
+                showToast('تم مسح بيانات الجدول بنجاح!', 'fa-trash-can', '#ef4444');
             });
 
             window.addEventListener('DOMContentLoaded', () => {
