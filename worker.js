@@ -29,11 +29,12 @@
  * 8) افتح index.html وضع هذا الرابط + "/chat" في متغيّر PROXY_URL أعلى قسم السكربت.
  *
  * ملاحظة أمان: ALLOWED_ORIGIN أدناه يقيّد من يستطيع استخدام الخادم بموقعك فقط.
- * غيّره إلى دومين موقعك الفعلي بعد النشر (مثال: https://your-username.github.io) بدل "*".
+ * تم تعيينه مسبقاً لدومين GitHub Pages الفعلي (ahmedvall70.github.io). لو غيّرت
+ * دومين الموقع مستقبلاً (نطاق مخصص مثلاً)، حدّث القيمة أدناه وأعد النشر بأمر wrangler deploy.
  */
 
-const ALLOWED_ORIGIN = "*"; // ⚠️ غيّرها إلى دومين موقعك تحديداً بعد التجربة
-const MODEL = "claude-sonnet-4-6";
+const ALLOWED_ORIGIN = "https://ahmedvall70.github.io"; // مقيّد لدومين GitHub Pages الفعلي لموقعك
+const MODEL = "claude-sonnet-5";
 const MAX_TOKENS = 1000;
 
 function corsHeaders() {
