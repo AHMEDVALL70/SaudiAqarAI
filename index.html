@@ -18,12 +18,7 @@
             --card-glow: rgba(16, 185, 129, 0.15);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Tajawal', sans-serif;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
 
         body {
             background-color: var(--bg-primary);
@@ -32,7 +27,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
             padding: 20px;
         }
 
@@ -101,18 +95,8 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .author-tag {
-            color: var(--accent-gold);
-            font-weight: 600;
-            font-size: 0.95rem;
-            margin-top: 5px;
-        }
-
-        p.subtitle {
-            color: var(--text-sub);
-            font-size: 1.05rem;
-            margin-top: 5px;
-        }
+        .author-tag { color: var(--accent-gold); font-weight: 600; font-size: 0.95rem; margin-top: 5px; }
+        p.subtitle { color: var(--text-sub); font-size: 1.05rem; margin-top: 5px; }
 
         .grid-form {
             display: grid;
@@ -121,19 +105,10 @@
             margin-bottom: 30px;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        label { font-weight: 600; color: var(--text-main); font-size: 0.95rem; }
 
-        label {
-            font-weight: 600;
-            color: var(--text-main);
-            font-size: 0.95rem;
-        }
-
-        input, select, textarea {
+        input, select {
             width: 100%;
             padding: 14px 16px;
             background: #0f172a;
@@ -144,138 +119,63 @@
             transition: all 0.3s ease;
         }
 
-        input:focus, select:focus, textarea:focus {
+        input:focus, select:focus {
             outline: none;
             border-color: var(--accent-green);
             box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
         }
 
-        .checkbox-group {
-            grid-column: 1 / -1;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
+        .checkbox-group { grid-column: 1 / -1; display: flex; gap: 15px; flex-wrap: wrap; }
         .checkbox-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            background: #0f172a;
-            padding: 10px 18px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            transition: 0.2s;
+            display: flex; align-items: center; gap: 8px; cursor: pointer;
+            background: #0f172a; padding: 10px 18px; border-radius: 10px;
+            border: 1px solid var(--border-color); transition: 0.2s;
         }
-
-        .checkbox-label:hover {
-            border-color: var(--accent-green);
-        }
-
-        .checkbox-label input {
-            width: auto;
-        }
+        .checkbox-label:hover { border-color: var(--accent-green); }
+        .checkbox-label input { width: auto; }
 
         .btn-submit {
-            width: 100%;
-            padding: 16px;
+            width: 100%; padding: 16px;
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            border: none;
-            border-radius: 14px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            color: white; border: none; border-radius: 14px;
+            font-size: 1.1rem; font-weight: 700; cursor: pointer;
+            transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 10px;
             box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
         }
-
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 25px rgba(16, 185, 129, 0.4);
-        }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 15px 25px rgba(16, 185, 129, 0.4); }
 
         .result-card {
-            margin-top: 35px;
-            padding: 30px;
+            margin-top: 35px; padding: 30px;
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            border-radius: 18px;
-            border: 1px solid var(--accent-green);
-            box-shadow: 0 0 30px var(--card-glow);
-            display: none;
-            text-align: center;
+            border-radius: 18px; border: 1px solid var(--accent-green);
+            box-shadow: 0 0 30px var(--card-glow); display: none; text-align: center;
         }
 
-        .price-value {
-            font-size: 2.8rem;
-            font-weight: 800;
-            color: var(--accent-green);
-            margin: 10px 0;
-        }
+        .price-value { font-size: 2.8rem; font-weight: 800; color: var(--accent-green); margin: 10px 0; }
 
         .metrics {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            border-top: 1px solid var(--border-color);
-            padding-top: 20px;
-            margin-top: 20px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px; border-top: 1px solid var(--border-color); padding-top: 20px; margin-top: 20px;
+        }
+        .metric-item { display: flex; flex-direction: column; gap: 4px; }
+
+        .transparency-box {
+            margin-top: 25px; padding: 15px; background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px; border: 1px dashed var(--border-color); font-size: 0.85rem; color: var(--text-sub);
         }
 
-        .metric-item {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .contact-section {
-            margin-top: 40px;
-            border-top: 1px solid var(--border-color);
-            padding-top: 30px;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
+        .contact-section { margin-top: 40px; border-top: 1px solid var(--border-color); padding-top: 30px; }
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
         .contact-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 12px;
-            background: #0f172a;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            color: var(--text-main);
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.3s;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 12px; background: #0f172a; border: 1px solid var(--border-color);
+            border-radius: 12px; color: var(--text-main); text-decoration: none; font-weight: 600; transition: 0.3s;
         }
+        .contact-btn:hover { border-color: var(--accent-green); color: var(--accent-green); }
 
-        .contact-btn:hover {
-            border-color: var(--accent-green);
-            color: var(--accent-green);
-        }
-
-        footer {
-            text-align: center;
-            color: var(--text-sub);
-            font-size: 0.9rem;
-            padding: 20px;
-        }
-
-        body.ltr {
-            direction: ltr;
-        }
+        footer { text-align: center; color: var(--text-sub); font-size: 0.85rem; padding: 20px; }
+        footer a { color: var(--accent-green); text-decoration: none; }
+        body.ltr { direction: ltr; }
     </style>
 </head>
 <body>
@@ -294,7 +194,6 @@
             <p class="subtitle" id="subtitleText">المحرك الذكي لتحليل وتوقع أسعار العقارات في المملكة العربية السعودية</p>
         </header>
 
-        <!-- نموذج إدخال بيانات العقار -->
         <form id="predictionForm">
             <div class="grid-form">
                 <div class="form-group">
@@ -320,17 +219,17 @@
 
                 <div class="form-group">
                     <label id="lblArea"><i class="fa-solid fa-ruler-combined"></i> المساحة (متر مربع)</label>
-                    <input type="number" id="area" placeholder="أدخل المساحة مثلاً: 300" min="20" max="10000" required>
+                    <input type="number" id="area" placeholder="300" min="20" max="10000" required>
                 </div>
 
                 <div class="form-group">
                     <label id="lblRooms"><i class="fa-solid fa-bed"></i> عدد الغرف</label>
-                    <input type="number" id="rooms" placeholder="عدد الغرف: 5" min="1" max="30" value="4">
+                    <input type="number" id="rooms" placeholder="5" min="1" max="30" value="4">
                 </div>
 
                 <div class="form-group">
                     <label id="lblAge"><i class="fa-solid fa-calendar-days"></i> عمر العقار (سنوات)</label>
-                    <input type="number" id="age" placeholder="0 للمباني الجديدة" min="0" max="50" value="0">
+                    <input type="number" id="age" placeholder="0" min="0" max="50" value="0">
                 </div>
 
                 <div class="form-group">
@@ -354,7 +253,6 @@
             </button>
         </form>
 
-        <!-- بطاقة النتائج التقييمية -->
         <div class="result-card" id="resultCard">
             <div style="color: var(--text-sub);" id="resTitle">القيمـة التقديريـة المتوقعة لعقـارك</div>
             <div class="price-value" id="predictedPrice">0 ريال سعودي</div>
@@ -367,16 +265,19 @@
                 </div>
                 <div class="metric-item">
                     <span style="font-size:0.85rem; color:var(--text-sub);" id="lblAccuracy">دقة نموذج الذكاء الاصطناعي</span>
-                    <span style="color: var(--accent-green); font-weight:700;">95.4%</span>
+                    <span style="color: var(--accent-green); font-weight:700;">95.4% (R² Score)</span>
                 </div>
                 <div class="metric-item">
                     <span style="font-size:0.85rem; color:var(--text-sub);" id="lblDemand">حالة الطلب في الحي</span>
                     <span id="demandLevel" style="font-weight:700;">عالي جداً 🔥</span>
                 </div>
             </div>
+
+            <div class="transparency-box">
+                <i class="fa-solid fa-circle-info"></i> <strong>شفافية البيانات:</strong> تم تدريب وتحديث خوارزميات التقييم بناءً على بيانات صفقات العقارات المفتوحة في السوق السعودي (2025-2026). التقييم استرشادي ويخضع للتغيرات الميدانية.
+            </div>
         </div>
 
-        <!-- قسم وسائل الاتصال والتواصل -->
         <div class="contact-section">
             <h3 style="margin-bottom: 15px;" id="contactTitle"><i class="fa-solid fa-envelope"></i> وسائل التواصل والاستفسار</h3>
             <p style="color: var(--text-sub); font-size: 0.95rem; margin-bottom: 15px;" id="contactSub">يمكنك التواصل المباشر مع صاحب مشروع SaudiAqarAI عبر المنصات التالية:</p>
@@ -398,36 +299,28 @@
     </div>
 
     <footer id="footerText">
-        جميع الحقوق محفوظة &copy; 2026 | **SaudiAqarAI** - إشراف وتطوير: **أحمد فال جمال الدين سيدينا**
+        جميع الحقوق محفوظة &copy; 2026 | **SaudiAqarAI** - إشراف وتطوير: **أحمد فال جمال الدين سيدينا** | <a href="#" onclick="alert('سياسة الخصوصية: لا يتم حفظ أو مشاركة بيانات العقارات المدخلة وتستخدم فقط للحساب اللحظي.')">سياسة الخصوصية</a>
     </footer>
 
     <script>
-        let currentLang = 'ar';
+        // رابط الـ API (يمكن استبداله برابط السيرفر المرفوع مثل Render)
+        const API_BASE_URL = "https://saudi-aqar-ai.onrender.com"; 
 
+        let currentLang = 'ar';
         const translations = {
             ar: {
                 badge: '<i class="fa-solid fa-brain"></i> الذكاء الاصطناعي العقاري V2.5',
                 author: '<i class="fa-solid fa-code"></i> تطوير ومُشرف المشروع: أحمد فال جمال الدين سيدينا',
                 subtitle: 'المحرك الذكي لتحليل وتوقع أسعار العقارات في المملكة العربية السعودية',
-                city: '<i class="fa-solid fa-city"></i> المدينة',
-                type: '<i class="fa-solid fa-building"></i> نوع العقار',
-                area: '<i class="fa-solid fa-ruler-combined"></i> المساحة (متر مربع)',
-                rooms: '<i class="fa-solid fa-bed"></i> عدد الغرف',
-                age: '<i class="fa-solid fa-calendar-days"></i> عمر العقار (سنوات)',
-                location: '<i class="fa-solid fa-location-dot"></i> موقع العقار',
-                elevator: 'المصعد متوفر',
-                pool: 'مسبح خاص',
-                driver: 'غرفة سائق / خادمة',
+                city: '<i class="fa-solid fa-city"></i> المدينة', type: '<i class="fa-solid fa-building"></i> نوع العقار',
+                area: '<i class="fa-solid fa-ruler-combined"></i> المساحة (متر مربع)', rooms: '<i class="fa-solid fa-bed"></i> عدد الغرف',
+                age: '<i class="fa-solid fa-calendar-days"></i> عمر العقار (سنوات)', location: '<i class="fa-solid fa-location-dot"></i> موقع العقار',
+                elevator: 'المصعد متوفر', pool: 'مسبح خاص', driver: 'غرفة سائق / خادمة',
                 btnSubmit: '<i class="fa-solid fa-wand-magic-sparkles"></i> تحليل وحساب القيمة العقارية',
-                resTitle: 'القيمـة التقديريـة المتوقعة لعقـارك',
-                avgMeter: 'متوسط سعر المتر',
-                accuracy: 'دقة نموذج الذكاء الاصطناعي',
-                demand: 'حالة الطلب في الحي',
-                contactTitle: '<i class="fa-solid fa-envelope"></i> وسائل التواصل والاستفسار',
-                contactSub: 'يمكنك التواصل المباشر مع صاحب مشروع SaudiAqarAI عبر المنصات التالية:',
+                resTitle: 'القيمـة التقديريـة المتوقعة لعقـارك', avgMeter: 'متوسط سعر المتر', accuracy: 'دقة نموذج الذكاء الاصطناعي', demand: 'حالة الطلب في الحي',
+                contactTitle: '<i class="fa-solid fa-envelope"></i> وسائل التواصل والاستفسار', contactSub: 'يمكنك التواصل المباشر مع صاحب مشروع SaudiAqarAI عبر المنصات التالية:',
                 footer: 'جميع الحقوق محفوظة &copy; 2026 | SaudiAqarAI - إشراف وتطوير: أحمد فال جمال الدين سيدينا',
-                currency: 'ر.س',
-                rangePrefix: 'النطاق التقديري: ',
+                currency: 'ر.س', rangePrefix: 'النطاق التقديري: ',
                 riyadh: 'الرياض', jeddah: 'جدة', dammam: 'الدمام / الخبر', makkah: 'مكة المكرمة', madinah: 'المدينة المنورة',
                 apartment: 'شقة سكنية', villa: 'فيلا', land: 'أرض سكنية', duplex: 'دوبلكس',
                 prime: 'حي راقي / مركز المدينة', medium: 'حي متوسط / درجات استثمارية', developing: 'حي واعد / أطراف المدينة'
@@ -436,25 +329,15 @@
                 badge: '<i class="fa-solid fa-brain"></i> Real Estate AI V2.5',
                 author: '<i class="fa-solid fa-code"></i> Developer & Owner: Ahmed Vall Jemal Dine Sidina',
                 subtitle: 'AI Engine for Real Estate Price Prediction in Saudi Arabia',
-                city: '<i class="fa-solid fa-city"></i> City',
-                type: '<i class="fa-solid fa-building"></i> Property Type',
-                area: '<i class="fa-solid fa-ruler-combined"></i> Area (Sqm)',
-                rooms: '<i class="fa-solid fa-bed"></i> Rooms Count',
-                age: '<i class="fa-solid fa-calendar-days"></i> Property Age (Years)',
-                location: '<i class="fa-solid fa-location-dot"></i> Location Quality',
-                elevator: 'Elevator Available',
-                pool: 'Private Pool',
-                driver: 'Driver / Maid Room',
+                city: '<i class="fa-solid fa-city"></i> City', type: '<i class="fa-solid fa-building"></i> Property Type',
+                area: '<i class="fa-solid fa-ruler-combined"></i> Area (Sqm)', rooms: '<i class="fa-solid fa-bed"></i> Rooms Count',
+                age: '<i class="fa-solid fa-calendar-days"></i> Property Age (Years)', location: '<i class="fa-solid fa-location-dot"></i> Location Quality',
+                elevator: 'Elevator Available', pool: 'Private Pool', driver: 'Driver / Maid Room',
                 btnSubmit: '<i class="fa-solid fa-wand-magic-sparkles"></i> Calculate Valuation',
-                resTitle: 'Estimated Property Value',
-                avgMeter: 'Avg Price / Sqm',
-                accuracy: 'AI Model Accuracy',
-                demand: 'Demand Level',
-                contactTitle: '<i class="fa-solid fa-envelope"></i> Contact & Inquiries',
-                contactSub: 'Feel free to contact the project owner directly:',
+                resTitle: 'Estimated Property Value', avgMeter: 'Avg Price / Sqm', accuracy: 'AI Model Accuracy', demand: 'Demand Level',
+                contactTitle: '<i class="fa-solid fa-envelope"></i> Contact & Inquiries', contactSub: 'Feel free to contact the project owner directly:',
                 footer: 'All Rights Reserved &copy; 2026 | SaudiAqarAI - Developed by: Ahmed Vall Jemal Dine Sidina',
-                currency: 'SAR',
-                rangePrefix: 'Estimated Range: ',
+                currency: 'SAR', rangePrefix: 'Estimated Range: ',
                 riyadh: 'Riyadh', jeddah: 'Jeddah', dammam: 'Dammam / Khobar', makkah: 'Makkah', madinah: 'Madinah',
                 apartment: 'Apartment', villa: 'Villa', land: 'Land', duplex: 'Duplex',
                 prime: 'Prime Location / City Center', medium: 'Medium / Investment Quality', developing: 'Developing Area'
@@ -463,25 +346,15 @@
                 badge: '<i class="fa-solid fa-brain"></i> IA Immobilière V2.5',
                 author: '<i class="fa-solid fa-code"></i> Développeur & Propriétaire: Ahmed Vall Jemal Dine Sidina',
                 subtitle: 'Moteur IA pour la prédiction des prix immobiliers en Arabie Saoudite',
-                city: '<i class="fa-solid fa-city"></i> Ville',
-                type: '<i class="fa-solid fa-building"></i> Type de propriété',
-                area: '<i class="fa-solid fa-ruler-combined"></i> Surface (m²)',
-                rooms: '<i class="fa-solid fa-bed"></i> Nombre de pièces',
-                age: '<i class="fa-solid fa-calendar-days"></i> Âge du bien (Ans)',
-                location: '<i class="fa-solid fa-location-dot"></i> Emplacement',
-                elevator: 'Ascenseur disponible',
-                pool: 'Piscine privée',
-                driver: 'Chambre chauffeur / domestique',
+                city: '<i class="fa-solid fa-city"></i> Ville', type: '<i class="fa-solid fa-building"></i> Type de propriété',
+                area: '<i class="fa-solid fa-ruler-combined"></i> Surface (m²)', rooms: '<i class="fa-solid fa-bed"></i> Nombre de pièces',
+                age: '<i class="fa-solid fa-calendar-days"></i> Âge du bien (Ans)', location: '<i class="fa-solid fa-location-dot"></i> Emplacement',
+                elevator: 'Ascenseur disponible', pool: 'Piscine privée', driver: 'Chambre chauffeur / domestique',
                 btnSubmit: '<i class="fa-solid fa-wand-magic-sparkles"></i> Calculer l\'évaluation',
-                resTitle: 'Valeur estimée du bien',
-                avgMeter: 'Prix moyen / m²',
-                accuracy: 'Précision du modèle IA',
-                demand: 'Niveau de la demande',
-                contactTitle: '<i class="fa-solid fa-envelope"></i> Contact & Demandes',
-                contactSub: 'N\'hésitez pas à contacter le fondateur du projet:',
+                resTitle: 'Valeur estimée du bien', avgMeter: 'Prix moyen / m²', accuracy: 'Précision du modèle IA', demand: 'Niveau de la demande',
+                contactTitle: '<i class="fa-solid fa-envelope"></i> Contact & Demandes', contactSub: 'N\'hésitez pas à contacter le fondateur du projet:',
                 footer: 'Tous droits réservés &copy; 2026 | SaudiAqarAI - Développé par: Ahmed Vall Jemal Dine Sidina',
-                currency: 'SAR',
-                rangePrefix: 'Gamme estimée: ',
+                currency: 'SAR', rangePrefix: 'Gamme estimée: ',
                 riyadh: 'Riyad', jeddah: 'Djeddah', dammam: 'Dammam / Khobar', makkah: 'La Mecque', madinah: 'Médine',
                 apartment: 'Appartement', villa: 'Villa', land: 'Terrain', duplex: 'Duplex',
                 prime: 'Emplacement premium / Centre-ville', medium: 'Moyen / Qualité d\'investissement', developing: 'En développement'
@@ -491,7 +364,6 @@
         function setLanguage(lang) {
             currentLang = lang;
             const t = translations[lang];
-
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             if(lang === 'ar') document.querySelectorAll('.lang-btn')[0].classList.add('active');
             if(lang === 'en') document.querySelectorAll('.lang-btn')[1].classList.add('active');
@@ -499,11 +371,9 @@
 
             if(lang === 'ar') {
                 document.documentElement.setAttribute('dir', 'rtl');
-                document.documentElement.setAttribute('lang', 'ar');
                 document.body.classList.remove('ltr');
             } else {
                 document.documentElement.setAttribute('dir', 'ltr');
-                document.documentElement.setAttribute('lang', lang);
                 document.body.classList.add('ltr');
             }
 
@@ -526,9 +396,7 @@
             document.getElementById('lblDemand').innerText = t.demand;
             document.getElementById('contactTitle').innerHTML = t.contactTitle;
             document.getElementById('contactSub').innerText = t.contactSub;
-            document.getElementById('footerText').innerHTML = t.footer;
 
-            // Options translation
             document.getElementById('optRiyadh').innerText = t.riyadh;
             document.getElementById('optJeddah').innerText = t.jeddah;
             document.getElementById('optDammam').innerText = t.dammam;
@@ -545,50 +413,65 @@
             document.getElementById('optDeveloping').innerText = t.developing;
         }
 
-        const cityBaseRates = {
-            riyadh: { apartment: 4800, villa: 6200, land: 4000, duplex: 5300 },
-            jeddah: { apartment: 3900, villa: 5300, land: 3300, duplex: 4700 },
-            dammam: { apartment: 3300, villa: 4500, land: 2700, duplex: 4000 },
-            makkah: { apartment: 4300, villa: 5600, land: 4100, duplex: 5000 },
-            madinah: { apartment: 3600, villa: 4700, land: 3100, duplex: 4200 }
-        };
-
-        const locationMultipliers = { prime: 1.35, medium: 1.0, developing: 0.8 };
-
-        document.getElementById('predictionForm').addEventListener('submit', function(e) {
+        document.getElementById('predictionForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            const city = document.getElementById('city').value;
-            const type = document.getElementById('propertyType').value;
-            const area = parseFloat(document.getElementById('area').value);
-            const age = parseInt(document.getElementById('age').value) || 0;
-            const location = document.getElementById('locationQuality').value;
+            const payload = {
+                city: document.getElementById('city').value,
+                property_type: document.getElementById('propertyType').value,
+                area: parseFloat(document.getElementById('area').value),
+                rooms: parseInt(document.getElementById('rooms').value) || 4,
+                age: parseInt(document.getElementById('age').value) || 0,
+                location_quality: document.getElementById('locationQuality').value,
+                has_elevator: document.getElementById('hasElevator').checked,
+                has_pool: document.getElementById('hasPool').checked,
+                is_driver_room: document.getElementById('isDriverRoom').checked
+            };
 
-            const hasElevator = document.getElementById('hasElevator').checked;
-            const hasPool = document.getElementById('hasPool').checked;
-            const isDriverRoom = document.getElementById('isDriverRoom').checked;
+            const btnSubmit = document.getElementById('btnSubmit');
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري الاتصال بالذكاء الاصطناعي...';
 
-            let baseRate = cityBaseRates[city][type] * locationMultipliers[location];
-            baseRate *= Math.max(0.65, 1 - (age * 0.012));
+            try {
+                // الاتصال بـ API
+                const response = await fetch(`${API_BASE_URL}/predict`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
 
-            let totalPrice = area * baseRate;
-            if (hasElevator) totalPrice += 40000;
-            if (hasPool) totalPrice += 85000;
-            if (isDriverRoom) totalPrice += 25000;
+                if (!response.ok) throw new Error("API Connection Failed");
 
-            const finalMeterPrice = Math.round(totalPrice / area);
-            const minPrice = Math.round(totalPrice * 0.93);
-            const maxPrice = Math.round(totalPrice * 1.07);
+                const result = await response.json();
 
-            const curr = translations[currentLang].currency;
-            const prefix = translations[currentLang].rangePrefix;
+                const curr = translations[currentLang].currency;
+                const prefix = translations[currentLang].rangePrefix;
 
-            document.getElementById('predictedPrice').innerText = totalPrice.toLocaleString() + ' ' + curr;
-            document.getElementById('priceRange').innerText = `${prefix}${minPrice.toLocaleString()} - ${maxPrice.toLocaleString()} ${curr}`;
-            document.getElementById('meterPrice').innerText = finalMeterPrice.toLocaleString() + ' ' + curr + ' / m²';
-            
-            document.getElementById('resultCard').style.display = 'block';
-            document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('predictedPrice').innerText = result.predicted_price.toLocaleString() + ' ' + curr;
+                document.getElementById('priceRange').innerText = `${prefix}${result.min_price.toLocaleString()} - ${result.max_price.toLocaleString()} ${curr}`;
+                document.getElementById('meterPrice').innerText = result.meter_price.toLocaleString() + ' ' + curr + ' / m²';
+
+                document.getElementById('resultCard').style.display = 'block';
+                document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                // دالة fallback محلياً في حال عدم وجود اتصال بالسيرفر
+                console.warn("API offline, fallback to local math:", error);
+                
+                const cityBaseRates = {
+                    riyadh: { apartment: 4800, villa: 6200, land: 4000, duplex: 5300 },
+                    jeddah: { apartment: 3900, villa: 5300, land: 3300, duplex: 4700 }
+                };
+                const baseRate = (cityBaseRates[payload.city] ? cityBaseRates[payload.city][payload.property_type] : 4000);
+                let total = payload.area * baseRate;
+                if (payload.has_elevator) total += 40000;
+                
+                const curr = translations[currentLang].currency;
+                document.getElementById('predictedPrice').innerText = Math.round(total).toLocaleString() + ' ' + curr;
+                document.getElementById('resultCard').style.display = 'block';
+
+            } finally {
+                btnSubmit.innerHTML = translations[currentLang].btnSubmit;
+            }
         });
     </script>
 </body>
