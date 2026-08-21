@@ -5,8 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SaudiAqarAI — الذكاء الاصطناعي العقاري</title>
     
+    <!-- Fonts & FontAwesome -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Leaflet Map CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         * {
@@ -174,10 +180,6 @@
             font-weight: 800;
         }
 
-        .card-header h2 i {
-            margin-left: 8px;
-        }
-
         .card-header p {
             color: rgba(255,255,255,0.6);
             font-size: 0.8rem;
@@ -230,10 +232,6 @@
             box-shadow: 0 0 25px rgba(0, 212, 255, 0.05);
         }
 
-        .form-group input::placeholder {
-            color: rgba(255,255,255,0.3);
-        }
-
         .form-group select option {
             background: #1a1f35;
         }
@@ -273,6 +271,16 @@
             box-shadow: 0 0 20px rgba(52, 211, 153, 0.08);
         }
 
+        /* ===== MAP CONTAINER ===== */
+        #aqarMap {
+            width: 100%;
+            height: 220px;
+            border-radius: 14px;
+            margin: 12px 0;
+            border: 1px solid rgba(255,255,255,0.1);
+            z-index: 1;
+        }
+
         /* ===== PREDICT BUTTON ===== */
         .btn-predict {
             width: 100%;
@@ -289,21 +297,12 @@
             justify-content: center;
             gap: 10px;
             transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
         }
 
         .btn-predict:hover {
             background: rgba(52, 211, 153, 0.25);
             border-color: #34d399;
             transform: translateY(-2px);
-            box-shadow: 0 4px 30px rgba(52, 211, 153, 0.2);
-        }
-
-        .btn-predict:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
         }
 
         .spinner-box {
@@ -345,23 +344,12 @@
             background: rgba(255,255,255,0.02);
             border-radius: 12px;
             border: 1px solid rgba(255,255,255,0.04);
-            transition: all 0.3s;
-        }
-
-        .result-box:hover {
-            border-color: rgba(0, 212, 255, 0.15);
-        }
-
-        .result-box .icon {
-            font-size: 1rem;
-            margin-bottom: 2px;
         }
 
         .result-box .label {
             font-size: 0.6rem;
             color: rgba(255,255,255,0.5);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .result-box .value {
@@ -375,7 +363,7 @@
         .result-box .value.gold { color: #fbbf24; }
         .result-box .value.purple { color: #a78bfa; }
 
-        /* ===== SECTION CARDS ===== */
+        /* ===== SECTION CARDS & CHARTS ===== */
         .section-card {
             background: rgba(255,255,255,0.04);
             backdrop-filter: blur(20px);
@@ -385,9 +373,10 @@
             margin: 12px 0;
         }
 
-        .section-card.blue-glow {
-            border-color: rgba(56, 189, 248, 0.12);
-            box-shadow: 0 0 30px rgba(56, 189, 248, 0.03);
+        .chart-container {
+            position: relative;
+            margin-top: 15px;
+            max-height: 250px;
         }
 
         .section-header {
@@ -409,7 +398,6 @@
 
         .section-title.blue { color: #60a5fa; }
         .section-title.green { color: #34d399; }
-        .section-title i { font-size: 1rem; }
 
         .input-row {
             display: flex;
@@ -436,68 +424,20 @@
             align-items: center;
             gap: 6px;
             transition: all 0.3s ease;
-            white-space: nowrap;
             background: rgba(255,255,255,0.05);
             color: #e2e8f0;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
         }
 
         .btn-action:hover {
             background: rgba(56, 189, 248, 0.12);
             border-color: #38bdf8;
             color: #ffffff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(56, 189, 248, 0.15);
         }
 
-        .btn-action.primary {
-            background: rgba(56, 189, 248, 0.12);
-            border-color: rgba(56, 189, 248, 0.15);
-            color: #38bdf8;
-        }
-
-        .btn-action.primary:hover {
-            background: rgba(56, 189, 248, 0.22);
-            border-color: #38bdf8;
-            box-shadow: 0 4px 25px rgba(56, 189, 248, 0.15);
-        }
-
-        .btn-action.success {
-            background: rgba(52, 211, 153, 0.12);
-            border-color: rgba(52, 211, 153, 0.15);
-            color: #34d399;
-        }
-
-        .btn-action.success:hover {
-            background: rgba(52, 211, 153, 0.2);
-            border-color: #34d399;
-            box-shadow: 0 4px 25px rgba(52, 211, 153, 0.15);
-        }
-
-        .btn-action.purple {
-            background: rgba(139, 92, 246, 0.12);
-            border-color: rgba(139, 92, 246, 0.15);
-            color: #a78bfa;
-        }
-
-        .btn-action.purple:hover {
-            background: rgba(139, 92, 246, 0.2);
-            border-color: #8b5cf6;
-            box-shadow: 0 4px 25px rgba(139, 92, 246, 0.15);
-        }
-
-        .btn-action.danger {
-            background: rgba(244, 67, 54, 0.1);
-            border-color: rgba(244, 67, 54, 0.15);
-            color: #ef5350;
-        }
-
-        .btn-action.danger:hover {
-            background: rgba(244, 67, 54, 0.18);
-            border-color: #ef5350;
-            box-shadow: 0 4px 25px rgba(244, 67, 54, 0.12);
-        }
+        .btn-action.primary { background: rgba(56, 189, 248, 0.12); border-color: rgba(56, 189, 248, 0.15); color: #38bdf8; }
+        .btn-action.success { background: rgba(52, 211, 153, 0.12); border-color: rgba(52, 211, 153, 0.15); color: #34d399; }
+        .btn-action.purple { background: rgba(139, 92, 246, 0.12); border-color: rgba(139, 92, 246, 0.15); color: #a78bfa; }
+        .btn-action.danger { background: rgba(244, 67, 54, 0.1); border-color: rgba(244, 67, 54, 0.15); color: #ef5350; }
 
         .btn-delete-row {
             padding: 3px 10px;
@@ -507,13 +447,6 @@
             border-radius: 6px;
             color: #ef5350;
             cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-delete-row:hover {
-            background: rgba(244, 67, 54, 0.16);
-            border-color: #ef5350;
-            transform: scale(1.05);
         }
 
         /* ===== PROPERTY TABLE ===== */
@@ -532,7 +465,6 @@
             border-bottom: 1px solid rgba(255,255,255,0.06);
             font-size: 0.65rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .property-table td {
@@ -541,11 +473,7 @@
             color: rgba(255,255,255,0.8);
         }
 
-        .property-table tr:hover td {
-            background: rgba(255,255,255,0.02);
-        }
-
-        .property-table .badge-status {
+        .badge-status {
             display: inline-block;
             padding: 2px 8px;
             border-radius: 16px;
@@ -557,20 +485,9 @@
         .badge-status.medium { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
         .badge-status.low { background: rgba(244, 67, 54, 0.15); color: #ef5350; }
 
-        .empty-state {
-            text-align: center;
-            padding: 20px 15px;
-            color: rgba(255,255,255,0.3);
-        }
+        .empty-state { text-align: center; padding: 20px 15px; color: rgba(255,255,255,0.3); }
 
-        .empty-state i {
-            font-size: 1.8rem;
-            display: block;
-            margin-bottom: 6px;
-            opacity: 0.5;
-        }
-
-        /* ===== CONTACT SECTION ===== */
+        /* ===== CONTACT ===== */
         .contact-section {
             background: rgba(255,255,255,0.04);
             backdrop-filter: blur(20px);
@@ -578,43 +495,6 @@
             border-radius: 24px;
             padding: 25px 28px;
             margin: 12px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .contact-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #00d4ff, #7c4dff, #00e676);
-            opacity: 0.5;
-        }
-
-        .contact-container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .contact-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .contact-header h2 {
-            font-size: 1.4rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #ffffff 30%, #00d4ff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 4px;
-        }
-
-        .contact-header p {
-            color: rgba(255,255,255,0.6);
-            font-size: 0.85rem;
         }
 
         .contact-info-grid {
@@ -632,53 +512,11 @@
             border: 1px solid rgba(255,255,255,0.06);
             border-radius: 12px;
             padding: 12px 14px;
-            transition: all 0.3s ease;
         }
 
-        .contact-info-item:hover {
-            background: rgba(255,255,255,0.06);
-            border-color: rgba(0, 212, 255, 0.15);
-            transform: translateY(-2px);
-        }
-
-        .contact-icon {
-            width: 38px;
-            height: 38px;
-            min-width: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 212, 255, 0.08);
-            border-radius: 10px;
-            font-size: 1rem;
-            color: #00d4ff;
-        }
-
-        .contact-details {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .contact-label {
-            font-size: 0.6rem;
-            color: rgba(255,255,255,0.4);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 1px;
-        }
-
-        .contact-value {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #ffffff;
-            word-break: break-word;
-        }
-
-        /* ===== CONTACT BUTTONS ===== */
         .contact-buttons-container {
             display: flex;
             justify-content: center;
-            align-items: center;
             gap: 10px;
             flex-wrap: wrap;
             padding-top: 16px;
@@ -688,41 +526,19 @@
         .contact-btn {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
             gap: 6px;
             padding: 8px 16px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 10px;
             color: #e2e8f0;
-            font-weight: 600;
             font-size: 0.8rem;
             text-decoration: none;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
         }
 
-        .contact-btn:hover {
-            background: rgba(56, 189, 248, 0.12);
-            border-color: #38bdf8;
-            color: #ffffff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(56, 189, 248, 0.15);
-        }
+        .phone-ltr { direction: ltr; display: inline-block; unicode-bidi: embed; }
 
-        .contact-btn i {
-            font-size: 0.95rem;
-        }
-
-        /* ===== PHONE NUMBER LTR ===== */
-        .phone-ltr {
-            direction: ltr;
-            display: inline-block;
-            unicode-bidi: embed;
-        }
-
-        /* ===== BOTTOM NAVIGATION ===== */
+        /* ===== BOTTOM NAV ===== */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -730,11 +546,9 @@
             right: 0;
             background: rgba(10, 14, 26, 0.95);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             justify-content: space-around;
-            align-items: center;
             padding: 6px 10px 10px;
             z-index: 1000;
             max-width: 1200px;
@@ -746,73 +560,17 @@
             flex-direction: column;
             align-items: center;
             gap: 2px;
-            padding: 4px 12px;
             border: none;
             background: transparent;
             color: rgba(255, 255, 255, 0.4);
             font-size: 0.55rem;
-            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 8px;
-            min-width: 50px;
-            text-decoration: none;
         }
 
-        .bottom-nav .nav-item i {
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-
-        .bottom-nav .nav-item:hover {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .bottom-nav .nav-item.active {
-            color: #38bdf8;
-        }
-
-        .bottom-nav .nav-item.active i {
-            filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.3));
-        }
-
-        .bottom-nav .nav-item span {
-            font-size: 0.5rem;
-            letter-spacing: 0.3px;
-        }
+        .bottom-nav .nav-item.active { color: #38bdf8; }
 
         /* ===== FOOTER ===== */
-        .footer {
-            text-align: center;
-            padding: 16px 20px 6px;
-            border-top: 1px solid rgba(255,255,255,0.06);
-            color: rgba(255,255,255,0.3);
-            font-size: 0.7rem;
-            line-height: 1.8;
-        }
-
-        .footer strong {
-            color: rgba(255,255,255,0.5);
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 14px;
-            flex-wrap: wrap;
-            margin-top: 4px;
-        }
-
-        .footer-links a {
-            color: rgba(255,255,255,0.3);
-            text-decoration: none;
-            transition: color 0.3s;
-            font-size: 0.65rem;
-        }
-
-        .footer-links a:hover {
-            color: #38bdf8;
-        }
+        .footer { text-align: center; padding: 16px 20px 6px; border-top: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.3); font-size: 0.7rem; }
 
         /* ===== TOAST ===== */
         .toast {
@@ -820,109 +578,29 @@
             bottom: 80px;
             right: 30px;
             background: rgba(10, 14, 26, 0.95);
-            backdrop-filter: blur(20px);
             border: 1px solid rgba(255,255,255,0.08);
             border-radius: 14px;
             padding: 12px 20px;
             color: #ffffff;
-            font-weight: 600;
             font-size: 0.85rem;
             display: flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
             transform: translateY(120px);
             opacity: 0;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.5s ease;
             z-index: 999;
-            max-width: 90%;
         }
 
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
+        .toast.show { transform: translateY(0); opacity: 1; }
         .toast.success { border-color: #34d399; }
-        .toast.success i { color: #34d399; }
         .toast.info { border-color: #38bdf8; }
-        .toast.info i { color: #38bdf8; }
         .toast.error { border-color: #ef5350; }
-        .toast.error i { color: #ef5350; }
-
-        /* ===== PRINT STYLE FOR PDF EXPORT ===== */
-        @media print {
-            body { background: #ffffff; color: #000000; padding: 0; }
-            .top-bar, .nav-tabs, .bottom-nav, .btn-action, .contact-buttons-container, .btn-delete-row, .toast { display: none !important; }
-            .section-content.hidden { display: block !important; }
-            .section-card, .main-card, .contact-section { background: #fff !important; border: 1px solid #ccc !important; color: #000 !important; box-shadow: none !important; }
-            .property-table th, .property-table td { color: #000 !important; border-bottom: 1px solid #ddd !important; }
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 992px) {
-            .results { grid-template-columns: repeat(2, 1fr); }
-            .contact-info-grid { grid-template-columns: repeat(2, 1fr); }
-            .bottom-nav .nav-item { min-width: 40px; padding: 3px 8px; }
-            .bottom-nav .nav-item i { font-size: 1.1rem; }
-        }
 
         @media (max-width: 768px) {
-            body { padding: 10px 10px 70px 10px; }
-            .main-card { padding: 16px 14px; }
-            .section-card { padding: 14px 12px; }
-            .contact-section { padding: 20px 16px; }
+            .results { grid-template-columns: repeat(2, 1fr); }
+            .contact-info-grid { grid-template-columns: 1fr; }
             .form-grid { grid-template-columns: 1fr 1fr; }
-            .top-bar { flex-direction: column; align-items: center; }
-            .input-row { flex-direction: column; align-items: stretch; }
-            .input-row .form-group { min-width: unset; }
-            .property-table { font-size: 0.65rem; }
-            .property-table th, .property-table td { padding: 5px 6px; }
-
-            .nav-tabs { gap: 3px; padding: 4px; }
-            .nav-tab { padding: 5px 10px; font-size: 0.7rem; }
-            .nav-tab span { font-size: 0.6rem; }
-            .nav-tab i { font-size: 0.85rem; }
-
-            .contact-info-grid { grid-template-columns: 1fr; gap: 8px; }
-            .contact-info-item { padding: 10px 12px; }
-            .contact-header h2 { font-size: 1.2rem; }
-            .contact-buttons-container { flex-direction: column; align-items: stretch; }
-            .contact-btn { justify-content: center; padding: 8px 14px; }
-
-            .results { grid-template-columns: repeat(2, 1fr); gap: 6px; }
-            .result-box { padding: 6px 4px; }
-            .result-box .value { font-size: 0.85rem; }
-
-            .bottom-nav { padding: 4px 6px 8px; }
-            .bottom-nav .nav-item { padding: 3px 6px; min-width: 35px; }
-            .bottom-nav .nav-item i { font-size: 1rem; }
-            .bottom-nav .nav-item span { font-size: 0.45rem; }
-
-            .toast { bottom: 75px; right: 15px; left: 15px; font-size: 0.8rem; padding: 10px 16px; }
-        }
-
-        @media (max-width: 480px) {
-            .form-grid { grid-template-columns: 1fr; }
-            .results { grid-template-columns: 1fr; }
-            .chips { gap: 5px; }
-            .chip-label { padding: 4px 10px; font-size: 0.6rem; }
-            .section-header { flex-direction: column; align-items: stretch; }
-            .contact-section { padding: 14px 10px; border-radius: 18px; }
-            .contact-header h2 { font-size: 1rem; }
-            .contact-header p { font-size: 0.75rem; }
-            .contact-icon { width: 32px; height: 32px; min-width: 32px; font-size: 0.8rem; }
-            .contact-value { font-size: 0.75rem; }
-
-            .nav-tab { padding: 4px 6px; font-size: 0.6rem; }
-            .nav-tab span { font-size: 0.5rem; }
-            .nav-tab i { font-size: 0.75rem; }
-
-            .bottom-nav .nav-item i { font-size: 0.9rem; }
-            .bottom-nav .nav-item span { font-size: 0.4rem; }
-
-            .btn-action { height: 34px; padding: 0 12px; font-size: 0.7rem; }
-            .btn-predict { height: 40px; font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -943,31 +621,16 @@
             </div>
         </div>
 
-        <!-- ===== TOP NAVIGATION TABS ===== -->
-        <div class="nav-tabs" role="tablist">
-            <button class="nav-tab active" data-tab="evaluate">
-                <i class="fa-solid fa-robot"></i>
-                <span data-key="tabEvaluate">التقييم</span>
-            </button>
-            <button class="nav-tab" data-tab="add">
-                <i class="fa-solid fa-plus-circle"></i>
-                <span data-key="tabAdd">إضافة</span>
-            </button>
-            <button class="nav-tab" data-tab="database">
-                <i class="fa-solid fa-database"></i>
-                <span data-key="tabDatabase">قاعدة البيانات</span>
-            </button>
-            <button class="nav-tab" data-tab="search">
-                <i class="fa-solid fa-search"></i>
-                <span data-key="tabSearch">بحث</span>
-            </button>
-            <button class="nav-tab" data-tab="contact">
-                <i class="fa-solid fa-address-card"></i>
-                <span data-key="tabContact">تواصل</span>
-            </button>
+        <!-- ===== NAV TABS ===== -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-tab="evaluate"><i class="fa-solid fa-robot"></i><span data-key="tabEvaluate">التقييم</span></button>
+            <button class="nav-tab" data-tab="add"><i class="fa-solid fa-plus-circle"></i><span data-key="tabAdd">إضافة</span></button>
+            <button class="nav-tab" data-tab="database"><i class="fa-solid fa-database"></i><span data-key="tabDatabase">قاعدة البيانات والتحليلات</span></button>
+            <button class="nav-tab" data-tab="search"><i class="fa-solid fa-search"></i><span data-key="tabSearch">بحث</span></button>
+            <button class="nav-tab" data-tab="contact"><i class="fa-solid fa-address-card"></i><span data-key="tabContact">تواصل</span></button>
         </div>
 
-        <!-- ===== SECTION: EVALUATE ===== -->
+        <!-- ===== EVALUATE SECTION ===== -->
         <div class="section-content" id="section-evaluate">
             <div class="main-card">
                 <div class="card-header">
@@ -1000,17 +663,17 @@
 
                         <div class="form-group">
                             <label><i class="fa-solid fa-ruler-combined"></i> <span data-key="area">المساحة (م²)</span></label>
-                            <input type="number" placeholder="350" id="mainArea" min="20" value="350">
+                            <input type="number" id="mainArea" min="20" value="350">
                         </div>
 
                         <div class="form-group">
                             <label><i class="fa-solid fa-bed"></i> <span data-key="rooms">عدد الغرف</span></label>
-                            <input type="number" placeholder="4" id="mainRooms" min="1" value="4">
+                            <input type="number" id="mainRooms" min="1" value="4">
                         </div>
 
                         <div class="form-group">
                             <label><i class="fa-solid fa-hourglass-half"></i> <span data-key="age">عمر العقار (سنوات)</span></label>
-                            <input type="number" placeholder="0" id="mainAge" min="0" value="0">
+                            <input type="number" id="mainAge" min="0" value="0">
                         </div>
 
                         <div class="form-group">
@@ -1022,6 +685,9 @@
                             </select>
                         </div>
                     </div>
+
+                    <!-- INTERACTIVE MAP -->
+                    <div id="aqarMap"></div>
 
                     <div class="chips">
                         <input type="checkbox" id="elevator" class="chip-input">
@@ -1040,31 +706,24 @@
                     <button type="submit" class="btn-predict" id="predictBtn">
                         <i class="fa-solid fa-wand-magic-sparkles"></i>
                         <span data-key="predictBtn">تقييم العقار الآن</span>
-                        <span class="spinner-box" id="btnSpinner">
-                            <span class="spinner-dot"></span>
-                            <span data-key="loading">جارِ التحليل...</span>
-                        </span>
+                        <span class="spinner-box" id="btnSpinner"><span class="spinner-dot"></span></span>
                     </button>
                 </form>
 
                 <div class="results" id="resultCard">
                     <div class="result-box">
-                        <div class="icon">💰</div>
                         <div class="label" data-key="priceLabel">السعر التقديري</div>
                         <div class="value" id="estimatedPrice">3,931,130 <span style="font-size:0.5rem;color:rgba(255,255,255,0.3);">ر.س</span></div>
                     </div>
                     <div class="result-box">
-                        <div class="icon">📊</div>
                         <div class="label" data-key="accuracyLabel">دقة النموذج</div>
                         <div class="value green" id="modelAccuracy">96.8%</div>
                     </div>
                     <div class="result-box">
-                        <div class="icon">⭐</div>
                         <div class="label" data-key="investmentLabel">مؤشر الاستثمار</div>
                         <div class="value gold" id="investmentIndex">ممتاز (A+)</div>
                     </div>
                     <div class="result-box">
-                        <div class="icon">🕐</div>
                         <div class="label" data-key="updateLabel">آخر تحديث</div>
                         <div class="value purple" style="font-size:0.7rem;" id="lastUpdate">أغسطس 2026</div>
                     </div>
@@ -1072,23 +731,16 @@
             </div>
         </div>
 
-        <!-- ===== SECTION: ADD PROPERTY ===== -->
+        <!-- ===== ADD SECTION ===== -->
         <div class="section-content hidden" id="section-add">
-            <div class="section-card blue-glow">
+            <div class="section-card">
                 <div class="section-header">
-                    <div></div>
-                    <div class="section-title blue">
-                        <i class="fa-solid fa-circle-plus"></i> <span data-key="addProperty">إضافة عقار جديد — تقييم فوري</span>
-                    </div>
+                    <div class="section-title blue"><i class="fa-solid fa-circle-plus"></i> <span data-key="addProperty">إضافة عقار جديد</span></div>
                 </div>
-
                 <form id="addPropertyForm" class="input-row">
-                    <button type="submit" class="btn-action primary">
-                        <i class="fa-solid fa-bolt"></i> <span data-key="addBtn">إدراج وتقييم</span>
-                    </button>
-
+                    <button type="submit" class="btn-action primary"><i class="fa-solid fa-bolt"></i> <span data-key="addBtn">إدراج وتقييم</span></button>
                     <div class="form-group">
-                        <label><i class="fa-solid fa-city"></i> <span data-key="city">المدينة</span></label>
+                        <label>المدينة</label>
                         <select id="addCity">
                             <option value="الرياض">الرياض</option>
                             <option value="جدة">جدة</option>
@@ -1097,918 +749,190 @@
                             <option value="المدينة المنورة">المدينة المنورة</option>
                         </select>
                     </div>
-
+                    <div class="form-group"><label>الحي</label><input type="text" id="addLocation" placeholder="حي النخيل" required></div>
+                    <div class="form-group"><label>السعر المطلوب (ر.س)</label><input type="number" id="addPrice" required></div>
+                    <div class="form-group"><label>الغرف</label><input type="number" id="addRooms" value="3"></div>
+                    <div class="form-group"><label>المساحة (م²)</label><input type="number" id="addArea" required></div>
                     <div class="form-group">
-                        <label><i class="fa-solid fa-map-pin"></i> <span data-key="neighborhood">الحي</span></label>
-                        <input type="text" placeholder="مثال: حي النخيل" id="addLocation" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label><i class="fa-solid fa-coin"></i> <span data-key="price">السعر (ر.س)</span></label>
-                        <input type="number" placeholder="1800000" id="addPrice" min="0">
-                    </div>
-
-                    <div class="form-group">
-                        <label><i class="fa-solid fa-bed"></i> <span data-key="rooms">الغرف</span></label>
-                        <select id="addRooms">
-                            <option value="1">1</option>
-                            <option value="2" selected>2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label><i class="fa-solid fa-ruler-combined"></i> <span data-key="area">المساحة (م²)</span></label>
-                        <input type="number" placeholder="160" id="addArea" min="20">
-                    </div>
-
-                    <div class="form-group">
-                        <label><i class="fa-solid fa-building"></i> <span data-key="propertyType">نوع العقار</span></label>
+                        <label>نوع العقار</label>
                         <select id="addType">
-                            <option value="شقة فاخرة">شقة فاخرة</option>
                             <option value="فيلا">فيلا</option>
+                            <option value="شقة">شقة</option>
                             <option value="دوبلكس">دوبلكس</option>
-                            <option value="بنتهاوس">بنتهاوس</option>
                         </select>
                     </div>
                 </form>
             </div>
         </div>
 
-        <!-- ===== SECTION: DATABASE ===== -->
+        <!-- ===== DATABASE & ANALYTICS SECTION ===== -->
         <div class="section-content hidden" id="section-database">
             <div class="section-card">
                 <div class="section-header">
-                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                        <button class="btn-action success" id="exportPDF">
-                            <i class="fa-solid fa-file-pdf"></i> PDF
-                        </button>
-                        <button class="btn-action" id="exportCSV">
-                            <i class="fa-solid fa-table"></i> CSV
-                        </button>
-                        <button class="btn-action danger" id="clearDatabase">
-                            <i class="fa-solid fa-trash"></i> <span data-key="clear">مسح الكل</span>
-                        </button>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn-action success" id="exportPDF"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+                        <button class="btn-action" id="exportCSV"><i class="fa-solid fa-table"></i> CSV</button>
+                        <button class="btn-action danger" id="clearDatabase"><i class="fa-solid fa-trash"></i> مسح</button>
                     </div>
-                    <div class="section-title green">
-                        <i class="fa-solid fa-database"></i> <span data-key="database">قاعدة البيانات العقارية</span>
-                        <span id="propertyCount" style="font-size:0.6rem;color:rgba(255,255,255,0.4);">(0)</span>
-                    </div>
+                    <div class="section-title green"><i class="fa-solid fa-chart-line"></i> تحليلات وقاعدة البيانات العقارية <span id="propertyCount">(0)</span></div>
                 </div>
 
-                <div style="overflow-x: auto;">
+                <!-- CHART JS CANVAS -->
+                <div class="chart-container">
+                    <canvas id="analyticsChart"></canvas>
+                </div>
+
+                <div style="overflow-x: auto; margin-top: 15px;">
                     <table class="property-table" id="propertyTable">
                         <thead>
                             <tr>
-                                <th data-key="thCity">المدينة</th>
-                                <th data-key="thLocation">الحي</th>
-                                <th data-key="thType">النوع</th>
-                                <th data-key="thArea">المساحة</th>
-                                <th data-key="thRooms">الغرف</th>
-                                <th data-key="thPrice">السعر</th>
-                                <th data-key="thStatus">التقييم</th>
-                                <th data-key="thAction">حذف</th>
+                                <th>المدينة</th>
+                                <th>الحي</th>
+                                <th>النوع</th>
+                                <th>المساحة</th>
+                                <th>الغرف</th>
+                                <th>السعر</th>
+                                <th>التقييم</th>
+                                <th>حذف</th>
                             </tr>
                         </thead>
-                        <tbody id="propertyTableBody">
-                            <tr>
-                                <td colspan="8">
-                                    <div class="empty-state">
-                                        <i class="fa-regular fa-building"></i>
-                                        <span data-key="emptyState">لا توجد عقارات مسجلة. أضف عقاراً جديداً!</span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tbody id="propertyTableBody"></tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <!-- ===== SECTION: SEARCH ===== -->
+        <!-- ===== SEARCH SECTION ===== -->
         <div class="section-content hidden" id="section-search">
             <div class="section-card">
                 <div class="section-header">
-                    <div></div>
-                    <div class="section-title">
-                        <i class="fa-solid fa-filter"></i> <span data-key="search">محرك البحث والتصفية الذكي</span>
-                    </div>
+                    <div class="section-title"><i class="fa-solid fa-filter"></i> البحث والتصفية</div>
                 </div>
-
                 <form id="searchForm" class="input-row">
-                    <button type="button" class="btn-action" id="btnReset">
-                        <i class="fa-solid fa-rotate-right"></i> <span data-key="reset">إعادة ضبط</span>
-                    </button>
-
-                    <button type="submit" class="btn-action purple">
-                        <i class="fa-solid fa-magnifying-glass"></i> <span data-key="filter">تصفية</span>
-                    </button>
-
-                    <div class="form-group">
-                        <label><i class="fa-solid fa-bed"></i> <span data-key="rooms">عدد الغرف</span></label>
-                        <select id="filterRooms">
-                            <option value="all">الكل</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4+</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label><i class="fa-solid fa-ruler"></i> <span data-key="minArea">المساحة الأدنى (م²)</span></label>
-                        <input type="number" placeholder="150" id="filterMinArea" min="0">
-                    </div>
-
-                    <div class="form-group">
-                        <label><i class="fa-solid fa-building"></i> <span data-key="propertyType">نوع العقار</span></label>
-                        <select id="filterType">
-                            <option value="all">كل الأنواع</option>
-                            <option value="شقة">شقة</option>
-                            <option value="فيلا">فيلا</option>
-                            <option value="دوبلكس">دوبلكس</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label><i class="fa-solid fa-map-pin"></i> <span data-key="location">المنطقة</span></label>
-                        <input type="text" placeholder="مثال: الرياض" id="filterLocation">
-                    </div>
+                    <button type="submit" class="btn-action purple"><i class="fa-solid fa-magnifying-glass"></i> تصفية</button>
+                    <div class="form-group"><label>المنطقة</label><input type="text" id="filterLocation" placeholder="مثال: الرياض"></div>
                 </form>
             </div>
         </div>
 
-        <!-- ===== SECTION: CONTACT ===== -->
+        <!-- ===== CONTACT SECTION ===== -->
         <div class="section-content hidden" id="section-contact">
             <div class="contact-section">
-                <div class="contact-container">
-                    <div class="contact-header">
-                        <h2 data-key="contactTitle">اتصل بنا</h2>
-                        <p data-key="contactSub">يسعدنا التواصل لبحث فرص التعاون والاستشارات التقنية</p>
-                    </div>
-
-                    <div class="contact-info-grid">
-                        <div class="contact-info-item">
-                            <div class="contact-icon">
-                                <i class="fa-solid fa-location-dot"></i>
-                            </div>
-                            <div class="contact-details">
-                                <div class="contact-label" data-key="locationLabel">الموقع</div>
-                                <div class="contact-value">الـدوحة، قطر</div>
-                            </div>
-                        </div>
-
-                        <div class="contact-info-item">
-                            <div class="contact-icon">
-                                <i class="fa-solid fa-envelope"></i>
-                            </div>
-                            <div class="contact-details">
-                                <div class="contact-label" data-key="emailLabel">البريد الإلكتروني</div>
-                                <div class="contact-value">ahmedvalljemaldine@gmail.com</div>
-                            </div>
-                        </div>
-
-                        <div class="contact-info-item">
-                            <div class="contact-icon">
-                                <i class="fa-solid fa-phone"></i>
-                            </div>
-                            <div class="contact-details">
-                                <div class="contact-label" data-key="phoneLabel">رقم الهاتف</div>
-                                <div class="contact-value phone-ltr">+974 7473 6271</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="contact-buttons-container">
-                        <a href="https://wa.me/97474736271" target="_blank" class="contact-btn">
-                            <i class="fa-brands fa-whatsapp"></i>
-                            <span data-key="whatsapp">واتساب</span>
-                        </a>
-                        <a href="mailto:ahmedvalljemaldine@gmail.com" class="contact-btn">
-                            <i class="fa-solid fa-envelope"></i>
-                            <span data-key="emailBtn">البريد الإلكتروني</span>
-                        </a>
-                        <a href="https://ahmedvall70.github.io/ahmed-vall-cv/" target="_blank" class="contact-btn">
-                            <i class="fa-solid fa-file-pdf"></i>
-                            <span data-key="cv">السيرة الذاتية</span>
-                        </a>
-                        <a href="https://ahmedvall70.github.io/Innovision/" target="_blank" class="contact-btn">
-                            <i class="fa-solid fa-lightbulb"></i>
-                            <span>Innovision</span>
-                        </a>
-                    </div>
+                <div class="contact-info-grid">
+                    <div class="contact-info-item"><i class="fa-solid fa-location-dot" style="color:#00d4ff;"></i><div>الدوحة، قطر</div></div>
+                    <div class="contact-info-item"><i class="fa-solid fa-envelope" style="color:#00d4ff;"></i><div>ahmedvalljemaldine@gmail.com</div></div>
+                    <div class="contact-info-item"><i class="fa-solid fa-phone" style="color:#00d4ff;"></i><div class="phone-ltr">+974 7473 6271</div></div>
+                </div>
+                <div class="contact-buttons-container">
+                    <a href="https://wa.me/97474736271" target="_blank" class="contact-btn"><i class="fa-brands fa-whatsapp"></i> واتساب</a>
+                    <a href="https://ahmedvall70.github.io/ahmed-vall-cv/" target="_blank" class="contact-btn"><i class="fa-solid fa-file-pdf"></i> السيرة الذاتية</a>
                 </div>
             </div>
         </div>
 
         <!-- ===== FOOTER ===== -->
         <div class="footer">
-            <div>
-                <span data-key="footer">جميع الحقوق محفوظة © 2026 | <strong>SaudiAqarAI</strong> - إشراف وتطوير: <strong>أحمد فال جمال الدين سيدنا</strong></span>
-            </div>
-            <div class="footer-links">
-                <a href="#" data-key="privacy">سياسة الخصوصية</a>
-                <a href="#" data-key="terms">شروط الاستخدام</a>
-                <a href="#" data-key="about">عن المنصة</a>
-            </div>
+            جميع الحقوق محفوظة © 2026 | <strong>SaudiAqarAI</strong> - إشراف وتطوير: <strong>أحمد فال جمال الدين سيدنا</strong>
         </div>
 
     </div>
 
-    <!-- ===== BOTTOM NAVIGATION ===== -->
-    <nav class="bottom-nav" role="navigation">
-        <button class="nav-item active" data-tab="evaluate" aria-label="التقييم">
-            <i class="fa-solid fa-robot"></i>
-            <span data-key="tabEvaluate">التقييم</span>
-        </button>
-        <button class="nav-item" data-tab="add" aria-label="إضافة">
-            <i class="fa-solid fa-plus-circle"></i>
-            <span data-key="tabAdd">إضافة</span>
-        </button>
-        <button class="nav-item" data-tab="database" aria-label="قاعدة البيانات">
-            <i class="fa-solid fa-database"></i>
-            <span data-key="tabDatabase">قاعدة البيانات</span>
-        </button>
-        <button class="nav-item" data-tab="search" aria-label="بحث">
-            <i class="fa-solid fa-search"></i>
-            <span data-key="tabSearch">بحث</span>
-        </button>
-        <button class="nav-item" data-tab="contact" aria-label="تواصل">
-            <i class="fa-solid fa-address-card"></i>
-            <span data-key="tabContact">تواصل</span>
-        </button>
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" data-tab="evaluate"><i class="fa-solid fa-robot"></i><span>التقييم</span></button>
+        <button class="nav-item" data-tab="add"><i class="fa-solid fa-plus-circle"></i><span>إضافة</span></button>
+        <button class="nav-item" data-tab="database"><i class="fa-solid fa-database"></i><span>البيانات</span></button>
+        <button class="nav-item" data-tab="search"><i class="fa-solid fa-search"></i><span>بحث</span></button>
+        <button class="nav-item" data-tab="contact"><i class="fa-solid fa-address-card"></i><span>تواصل</span></button>
     </nav>
 
-    <!-- ===== TOAST ===== -->
-    <div class="toast" id="toast">
-        <i class="fa-solid fa-circle-check"></i>
-        <span id="toastMessage">تم التقييم بنجاح!</span>
-    </div>
+    <!-- TOAST -->
+    <div class="toast" id="toast"><i class="fa-solid fa-circle-check"></i><span id="toastMessage">تم بنجاح!</span></div>
 
-    <!-- ===== JAVASCRIPT ===== -->
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <script>
         (function() {
             'use strict';
 
-            // ============================================================
-            // 🔗 رابط الـ API الخاص بـ Hugging Face (قم بتغييره عند توفر خادِم حي)
-            // ============================================================
-            const HF_API_URL = "https://YOUR-USERNAME-SPACE-NAME.hf.space/predict";
-
-            // ===== TRANSLATIONS =====
-            const translations = {
-                ar: {
-                    tabEvaluate: 'التقييم',
-                    tabAdd: 'إضافة',
-                    tabDatabase: 'قاعدة البيانات',
-                    tabSearch: 'بحث',
-                    tabContact: 'تواصل',
-                    cardTitle: 'الذكاء الاصطناعي العقاري',
-                    cardSub: 'محرك تنبؤي ذكي لتقييم أسعار العقارات في المملكة العربية السعودية',
-                    city: 'المدينة',
-                    propertyType: 'نوع العقار',
-                    area: 'المساحة (م²)',
-                    rooms: 'عدد الغرف',
-                    age: 'عمر العقار (سنوات)',
-                    locationType: 'تصنيف الحي',
-                    elevator: 'مصعد',
-                    pool: 'مسبح',
-                    driver: 'غرفة سائق',
-                    furnished: 'مفروش',
-                    predictBtn: 'تقييم العقار الآن',
-                    loading: 'جارِ التحليل...',
-                    priceLabel: 'السعر التقديري',
-                    accuracyLabel: 'دقة النموذج',
-                    investmentLabel: 'مؤشر الاستثمار',
-                    updateLabel: 'آخر تحديث',
-                    addProperty: 'إضافة عقار جديد — تقييم فوري',
-                    addBtn: 'إدراج وتقييم',
-                    neighborhood: 'الحي',
-                    price: 'السعر (ر.س)',
-                    database: 'قاعدة البيانات العقارية',
-                    thCity: 'المدينة',
-                    thLocation: 'الحي',
-                    thType: 'النوع',
-                    thArea: 'المساحة',
-                    thRooms: 'الغرف',
-                    thPrice: 'السعر',
-                    thStatus: 'التقييم',
-                    thAction: 'حذف',
-                    emptyState: 'لا توجد عقارات مسجلة. أضف عقاراً جديداً!',
-                    clear: 'مسح الكل',
-                    search: 'محرك البحث والتصفية الذكي',
-                    reset: 'إعادة ضبط',
-                    filter: 'تصفية',
-                    location: 'المنطقة',
-                    minArea: 'المساحة الأدنى (م²)',
-                    contactTitle: 'اتصل بنا',
-                    contactSub: 'يسعدنا التواصل لبحث فرص التعاون والاستشارات التقنية',
-                    locationLabel: 'الموقع',
-                    emailLabel: 'البريد الإلكتروني',
-                    phoneLabel: 'رقم الهاتف',
-                    whatsapp: 'واتساب',
-                    emailBtn: 'البريد الإلكتروني',
-                    cv: 'السيرة الذاتية',
-                    footer: 'جميع الحقوق محفوظة © 2026 | <strong>SaudiAqarAI</strong> - إشراف وتطوير: <strong>أحمد فال جمال الدين سيدنا</strong>',
-                    privacy: 'سياسة الخصوصية',
-                    terms: 'شروط الاستخدام',
-                    about: 'عن المنصة'
-                },
-                en: {
-                    tabEvaluate: 'Evaluate',
-                    tabAdd: 'Add',
-                    tabDatabase: 'Database',
-                    tabSearch: 'Search',
-                    tabContact: 'Contact',
-                    cardTitle: 'Real Estate AI',
-                    cardSub: 'Intelligent predictive engine for real estate valuation in Saudi Arabia',
-                    city: 'City',
-                    propertyType: 'Property Type',
-                    area: 'Area (m²)',
-                    rooms: 'Rooms',
-                    age: 'Property Age (Years)',
-                    locationType: 'Location Class',
-                    elevator: 'Elevator',
-                    pool: 'Pool',
-                    driver: 'Driver Room',
-                    furnished: 'Furnished',
-                    predictBtn: 'Evaluate Property Now',
-                    loading: 'Analyzing...',
-                    priceLabel: 'Estimated Price',
-                    accuracyLabel: 'Model Accuracy',
-                    investmentLabel: 'Investment Index',
-                    updateLabel: 'Last Update',
-                    addProperty: 'Add New Property — Instant Evaluation',
-                    addBtn: 'Add & Evaluate',
-                    neighborhood: 'Neighborhood',
-                    price: 'Price (SAR)',
-                    database: 'Property Database',
-                    thCity: 'City',
-                    thLocation: 'Neighborhood',
-                    thType: 'Type',
-                    thArea: 'Area',
-                    thRooms: 'Rooms',
-                    thPrice: 'Price',
-                    thStatus: 'Status',
-                    thAction: 'Delete',
-                    emptyState: 'No properties registered. Add a new property!',
-                    clear: 'Clear All',
-                    search: 'Smart Search & Filter',
-                    reset: 'Reset',
-                    filter: 'Filter',
-                    location: 'Location',
-                    minArea: 'Min Area (m²)',
-                    contactTitle: 'Contact Us',
-                    contactSub: 'We are pleased to discuss cooperation and technical consulting opportunities',
-                    locationLabel: 'Location',
-                    emailLabel: 'Email',
-                    phoneLabel: 'Phone',
-                    whatsapp: 'WhatsApp',
-                    emailBtn: 'Email',
-                    cv: 'CV',
-                    footer: 'All Rights Reserved © 2026 | <strong>SaudiAqarAI</strong> - Supervision & Development: <strong>Ahmed Fall Jamal Al-Din Sidna</strong>',
-                    privacy: 'Privacy Policy',
-                    terms: 'Terms of Use',
-                    about: 'About'
-                },
-                fr: {
-                    tabEvaluate: 'Évaluer',
-                    tabAdd: 'Ajouter',
-                    tabDatabase: 'Base de données',
-                    tabSearch: 'Rechercher',
-                    tabContact: 'Contacter',
-                    cardTitle: 'IA Immobilière',
-                    cardSub: 'Moteur prédictif intelligent pour l\'évaluation immobilière en Arabie Saoudite',
-                    city: 'Ville',
-                    propertyType: 'Type de bien',
-                    area: 'Superficie (m²)',
-                    rooms: 'Chambres',
-                    age: 'Âge du bien (années)',
-                    locationType: 'Classe d\'emplacement',
-                    elevator: 'Ascenseur',
-                    pool: 'Piscine',
-                    driver: 'Chambre de chauffeur',
-                    furnished: 'Meublé',
-                    predictBtn: 'Évaluer maintenant',
-                    loading: 'Analyse en cours...',
-                    priceLabel: 'Prix estimé',
-                    accuracyLabel: 'Précision du modèle',
-                    investmentLabel: 'Indice d\'investissement',
-                    updateLabel: 'Dernière mise à jour',
-                    addProperty: 'Ajouter un bien — Évaluation instantanée',
-                    addBtn: 'Ajouter et évaluer',
-                    neighborhood: 'Quartier',
-                    price: 'Prix (SAR)',
-                    database: 'Base de données immobilière',
-                    thCity: 'Ville',
-                    thLocation: 'Quartier',
-                    thType: 'Type',
-                    thArea: 'Superficie',
-                    thRooms: 'Chambres',
-                    thPrice: 'Prix',
-                    thStatus: 'Statut',
-                    thAction: 'Supprimer',
-                    emptyState: 'Aucun bien enregistré. Ajoutez un nouveau bien!',
-                    clear: 'Tout effacer',
-                    search: 'Recherche et filtrage intelligent',
-                    reset: 'Réinitialiser',
-                    filter: 'Filtrer',
-                    location: 'Emplacement',
-                    minArea: 'Superficie min (m²)',
-                    contactTitle: 'Contactez-nous',
-                    contactSub: 'Nous sommes ravis de discuter des opportunités de coopération et de conseil technique',
-                    locationLabel: 'Emplacement',
-                    emailLabel: 'Email',
-                    phoneLabel: 'Téléphone',
-                    whatsapp: 'WhatsApp',
-                    emailBtn: 'Email',
-                    cv: 'CV',
-                    footer: 'Tous droits réservés © 2026 | <strong>SaudiAqarAI</strong> - Supervision et développement: <strong>Ahmed Fall Jamal Al-Din Sidna</strong>',
-                    privacy: 'Politique de confidentialité',
-                    terms: 'Conditions d\'utilisation',
-                    about: 'À propos'
-                }
-            };
-
-            // ===== DOM REFS =====
-            const predictForm = document.getElementById('predictForm');
-            const predictBtn = document.getElementById('predictBtn');
-            const btnSpinner = document.getElementById('btnSpinner');
-            const estPriceEl = document.getElementById('estimatedPrice');
-            const accuracyEl = document.getElementById('modelAccuracy');
-            const investIndexEl = document.getElementById('investmentIndex');
-            const lastUpdateEl = document.getElementById('lastUpdate');
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toastMessage');
-            const propertyTableBody = document.getElementById('propertyTableBody');
-            const propertyCount = document.getElementById('propertyCount');
-
-            // ===== DATABASE =====
+            let map, marker, analyticsChart;
             let properties = [];
 
-            function loadProperties() {
-                try {
-                    const stored = localStorage.getItem('properties');
-                    if (stored) {
-                        properties = JSON.parse(stored);
-                    }
-                } catch (e) {
-                    properties = [];
-                }
-                renderProperties();
-            }
+            const cityCoords = {
+                'الرياض': [24.7136, 46.6753],
+                'جدة': [21.5433, 39.1728],
+                'الدمام': [26.4207, 50.0888],
+                'مكة المكرمة': [21.3891, 39.8579],
+                'المدينة المنورة': [24.5247, 39.5692]
+            };
 
-            function saveProperties() {
-                localStorage.setItem('properties', JSON.stringify(properties));
-                renderProperties();
-            }
+            // Init Leaflet Map
+            function initMap() {
+                map = L.map('aqarMap').setView(cityCoords['الرياض'], 11);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 18,
+                    attribution: '© OpenStreetMap'
+                }).addTo(map);
 
-            // ===== RENDER PROPERTIES =====
-            function renderProperties() {
-                if (properties.length === 0) {
-                    const lang = document.querySelector('.lang-btn.active')?.dataset.lang || 'ar';
-                    const t = translations[lang] || translations.ar;
-                    propertyTableBody.innerHTML = `
-                        <tr>
-                            <td colspan="8">
-                                <div class="empty-state">
-                                    <i class="fa-regular fa-building"></i>
-                                    <span data-key="emptyState">${t.emptyState}</span>
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                    propertyCount.textContent = '(0)';
-                    return;
-                }
+                marker = L.marker(cityCoords['الرياض']).addTo(map)
+                    .bindPopup('موقع العقار المحدد').openPopup();
 
-                let html = '';
-                properties.forEach((prop, index) => {
-                    const status = prop.aiValue > prop.price * 1.1 ? 'high' :
-                                   prop.aiValue > prop.price * 0.9 ? 'medium' : 'low';
-                    const statusText = status === 'high' ? '🟢 مرتفع' :
-                                       status === 'medium' ? '🟡 متوسط' : '🔴 منخفض';
-                    html += `
-                        <tr data-index="${index}">
-                            <td>${prop.city}</td>
-                            <td>${prop.location}</td>
-                            <td>${prop.type}</td>
-                            <td>${prop.area} م²</td>
-                            <td>${prop.rooms}</td>
-                            <td>${formatPrice(prop.price)} ر.س</td>
-                            <td><span class="badge-status ${status}">${statusText}</span></td>
-                            <td><button class="btn-delete-row" data-action="delete" data-index="${index}"><i class="fa-solid fa-trash"></i></button></td>
-                        </tr>
-                    `;
+                document.getElementById('mainCity').addEventListener('change', function() {
+                    const coords = cityCoords[this.value] || cityCoords['الرياض'];
+                    map.setView(coords, 11);
+                    marker.setLatLng(coords);
                 });
-                propertyTableBody.innerHTML = html;
-                propertyCount.textContent = `(${properties.length})`;
             }
 
-            // ===== EVENT DELEGATION =====
-            propertyTableBody.addEventListener('click', function(e) {
-                const deleteBtn = e.target.closest('[data-action="delete"]');
-                if (deleteBtn) {
-                    const index = parseInt(deleteBtn.dataset.index);
-                    if (!isNaN(index) && index >= 0 && index < properties.length) {
-                        properties.splice(index, 1);
-                        saveProperties();
-                        showToast('🗑️ تم حذف العقار بنجاح', 'info');
-                    }
-                }
-            });
-
-            // ============================================================
-            // ⚡ HUGGING FACE API CALL WITH LOCAL FALLBACK
-            // ============================================================
-            async function evaluatePropertyViaAPI(data) {
-                // إذا لم يتم تحديث الرابط، يتم استخدام الخوارزمية المحلية المباشرة
-                if (HF_API_URL.includes("YOUR-USERNAME-SPACE-NAME")) {
-                    return calculateMockPrediction(data);
-                }
-
-                try {
-                    const response = await fetch(HF_API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`خطأ في الخادم: ${response.status}`);
-                    }
-
-                    return await response.json();
-                } catch (error) {
-                    console.warn("Hugging Face API unavailable, fallback to local algorithm:", error);
-                    return calculateMockPrediction(data);
-                }
-            }
-
-            // خوارزمية التقدير الذكية الاحتياطية (تضمين التكاليف الحقيقية بالتقريب)
-            function calculateMockPrediction(data) {
-                let basePricePerMeter = 4500;
-                if (data.city === 'الرياض') basePricePerMeter = 6800;
-                else if (data.city === 'جدة') basePricePerMeter = 5800;
-                else if (data.city === 'الدمام') basePricePerMeter = 4800;
-                else if (data.city === 'مكة المكرمة') basePricePerMeter = 7500;
-                else if (data.city === 'المدينة المنورة') basePricePerMeter = 5500;
-
-                if (data.propertyType === 'فيلا') basePricePerMeter *= 1.35;
-                else if (data.propertyType === 'دوبلكس') basePricePerMeter *= 1.15;
-                else if (data.propertyType === 'بنتهاوس') basePricePerMeter *= 1.25;
-
-                if (data.locationType === 'حي راقي') basePricePerMeter *= 1.4;
-                else if (data.locationType === 'حي استثماري') basePricePerMeter *= 1.6;
-
-                let calculatedPrice = data.area * basePricePerMeter;
-
-                if (data.age > 0) {
-                    calculatedPrice *= Math.max(0.65, 1 - (data.age * 0.015));
-                }
-
-                if (data.elevator) calculatedPrice += 45000;
-                if (data.pool) calculatedPrice += 85000;
-                if (data.driver) calculatedPrice += 30000;
-                if (data.furnished) calculatedPrice += 65000;
-
-                const finalPrice = Math.round(calculatedPrice / 1000) * 1000;
-                return {
-                    price: finalPrice,
-                    confidence: 96.8,
-                    index: 'ممتاز (A+)'
-                };
-            }
-
-            // ===== HELPERS =====
-            function formatPrice(num) {
-                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-            }
-
-            function showToast(msg, type = 'success') {
-                toast.className = 'toast ' + type;
-                toastMessage.textContent = msg;
-                toast.classList.add('show');
-                clearTimeout(toast._timeout);
-                toast._timeout = setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 3500);
-            }
-
-            // ===== APPLY LANGUAGE & DIRECTION =====
-            function applyLanguage(lang) {
-                document.documentElement.lang = lang;
-                document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-
-                const t = translations[lang] || translations.ar;
-                document.querySelectorAll('[data-key]').forEach(el => {
-                    const key = el.dataset.key;
-                    if (t[key] !== undefined) {
-                        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                            el.placeholder = t[key];
-                        } else if (el.tagName === 'TH') {
-                            el.textContent = t[key];
-                        } else {
-                            el.innerHTML = t[key];
+            // Init Chart.js
+            function initChart() {
+                const ctx = document.getElementById('analyticsChart').getContext('2d');
+                analyticsChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['الرياض', 'جدة', 'الدمام', 'مكة المكرمة', 'المدينة المنورة'],
+                        datasets: [{
+                            label: 'متوسط سعر العقار (ر.س)',
+                            data: [3200000, 2800000, 2100000, 3500000, 2400000],
+                            backgroundColor: 'rgba(56, 189, 248, 0.4)',
+                            borderColor: '#38bdf8',
+                            borderWidth: 1.5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { labels: { color: '#ffffff' } } },
+                        scales: {
+                            x: { ticks: { color: 'rgba(255,255,255,0.7)' } },
+                            y: { ticks: { color: 'rgba(255,255,255,0.7)' } }
                         }
                     }
                 });
-                document.querySelectorAll('.footer-links a').forEach((el, index) => {
-                    const keys = ['privacy', 'terms', 'about'];
-                    if (index < keys.length) {
-                        el.textContent = t[keys[index]];
-                    }
-                });
-                document.querySelectorAll('.nav-tab').forEach(tab => {
-                    const key = tab.dataset.tab;
-                    const map = { evaluate: 'tabEvaluate', add: 'tabAdd', database: 'tabDatabase', search: 'tabSearch', contact: 'tabContact' };
-                    if (map[key] && t[map[key]]) {
-                        const span = tab.querySelector('span');
-                        if (span) span.textContent = t[map[key]];
-                    }
-                });
-                document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
-                    const key = item.dataset.tab;
-                    const map = { evaluate: 'tabEvaluate', add: 'tabAdd', database: 'tabDatabase', search: 'tabSearch', contact: 'tabContact' };
-                    if (map[key] && t[map[key]]) {
-                        const span = item.querySelector('span');
-                        if (span) span.textContent = t[map[key]];
-                    }
-                });
-                renderProperties();
             }
 
-            // ===== NAVIGATION TABS =====
+            // Tabs Logic
             function switchTab(tabId) {
                 document.querySelectorAll('.nav-tab, .bottom-nav .nav-item').forEach(el => {
-                    el.classList.remove('active');
-                    if (el.dataset.tab === tabId) {
-                        el.classList.add('active');
-                    }
+                    el.classList.toggle('active', el.dataset.tab === tabId);
                 });
-
                 document.querySelectorAll('.section-content').forEach(s => s.classList.add('hidden'));
-                const target = document.getElementById('section-' + tabId);
-                if (target) target.classList.remove('hidden');
+                document.getElementById('section-' + tabId).classList.remove('hidden');
+
+                if (tabId === 'evaluate' && map) setTimeout(() => map.invalidateSize(), 200);
             }
 
-            document.querySelectorAll('.nav-tab').forEach(tab => {
-                tab.addEventListener('click', function() {
-                    switchTab(this.dataset.tab);
-                });
+            document.querySelectorAll('.nav-tab, .bottom-nav .nav-item').forEach(el => {
+                el.addEventListener('click', function() { switchTab(this.dataset.tab); });
             });
 
-            document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    switchTab(this.dataset.tab);
-                });
+            // Start up
+            window.addEventListener('DOMContentLoaded', () => {
+                initMap();
+                initChart();
             });
-
-            // ============================================================
-            // 🚀 RUN PREDICTION
-            // ============================================================
-            async function runPrediction(e) {
-                if (e) e.preventDefault();
-
-                predictBtn.disabled = true;
-                btnSpinner.classList.add('active');
-
-                const payload = {
-                    city: document.getElementById('mainCity').value,
-                    propertyType: document.getElementById('mainPropertyType').value,
-                    area: parseFloat(document.getElementById('mainArea').value) || 100,
-                    rooms: parseInt(document.getElementById('mainRooms').value) || 2,
-                    age: parseInt(document.getElementById('mainAge').value) || 0,
-                    locationType: document.getElementById('mainLocationType').value,
-                    elevator: document.getElementById('elevator').checked,
-                    pool: document.getElementById('pool').checked,
-                    driver: document.getElementById('driver').checked,
-                    furnished: document.getElementById('furnished').checked
-                };
-
-                const result = await evaluatePropertyViaAPI(payload);
-
-                if (result && result.price) {
-                    estPriceEl.innerHTML = formatPrice(result.price) + ' <span style="font-size:0.5rem;color:rgba(255,255,255,0.3);">ر.س</span>';
-                    accuracyEl.textContent = (result.confidence || 96.8) + '%';
-                    if (result.index) {
-                        investIndexEl.textContent = result.index;
-                    }
-
-                    const now = new Date();
-                    const months = ['يناير', 'فبراير', 'مارس', 'إبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
-                    lastUpdateEl.textContent = months[now.getMonth()] + ' ' + now.getFullYear();
-
-                    showToast('✅ تم التقييم بنجاح بواسطة الذكاء الاصطناعي! السعر: ' + formatPrice(result.price) + ' ر.س', 'success');
-                } else {
-                    showToast('⚠️ متعذر التحليل حالياً، يرجى إعادة المحاولة', 'error');
-                }
-
-                predictBtn.disabled = false;
-                btnSpinner.classList.remove('active');
-            }
-
-            predictForm.addEventListener('submit', runPrediction);
-
-            // ===== ADD PROPERTY =====
-            document.getElementById('addPropertyForm').addEventListener('submit', async function(e) {
-                e.preventDefault();
-
-                const city = document.getElementById('addCity').value;
-                const location = document.getElementById('addLocation').value.trim();
-                const price = parseFloat(document.getElementById('addPrice').value);
-                const rooms = parseInt(document.getElementById('addRooms').value);
-                const area = parseFloat(document.getElementById('addArea').value);
-                const type = document.getElementById('addType').value;
-
-                if (!location || !price || !area) {
-                    showToast('⚠️ يرجى إدخال الحي، السعر والمساحة', 'info');
-                    return;
-                }
-
-                const payload = {
-                    city: city,
-                    propertyType: type,
-                    area: area,
-                    rooms: rooms,
-                    age: 0,
-                    locationType: 'حي متوسط',
-                    elevator: false,
-                    pool: false,
-                    driver: false,
-                    furnished: false
-                };
-
-                const result = await evaluatePropertyViaAPI(payload);
-                const aiValue = (result && result.price) ? result.price : price;
-
-                const newProperty = { city, location, type, area, rooms, price, aiValue };
-                properties.push(newProperty);
-                saveProperties();
-
-                const verdict = aiValue > price * 1.1 ? '🟢 أعلى من السعر المطلوب' : 
-                               aiValue > price * 0.9 ? '🟡 قريب من السعر المطلوب' : '🔴 أقل من السعر المطلوب';
-
-                showToast(`🏠 تم إدراج العقار في ${city} - ${location} — التقييم الذكي: ${formatPrice(aiValue)} ر.س (${verdict})`, 'success');
-
-                document.getElementById('addLocation').value = '';
-                document.getElementById('addPrice').value = '';
-                document.getElementById('addArea').value = '';
-            });
-
-            // ===== CLEAR DATABASE =====
-            document.getElementById('clearDatabase').addEventListener('click', function() {
-                if (confirm('هل أنت متأكد من حذف جميع العقارات؟')) {
-                    properties = [];
-                    saveProperties();
-                    showToast('🗑️ تم حذف جميع العقارات', 'info');
-                }
-            });
-
-            // ===== SEARCH =====
-            document.getElementById('searchForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const rooms = document.getElementById('filterRooms').value;
-                const minArea = document.getElementById('filterMinArea').value;
-                const type = document.getElementById('filterType').value;
-                const location = document.getElementById('filterLocation').value.trim();
-
-                let filtered = [...properties];
-
-                if (rooms !== 'all') {
-                    const roomNum = parseInt(rooms);
-                    filtered = filtered.filter(p => p.rooms === roomNum);
-                }
-                if (minArea) {
-                    filtered = filtered.filter(p => p.area >= parseFloat(minArea));
-                }
-                if (type !== 'all') {
-                    filtered = filtered.filter(p => p.type.includes(type));
-                }
-                if (location) {
-                    filtered = filtered.filter(p => p.city.includes(location) || p.location.includes(location));
-                }
-
-                if (filtered.length === 0) {
-                    const lang = document.querySelector('.lang-btn.active')?.dataset.lang || 'ar';
-                    const t = translations[lang] || translations.ar;
-                    propertyTableBody.innerHTML = `
-                        <tr>
-                            <td colspan="8">
-                                <div class="empty-state">
-                                    <i class="fa-regular fa-building"></i>
-                                    <span>${t.emptyState}</span>
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                    propertyCount.textContent = '(0)';
-                } else {
-                    let html = '';
-                    filtered.forEach((prop, index) => {
-                        const status = prop.aiValue > prop.price * 1.1 ? 'high' :
-                                       prop.aiValue > prop.price * 0.9 ? 'medium' : 'low';
-                        const statusText = status === 'high' ? '🟢 مرتفع' :
-                                           status === 'medium' ? '🟡 متوسط' : '🔴 منخفض';
-                        const realIndex = properties.indexOf(prop);
-                        html += `
-                            <tr data-index="${realIndex}">
-                                <td>${prop.city}</td>
-                                <td>${prop.location}</td>
-                                <td>${prop.type}</td>
-                                <td>${prop.area} م²</td>
-                                <td>${prop.rooms}</td>
-                                <td>${formatPrice(prop.price)} ر.س</td>
-                                <td><span class="badge-status ${status}">${statusText}</span></td>
-                                <td><button class="btn-delete-row" data-action="delete" data-index="${realIndex}"><i class="fa-solid fa-trash"></i></button></td>
-                            </tr>
-                        `;
-                    });
-                    propertyTableBody.innerHTML = html;
-                    propertyCount.textContent = `(${filtered.length})`;
-                }
-
-                switchTab('database');
-                showToast(`🔍 تم العثور على ${filtered.length} عقار`, 'info');
-            });
-
-            // ===== RESET SEARCH =====
-            document.getElementById('btnReset').addEventListener('click', function() {
-                document.getElementById('filterRooms').value = 'all';
-                document.getElementById('filterMinArea').value = '';
-                document.getElementById('filterType').value = 'all';
-                document.getElementById('filterLocation').value = '';
-                renderProperties();
-                showToast('🔄 تم إعادة ضبط جميع الفلاتر', 'info');
-            });
-
-            // ===== EXPORT CSV =====
-            document.getElementById('exportCSV').addEventListener('click', function() {
-                if (properties.length === 0) {
-                    showToast('⚠️ لا توجد بيانات لتصديرها', 'info');
-                    return;
-                }
-
-                let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
-                csvContent += "المدينة,الحي,النوع,المساحة,الغرف,السعر المطلوب,القيمة الذكية\n";
-
-                properties.forEach(p => {
-                    csvContent += `${p.city},${p.location},${p.type},${p.area},${p.rooms},${p.price},${p.aiValue}\n`;
-                });
-
-                const encodedUri = encodeURI(csvContent);
-                const link = document.createElement("a");
-                link.setAttribute("href", encodedUri);
-                link.setAttribute("download", "SaudiAqarAI_Export.csv");
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-
-                showToast('📊 تم تصدير ملف CSV بنجاح!', 'success');
-            });
-
-            // ===== EXPORT PDF =====
-            document.getElementById('exportPDF').addEventListener('click', function() {
-                if (properties.length === 0) {
-                    showToast('⚠️ لا توجد بيانات لتصديرها', 'info');
-                    return;
-                }
-                showToast('📄 جاري تجهيز التقرير لتصديره كـ PDF...', 'info');
-                setTimeout(() => {
-                    window.print();
-                }, 500);
-            });
-
-            // ===== LANGUAGE SWITCHER =====
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    applyLanguage(this.dataset.lang);
-                    showToast(`🌐 تم التبديل إلى ${this.textContent}`, 'info');
-                });
-            });
-
-            // ===== AUTO-RUN =====
-            window.addEventListener('DOMContentLoaded', function() {
-                loadProperties();
-                setTimeout(() => {
-                    document.getElementById('mainArea').value = '350';
-                    document.getElementById('mainRooms').value = '4';
-                    document.getElementById('mainCity').value = 'الرياض';
-                    document.getElementById('mainPropertyType').value = 'فيلا';
-                    document.getElementById('mainLocationType').value = 'حي راقي';
-                    document.getElementById('mainAge').value = '2';
-                    runPrediction(new Event('submit'));
-                }, 400);
-            });
-
         })();
     </script>
-
 </body>
 </html>
