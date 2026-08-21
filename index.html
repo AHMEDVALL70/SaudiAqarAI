@@ -36,6 +36,32 @@
             padding: 20px;
         }
 
+        .lang-switch {
+            width: 100%;
+            max-width: 950px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .lang-btn {
+            background: #1e293b;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active, .lang-btn:hover {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
         .container {
             width: 100%;
             max-width: 950px;
@@ -246,95 +272,105 @@
             font-size: 0.9rem;
             padding: 20px;
         }
+
+        body.ltr {
+            direction: ltr;
+        }
     </style>
 </head>
 <body>
 
+    <div class="lang-switch">
+        <button class="lang-btn active" onclick="setLanguage('ar')">العربية</button>
+        <button class="lang-btn" onclick="setLanguage('en')">English</button>
+        <button class="lang-btn" onclick="setLanguage('fr')">Français</button>
+    </div>
+
     <div class="container">
         <header>
-            <span class="badge"><i class="fa-solid fa-brain"></i> الذكاء الاصطناعي العقاري V2.5</span>
+            <span class="badge" id="badgeText"><i class="fa-solid fa-brain"></i> الذكاء الاصطناعي العقاري V2.5</span>
             <h1>SaudiAqarAI</h1>
-            <div class="author-tag"><i class="fa-solid fa-code"></i> تطوير ومُشرف المشروع: أحمد فال جمال الدين</div>
-            <p class="subtitle">المحرك الذكي لتحليل وتوقع أسعار العقارات في المملكة العربية السعودية</p>
+            <div class="author-tag" id="authorTag"><i class="fa-solid fa-code"></i> تطوير ومُشرف المشروع: أحمد فال جمال الدين سيدينا</div>
+            <p class="subtitle" id="subtitleText">المحرك الذكي لتحليل وتوقع أسعار العقارات في المملكة العربية السعودية</p>
         </header>
 
         <!-- نموذج إدخال بيانات العقار -->
         <form id="predictionForm">
             <div class="grid-form">
                 <div class="form-group">
-                    <label><i class="fa-solid fa-city"></i> المدينة</label>
+                    <label id="lblCity"><i class="fa-solid fa-city"></i> المدينة</label>
                     <select id="city" required>
-                        <option value="riyadh">الرياض</option>
-                        <option value="jeddah">جدة</option>
-                        <option value="dammam">الدمام / الخبر</option>
-                        <option value="makkah">مكة المكرمة</option>
-                        <option value="madinah">المدينة المنورة</option>
+                        <option value="riyadh" id="optRiyadh">الرياض</option>
+                        <option value="jeddah" id="optJeddah">جدة</option>
+                        <option value="dammam" id="optDammam">الدمام / الخبر</option>
+                        <option value="makkah" id="optMakkah">مكة المكرمة</option>
+                        <option value="madinah" id="optMadinah">المدينة المنورة</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label><i class="fa-solid fa-building"></i> نوع العقار</label>
+                    <label id="lblType"><i class="fa-solid fa-building"></i> نوع العقار</label>
                     <select id="propertyType" required>
-                        <option value="apartment">شقة سكنية</option>
-                        <option value="villa">فيلا</option>
-                        <option value="land">أرض سكنية</option>
-                        <option value="duplex">دوبلكس</option>
+                        <option value="apartment" id="optApartment">شقة سكنية</option>
+                        <option value="villa" id="optVilla">فيلا</option>
+                        <option value="land" id="optLand">أرض سكنية</option>
+                        <option value="duplex" id="optDuplex">دوبلكس</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label><i class="fa-solid fa-ruler-combined"></i> المساحة (متر مربع)</label>
+                    <label id="lblArea"><i class="fa-solid fa-ruler-combined"></i> المساحة (متر مربع)</label>
                     <input type="number" id="area" placeholder="أدخل المساحة مثلاً: 300" min="20" max="10000" required>
                 </div>
 
                 <div class="form-group">
-                    <label><i class="fa-solid fa-bed"></i> عدد الغرف</label>
+                    <label id="lblRooms"><i class="fa-solid fa-bed"></i> عدد الغرف</label>
                     <input type="number" id="rooms" placeholder="عدد الغرف: 5" min="1" max="30" value="4">
                 </div>
 
                 <div class="form-group">
-                    <label><i class="fa-solid fa-calendar-days"></i> عمر العقار (سنوات)</label>
+                    <label id="lblAge"><i class="fa-solid fa-calendar-days"></i> عمر العقار (سنوات)</label>
                     <input type="number" id="age" placeholder="0 للمباني الجديدة" min="0" max="50" value="0">
                 </div>
 
                 <div class="form-group">
-                    <label><i class="fa-solid fa-location-dot"></i> موقع العقار</label>
+                    <label id="lblLocation"><i class="fa-solid fa-location-dot"></i> موقع العقار</label>
                     <select id="locationQuality">
-                        <option value="prime">حي راقي / مركز المدينة</option>
-                        <option value="medium" selected>حي متوسط / درجات استثمارية</option>
-                        <option value="developing">حي واعد / أطراف المدينة</option>
+                        <option value="prime" id="optPrime">حي راقي / مركز المدينة</option>
+                        <option value="medium" id="optMedium" selected>حي متوسط / درجات استثمارية</option>
+                        <option value="developing" id="optDeveloping">حي واعد / أطراف المدينة</option>
                     </select>
                 </div>
 
                 <div class="checkbox-group">
-                    <label class="checkbox-label"><input type="checkbox" id="hasElevator"> المصعد متوفر</label>
-                    <label class="checkbox-label"><input type="checkbox" id="hasPool"> مسبح خاص</label>
-                    <label class="checkbox-label"><input type="checkbox" id="isDriverRoom"> غرفة سائق / خادمة</label>
+                    <label class="checkbox-label"><input type="checkbox" id="hasElevator"> <span id="lblElevator">المصعد متوفر</span></label>
+                    <label class="checkbox-label"><input type="checkbox" id="hasPool"> <span id="lblPool">مسبح خاص</span></label>
+                    <label class="checkbox-label"><input type="checkbox" id="isDriverRoom"> <span id="lblDriver">غرفة سائق / خادمة</span></label>
                 </div>
             </div>
 
-            <button type="submit" class="btn-submit">
+            <button type="submit" class="btn-submit" id="btnSubmit">
                 <i class="fa-solid fa-wand-magic-sparkles"></i> تحليل وحساب القيمة العقارية
             </button>
         </form>
 
         <!-- بطاقة النتائج التقييمية -->
         <div class="result-card" id="resultCard">
-            <div style="color: var(--text-sub);">القيمـة التقديريـة المتوقعة لعقـارك</div>
+            <div style="color: var(--text-sub);" id="resTitle">القيمـة التقديريـة المتوقعة لعقـارك</div>
             <div class="price-value" id="predictedPrice">0 ريال سعودي</div>
             <div style="color: var(--accent-gold);" id="priceRange">النطاق التقديري: 0 - 0 ريال</div>
 
             <div class="metrics">
                 <div class="metric-item">
-                    <span style="font-size:0.85rem; color:var(--text-sub);">متوسط سعر المتر</span>
+                    <span style="font-size:0.85rem; color:var(--text-sub);" id="lblAvgMeter">متوسط سعر المتر</span>
                     <span id="meterPrice" style="font-weight:700;">0 ريال</span>
                 </div>
                 <div class="metric-item">
-                    <span style="font-size:0.85rem; color:var(--text-sub);">دقة نموذج الذكاء الاصطناعي</span>
+                    <span style="font-size:0.85rem; color:var(--text-sub);" id="lblAccuracy">دقة نموذج الذكاء الاصطناعي</span>
                     <span style="color: var(--accent-green); font-weight:700;">95.4%</span>
                 </div>
                 <div class="metric-item">
-                    <span style="font-size:0.85rem; color:var(--text-sub);">حالة الطلب في الحي</span>
+                    <span style="font-size:0.85rem; color:var(--text-sub);" id="lblDemand">حالة الطلب في الحي</span>
                     <span id="demandLevel" style="font-weight:700;">عالي جداً 🔥</span>
                 </div>
             </div>
@@ -342,27 +378,170 @@
 
         <!-- قسم وسائل الاتصال والتواصل -->
         <div class="contact-section">
-            <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-envelope"></i> وسائل التواصل والاستفسار</h3>
-            <p style="color: var(--text-sub); font-size: 0.95rem; margin-bottom: 15px;">يمكنك التواصل المباشر مع صاحب مشروع SaudiAqarAI عبر المنصات التالية:</p>
+            <h3 style="margin-bottom: 15px;" id="contactTitle"><i class="fa-solid fa-envelope"></i> وسائل التواصل والاستفسار</h3>
+            <p style="color: var(--text-sub); font-size: 0.95rem; margin-bottom: 15px;" id="contactSub">يمكنك التواصل المباشر مع صاحب مشروع SaudiAqarAI عبر المنصات التالية:</p>
             <div class="contact-grid">
+                <a href="https://wa.me/97474736271" target="_blank" class="contact-btn">
+                    <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i> واتساب (+97474736271)
+                </a>
                 <a href="https://github.com/ahmedvall70" target="_blank" class="contact-btn">
                     <i class="fa-brands fa-github"></i> GitHub Profile
                 </a>
-                <a href="https://ahmedvall70.github.io/ahmed-vall-cv/" target="_blank" class="contact-btn">
-                    <i class="fa-solid fa-user-tie"></i> السيرة الذاتية (CV)
-                </a>
-                <a href="mailto:ahmedvall70@gmail.com" class="contact-btn">
+                <a href="mailto:ahmedvalljemaldine@gmail.com" class="contact-btn">
                     <i class="fa-solid fa-paper-plane"></i> البريد الإلكتروني
                 </a>
             </div>
         </div>
     </div>
 
-    <footer>
-        جميع الحقوق محفوظة &copy; 2026 | **SaudiAqarAI** - إشراف وتطوير: **أحمد فال جمال الدين**
+    <footer id="footerText">
+        جميع الحقوق محفوظة &copy; 2026 | **SaudiAqarAI** - إشراف وتطوير: **أحمد فال جمال الدين سيدينا**
     </footer>
 
     <script>
+        let currentLang = 'ar';
+
+        const translations = {
+            ar: {
+                badge: '<i class="fa-solid fa-brain"></i> الذكاء الاصطناعي العقاري V2.5',
+                author: '<i class="fa-solid fa-code"></i> تطوير ومُشرف المشروع: أحمد فال جمال الدين سيدينا',
+                subtitle: 'المحرك الذكي لتحليل وتوقع أسعار العقارات في المملكة العربية السعودية',
+                city: '<i class="fa-solid fa-city"></i> المدينة',
+                type: '<i class="fa-solid fa-building"></i> نوع العقار',
+                area: '<i class="fa-solid fa-ruler-combined"></i> المساحة (متر مربع)',
+                rooms: '<i class="fa-solid fa-bed"></i> عدد الغرف',
+                age: '<i class="fa-solid fa-calendar-days"></i> عمر العقار (سنوات)',
+                location: '<i class="fa-solid fa-location-dot"></i> موقع العقار',
+                elevator: 'المصعد متوفر',
+                pool: 'مسبح خاص',
+                driver: 'غرفة سائق / خادمة',
+                btnSubmit: '<i class="fa-solid fa-wand-magic-sparkles"></i> تحليل وحساب القيمة العقارية',
+                resTitle: 'القيمـة التقديريـة المتوقعة لعقـارك',
+                avgMeter: 'متوسط سعر المتر',
+                accuracy: 'دقة نموذج الذكاء الاصطناعي',
+                demand: 'حالة الطلب في الحي',
+                contactTitle: '<i class="fa-solid fa-envelope"></i> وسائل التواصل والاستفسار',
+                contactSub: 'يمكنك التواصل المباشر مع صاحب مشروع SaudiAqarAI عبر المنصات التالية:',
+                footer: 'جميع الحقوق محفوظة &copy; 2026 | SaudiAqarAI - إشراف وتطوير: أحمد فال جمال الدين سيدينا',
+                currency: 'ر.س',
+                rangePrefix: 'النطاق التقديري: ',
+                riyadh: 'الرياض', jeddah: 'جدة', dammam: 'الدمام / الخبر', makkah: 'مكة المكرمة', madinah: 'المدينة المنورة',
+                apartment: 'شقة سكنية', villa: 'فيلا', land: 'أرض سكنية', duplex: 'دوبلكس',
+                prime: 'حي راقي / مركز المدينة', medium: 'حي متوسط / درجات استثمارية', developing: 'حي واعد / أطراف المدينة'
+            },
+            en: {
+                badge: '<i class="fa-solid fa-brain"></i> Real Estate AI V2.5',
+                author: '<i class="fa-solid fa-code"></i> Developer & Owner: Ahmed Vall Jemal Dine Sidina',
+                subtitle: 'AI Engine for Real Estate Price Prediction in Saudi Arabia',
+                city: '<i class="fa-solid fa-city"></i> City',
+                type: '<i class="fa-solid fa-building"></i> Property Type',
+                area: '<i class="fa-solid fa-ruler-combined"></i> Area (Sqm)',
+                rooms: '<i class="fa-solid fa-bed"></i> Rooms Count',
+                age: '<i class="fa-solid fa-calendar-days"></i> Property Age (Years)',
+                location: '<i class="fa-solid fa-location-dot"></i> Location Quality',
+                elevator: 'Elevator Available',
+                pool: 'Private Pool',
+                driver: 'Driver / Maid Room',
+                btnSubmit: '<i class="fa-solid fa-wand-magic-sparkles"></i> Calculate Valuation',
+                resTitle: 'Estimated Property Value',
+                avgMeter: 'Avg Price / Sqm',
+                accuracy: 'AI Model Accuracy',
+                demand: 'Demand Level',
+                contactTitle: '<i class="fa-solid fa-envelope"></i> Contact & Inquiries',
+                contactSub: 'Feel free to contact the project owner directly:',
+                footer: 'All Rights Reserved &copy; 2026 | SaudiAqarAI - Developed by: Ahmed Vall Jemal Dine Sidina',
+                currency: 'SAR',
+                rangePrefix: 'Estimated Range: ',
+                riyadh: 'Riyadh', jeddah: 'Jeddah', dammam: 'Dammam / Khobar', makkah: 'Makkah', madinah: 'Madinah',
+                apartment: 'Apartment', villa: 'Villa', land: 'Land', duplex: 'Duplex',
+                prime: 'Prime Location / City Center', medium: 'Medium / Investment Quality', developing: 'Developing Area'
+            },
+            fr: {
+                badge: '<i class="fa-solid fa-brain"></i> IA Immobilière V2.5',
+                author: '<i class="fa-solid fa-code"></i> Développeur & Propriétaire: Ahmed Vall Jemal Dine Sidina',
+                subtitle: 'Moteur IA pour la prédiction des prix immobiliers en Arabie Saoudite',
+                city: '<i class="fa-solid fa-city"></i> Ville',
+                type: '<i class="fa-solid fa-building"></i> Type de propriété',
+                area: '<i class="fa-solid fa-ruler-combined"></i> Surface (m²)',
+                rooms: '<i class="fa-solid fa-bed"></i> Nombre de pièces',
+                age: '<i class="fa-solid fa-calendar-days"></i> Âge du bien (Ans)',
+                location: '<i class="fa-solid fa-location-dot"></i> Emplacement',
+                elevator: 'Ascenseur disponible',
+                pool: 'Piscine privée',
+                driver: 'Chambre chauffeur / domestique',
+                btnSubmit: '<i class="fa-solid fa-wand-magic-sparkles"></i> Calculer l\'évaluation',
+                resTitle: 'Valeur estimée du bien',
+                avgMeter: 'Prix moyen / m²',
+                accuracy: 'Précision du modèle IA',
+                demand: 'Niveau de la demande',
+                contactTitle: '<i class="fa-solid fa-envelope"></i> Contact & Demandes',
+                contactSub: 'N\'hésitez pas à contacter le fondateur du projet:',
+                footer: 'Tous droits réservés &copy; 2026 | SaudiAqarAI - Développé par: Ahmed Vall Jemal Dine Sidina',
+                currency: 'SAR',
+                rangePrefix: 'Gamme estimée: ',
+                riyadh: 'Riyad', jeddah: 'Djeddah', dammam: 'Dammam / Khobar', makkah: 'La Mecque', madinah: 'Médine',
+                apartment: 'Appartement', villa: 'Villa', land: 'Terrain', duplex: 'Duplex',
+                prime: 'Emplacement premium / Centre-ville', medium: 'Moyen / Qualité d\'investissement', developing: 'En développement'
+            }
+        };
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            if(lang === 'ar') document.querySelectorAll('.lang-btn')[0].classList.add('active');
+            if(lang === 'en') document.querySelectorAll('.lang-btn')[1].classList.add('active');
+            if(lang === 'fr') document.querySelectorAll('.lang-btn')[2].classList.add('active');
+
+            if(lang === 'ar') {
+                document.documentElement.setAttribute('dir', 'rtl');
+                document.documentElement.setAttribute('lang', 'ar');
+                document.body.classList.remove('ltr');
+            } else {
+                document.documentElement.setAttribute('dir', 'ltr');
+                document.documentElement.setAttribute('lang', lang);
+                document.body.classList.add('ltr');
+            }
+
+            document.getElementById('badgeText').innerHTML = t.badge;
+            document.getElementById('authorTag').innerHTML = t.author;
+            document.getElementById('subtitleText').innerText = t.subtitle;
+            document.getElementById('lblCity').innerHTML = t.city;
+            document.getElementById('lblType').innerHTML = t.type;
+            document.getElementById('lblArea').innerHTML = t.area;
+            document.getElementById('lblRooms').innerHTML = t.rooms;
+            document.getElementById('lblAge').innerHTML = t.age;
+            document.getElementById('lblLocation').innerHTML = t.location;
+            document.getElementById('lblElevator').innerText = t.elevator;
+            document.getElementById('lblPool').innerText = t.pool;
+            document.getElementById('lblDriver').innerText = t.driver;
+            document.getElementById('btnSubmit').innerHTML = t.btnSubmit;
+            document.getElementById('resTitle').innerText = t.resTitle;
+            document.getElementById('lblAvgMeter').innerText = t.avgMeter;
+            document.getElementById('lblAccuracy').innerText = t.accuracy;
+            document.getElementById('lblDemand').innerText = t.demand;
+            document.getElementById('contactTitle').innerHTML = t.contactTitle;
+            document.getElementById('contactSub').innerText = t.contactSub;
+            document.getElementById('footerText').innerHTML = t.footer;
+
+            // Options translation
+            document.getElementById('optRiyadh').innerText = t.riyadh;
+            document.getElementById('optJeddah').innerText = t.jeddah;
+            document.getElementById('optDammam').innerText = t.dammam;
+            document.getElementById('optMakkah').innerText = t.makkah;
+            document.getElementById('optMadinah').innerText = t.madinah;
+
+            document.getElementById('optApartment').innerText = t.apartment;
+            document.getElementById('optVilla').innerText = t.villa;
+            document.getElementById('optLand').innerText = t.land;
+            document.getElementById('optDuplex').innerText = t.duplex;
+
+            document.getElementById('optPrime').innerText = t.prime;
+            document.getElementById('optMedium').innerText = t.medium;
+            document.getElementById('optDeveloping').innerText = t.developing;
+        }
+
         const cityBaseRates = {
             riyadh: { apartment: 4800, villa: 6200, land: 4000, duplex: 5300 },
             jeddah: { apartment: 3900, villa: 5300, land: 3300, duplex: 4700 },
@@ -379,7 +558,6 @@
             const city = document.getElementById('city').value;
             const type = document.getElementById('propertyType').value;
             const area = parseFloat(document.getElementById('area').value);
-            const rooms = parseInt(document.getElementById('rooms').value) || 0;
             const age = parseInt(document.getElementById('age').value) || 0;
             const location = document.getElementById('locationQuality').value;
 
@@ -399,9 +577,12 @@
             const minPrice = Math.round(totalPrice * 0.93);
             const maxPrice = Math.round(totalPrice * 1.07);
 
-            document.getElementById('predictedPrice').innerText = totalPrice.toLocaleString('ar-SA') + ' ر.س';
-            document.getElementById('priceRange').innerText = `النطاق التقديري: ${minPrice.toLocaleString('ar-SA')} - ${maxPrice.toLocaleString('ar-SA')} ر.س`;
-            document.getElementById('meterPrice').innerText = finalMeterPrice.toLocaleString('ar-SA') + ' ر.س / م²';
+            const curr = translations[currentLang].currency;
+            const prefix = translations[currentLang].rangePrefix;
+
+            document.getElementById('predictedPrice').innerText = totalPrice.toLocaleString() + ' ' + curr;
+            document.getElementById('priceRange').innerText = `${prefix}${minPrice.toLocaleString()} - ${maxPrice.toLocaleString()} ${curr}`;
+            document.getElementById('meterPrice').innerText = finalMeterPrice.toLocaleString() + ' ' + curr + ' / m²';
             
             document.getElementById('resultCard').style.display = 'block';
             document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth' });
