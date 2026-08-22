@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
     <style>
+        /* ... نفس الستايلات السابقة ... */
         :root {
             --bg: #f0f4f8;
             --bg-soft: #e8eef5;
@@ -50,8 +51,6 @@
             line-height: 1.6;
         }
         .container { max-width: 1080px; margin: 0 auto; }
-
-        /* Header */
         .header {
             display: flex; justify-content: space-between; align-items: center;
             flex-wrap: wrap; gap: 14px; margin-bottom: 20px;
@@ -77,6 +76,7 @@
         }
         .api-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); }
         .api-dot.offline { background: var(--warning); }
+        .api-dot.online { background: var(--success); }
         .lang-group {
             display: flex; gap: 3px; background: var(--bg); padding: 4px;
             border-radius: 999px; border: 1px solid var(--border);
@@ -88,8 +88,6 @@
         }
         .lang-btn.active { background: var(--card); color: var(--primary); box-shadow: var(--shadow-sm); }
         .lang-btn:hover:not(.active) { color: var(--text); }
-
-        /* Nav */
         .nav-tabs {
             display: flex; gap: 6px; flex-wrap: wrap; justify-content: center;
             background: var(--card); border: 1px solid var(--border);
@@ -109,13 +107,9 @@
             box-shadow: 0 4px 16px rgba(37,99,235,0.25);
         }
         .nav-tab.active i { color: #fff; }
-
-        /* Sections */
         .section-content { display: none; animation: fadeUp 0.35s ease; }
         .section-content.active { display: block; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-
-        /* Cards */
         .card {
             background: var(--card); border: 1px solid var(--border);
             border-radius: var(--radius-lg); padding: 28px;
@@ -130,15 +124,17 @@
             padding: 6px 16px; border-radius: 999px; font-size: 0.72rem;
             font-weight: 700; color: var(--primary); margin-bottom: 14px;
         }
-        .card-hero h2 { font-size: 1.45rem; font-weight: 900; color: var(--text); margin-bottom: 8px; }
+        .card-hero h2 { 
+            font-size: 1.45rem; font-weight: 900; color: var(--text); margin-bottom: 8px;
+            background: var(--gradient); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; background-clip: text;
+        }
         .card-hero p { font-size: 0.9rem; color: var(--text-secondary); max-width: 560px; margin: 0 auto; }
         .section-title {
             font-size: 1.1rem; font-weight: 800; color: var(--text);
             margin-bottom: 18px; display: flex; align-items: center; gap: 10px;
         }
         .section-title i { color: var(--primary); }
-
-        /* Forms */
         .form-grid {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
             gap: 16px; margin-bottom: 18px;
@@ -154,14 +150,20 @@
             background: var(--bg); border: 1.5px solid var(--border);
             color: var(--text); font-size: 0.88rem; outline: none; width: 100%;
             transition: border-color 0.2s, box-shadow 0.2s;
+            -webkit-appearance: none;
+            appearance: none;
         }
         .form-group input:focus, .form-group select:focus {
             border-color: var(--primary); background: var(--card);
             box-shadow: 0 0 0 4px rgba(37,99,235,0.1);
         }
         .form-group select option { background: #fff; color: var(--text); }
-
-        /* Chips */
+        .form-group input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        .form-group input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
         .chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 18px 0; }
         .chip-input { display: none; }
         .chip-label {
@@ -175,7 +177,6 @@
             background: var(--success-light); border-color: var(--success);
             color: var(--success); font-weight: 700;
         }
-
         .live-hint {
             text-align: center; font-size: 0.8rem; color: var(--primary);
             margin: 16px 0 6px; display: flex; align-items: center;
@@ -183,8 +184,6 @@
         }
         .live-hint i { animation: pulse 2s infinite; }
         @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
-
-        /* Buttons — consulting style */
         .btn {
             display: inline-flex; align-items: center; justify-content: center; gap: 8px;
             padding: 0 24px; height: 48px; border-radius: 12px;
@@ -206,32 +205,69 @@
             box-shadow: 0 4px 14px rgba(5,150,105,0.25);
         }
         .btn-success:hover { transform: translateY(-2px); }
+        .btn-danger {
+            background: var(--danger); color: #fff;
+        }
+        .btn-danger:hover { transform: translateY(-2px); }
         .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
-
-        /* Results */
+        .btn-sm { height: 32px; padding: 0 14px; font-size: 0.72rem; }
+        .results-wrapper {
+            background: linear-gradient(135deg, rgba(37,99,235,0.03) 0%, rgba(124,58,237,0.03) 100%);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(37,99,235,0.1);
+        }
         .results {
             display: grid; grid-template-columns: 2fr 1fr 1fr;
-            gap: 14px; margin-top: 24px; padding-top: 24px;
-            border-top: 1px solid var(--border);
+            gap: 14px;
         }
         .result-box {
-            background: var(--bg); border: 1.5px solid var(--border);
+            background: var(--card); border: 1px solid var(--border);
             border-radius: var(--radius); padding: 18px 14px; text-align: center;
             transition: 0.3s;
+            box-shadow: var(--shadow-sm);
         }
+        .result-box:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
         .result-box.highlight {
             background: var(--gradient-soft); border-color: rgba(37,99,235,0.2);
+            border-width: 2px;
         }
-        .result-box .label { font-size: 0.72rem; color: var(--muted); font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.03em; }
-        .result-box .value { font-size: 1.1rem; font-weight: 900; color: var(--success); word-break: break-word; }
+        .result-box .label { 
+            font-size: 0.7rem; color: var(--muted); font-weight: 700; 
+            margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .result-box .value { 
+            font-size: 1.2rem; font-weight: 900; color: var(--success); 
+            word-break: break-word;
+            transition: all 0.3s;
+        }
         .result-box .sub { font-size: 0.75rem; color: var(--muted); margin-top: 6px; }
+        .result-box .value.price-updated {
+            animation: pricePop 0.4s ease;
+        }
+        @keyframes pricePop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); color: var(--primary); }
+            100% { transform: scale(1); }
+        }
         @keyframes glowLight {
             0% { box-shadow: 0 0 0 0 rgba(37,99,235,0.3); border-color: var(--primary); }
             100% { box-shadow: 0 0 0 10px rgba(37,99,235,0); }
         }
         .glow-active { animation: glowLight 0.7s ease-out; }
-
-        /* Tables */
+        .details-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 8px; font-size: 0.85rem;
+            background: var(--bg); padding: 16px; border-radius: var(--radius);
+        }
+        .details-grid .item {
+            display: flex; justify-content: space-between;
+            padding: 6px 8px; border-bottom: 1px solid var(--border);
+        }
+        .details-grid .item:last-child { border-bottom: none; }
+        .details-grid .item .label { color: var(--muted); font-weight: 600; }
+        .details-grid .item .value { color: var(--text); font-weight: 700; }
         .table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); margin-top: 12px; background: var(--card); }
         .data-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
         .data-table th {
@@ -246,18 +282,19 @@
         }
         .badge-warn { background: var(--warning-light); color: var(--warning); }
         .badge-ok { background: var(--success-light); color: var(--success); }
+        .badge-danger { background: var(--danger-light); color: var(--danger); }
         .empty-msg { text-align: center; padding: 28px; color: var(--muted); font-size: 0.88rem; }
         .chart-box { height: 270px; margin: 16px 0; background: var(--bg); border-radius: var(--radius); padding: 12px; border: 1px solid var(--border); }
         .review-note { font-size: 0.8rem; color: var(--muted); margin-bottom: 12px; line-height: 1.7; }
-
-        /* Disclaimer */
         .disclaimer {
-            margin-top: 18px; padding: 14px 18px; border-radius: var(--radius);
-            background: var(--danger-light); border: 1px solid rgba(220,38,38,0.2);
-            font-size: 0.8rem; color: #991b1b; line-height: 1.65;
+            margin-top: 18px; padding: 16px 20px; border-radius: var(--radius);
+            background: linear-gradient(135deg, rgba(220,38,38,0.06) 0%, rgba(220,38,38,0.02) 100%);
+            border: 1px solid rgba(220,38,38,0.15);
+            font-size: 0.8rem; color: #7f1d1d; line-height: 1.7;
+            display: flex; align-items: flex-start; gap: 12px;
         }
-
-        /* Contact */
+        .disclaimer i { color: var(--danger); font-size: 1.1rem; margin-top: 2px; flex-shrink: 0; }
+        .disclaimer strong { color: #991b1b; }
         .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px; }
         .contact-card {
             background: var(--bg); border: 1px solid var(--border);
@@ -277,8 +314,6 @@
         .contact-card a { color: var(--text); text-decoration: none; }
         .contact-card a:hover { color: var(--primary); }
         .contact-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; padding-top: 20px; border-top: 1px solid var(--border); }
-
-        /* Footer & bottom nav */
         .footer { text-align: center; padding: 28px 0 10px; color: var(--muted); font-size: 0.78rem; }
         .bottom-nav-wrap {
             position: fixed; bottom: 0; left: 0; right: 0;
@@ -296,8 +331,6 @@
         .bottom-nav .nav-item i { font-size: 1.2rem; }
         .bottom-nav .nav-item.active { color: var(--primary); }
         .bottom-nav .nav-item:hover { color: var(--text); }
-
-        /* Modal */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(15,23,42,0.4);
             display: none; align-items: center; justify-content: center; z-index: 2000;
@@ -308,11 +341,23 @@
             background: var(--card); border: 1px solid var(--border);
             border-radius: var(--radius-lg); padding: 32px 36px; text-align: center;
             max-width: 420px; width: 90%; box-shadow: var(--shadow-lg);
+            animation: modalIn 0.3s ease;
+        }
+        @keyframes modalIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
         .modal-box i { font-size: 2.8rem; color: var(--success); margin-bottom: 14px; }
         .modal-box h4 { font-size: 1.15rem; margin-bottom: 10px; color: var(--text); }
         .modal-box p { font-size: 0.88rem; color: var(--muted); margin-bottom: 24px; line-height: 1.65; }
-
+        .toast {
+            position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+            background: var(--text); color: #fff; padding: 12px 24px;
+            border-radius: 12px; font-size: 0.85rem; font-weight: 600;
+            opacity: 0; transition: opacity 0.3s; z-index: 3000;
+            box-shadow: var(--shadow-lg);
+        }
+        .toast.show { opacity: 1; }
         @media (max-width: 768px) {
             body { padding: 14px 14px 95px; }
             .results, .contact-grid { grid-template-columns: 1fr; }
@@ -321,15 +366,34 @@
             .card { padding: 20px 16px; }
             .header { padding: 14px 16px; }
             .header-actions { width: 100%; justify-content: space-between; }
+            .details-grid { grid-template-columns: 1fr; }
+            .results-wrapper { padding: 12px; }
+        }
+        @media (max-width: 480px) {
+            .form-grid { grid-template-columns: 1fr; gap: 12px; }
+            .results { grid-template-columns: 1fr; }
+            .chips { gap: 6px; }
+            .chip-label { padding: 6px 12px; font-size: 0.7rem; }
+            .card-hero h2 { font-size: 1.1rem; }
+            .bottom-nav .nav-item { font-size: 0.5rem; }
+            .bottom-nav .nav-item i { font-size: 1rem; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .btn { padding: 0 16px; height: 40px; font-size: 0.78rem; }
+            .disclaimer { flex-direction: column; align-items: center; text-align: center; }
         }
     </style>
 </head>
 <body>
 <div class="container">
+    <div class="toast" id="toast"></div>
+
     <header class="header">
         <div class="logo"><i class="fa-solid fa-building"></i><span>SaudiAqarAI</span></div>
         <div class="header-actions">
-            <div class="api-badge" id="apiStatus"><span class="api-dot offline"></span><span data-i18n="api_offline">وضع محلي</span></div>
+            <div class="api-badge" id="apiStatus">
+                <span class="api-dot offline" id="apiDot"></span>
+                <span id="apiLabel" data-i18n="api_offline">🇸🇦 Local Mode</span>
+            </div>
             <div class="lang-group">
                 <button class="lang-btn active" data-lang="ar">العربية</button>
                 <button class="lang-btn" data-lang="en">English</button>
@@ -339,110 +403,145 @@
     </header>
 
     <nav class="nav-tabs">
-        <button class="nav-tab active" data-tab="evaluate"><i class="fa-solid fa-robot"></i><span data-i18n="nav_eval">التقييم</span></button>
-        <button class="nav-tab" data-tab="add"><i class="fa-solid fa-plus-circle"></i><span data-i18n="nav_add">إضافة</span></button>
-        <button class="nav-tab" data-tab="database"><i class="fa-solid fa-chart-bar"></i><span data-i18n="nav_db">البيانات</span></button>
-        <button class="nav-tab" data-tab="about"><i class="fa-solid fa-circle-info"></i><span data-i18n="nav_about">عن المنصة</span></button>
-        <button class="nav-tab" data-tab="contact"><i class="fa-solid fa-address-card"></i><span data-i18n="nav_contact">تواصل</span></button>
+        <button class="nav-tab active" data-tab="evaluate"><i class="fa-solid fa-robot"></i><span data-i18n="nav_eval">Valuation</span></button>
+        <button class="nav-tab" data-tab="add"><i class="fa-solid fa-plus-circle"></i><span data-i18n="nav_add">Add</span></button>
+        <button class="nav-tab" data-tab="database"><i class="fa-solid fa-chart-bar"></i><span data-i18n="nav_db">Analytics</span></button>
+        <button class="nav-tab" data-tab="about"><i class="fa-solid fa-circle-info"></i><span data-i18n="nav_about">About</span></button>
+        <button class="nav-tab" data-tab="contact"><i class="fa-solid fa-address-card"></i><span data-i18n="nav_contact">Contact</span></button>
     </nav>
 
     <!-- EVALUATE -->
     <div class="section-content active" id="section-evaluate">
         <div class="card card-hero">
-            <div class="badge-top"><i class="fa-solid fa-sparkles"></i> <span data-i18n="hero_badge">ذكاء اصطناعي عقاري</span></div>
-            <h2 data-i18n="title">محرك التقييم العقاري الذكي</h2>
-            <p data-i18n="subtitle">أدخل مواصفات العقار للحصول على تقييم تقديري فوري يستند لمؤشرات السوق</p>
+            <div class="badge-top"><i class="fa-solid fa-sparkles"></i> <span data-i18n="hero_badge">🏢 AI Real Estate</span></div>
+            <h2 data-i18n="title">Smart Property Valuator</h2>
+            <p data-i18n="subtitle">Enter property details and AI will estimate fair market value in real-time</p>
         </div>
         <div class="card">
             <div id="predictForm">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label><i class="fa-solid fa-city"></i> <span data-i18n="city">المدينة</span></label>
+                        <label><i class="fa-solid fa-city"></i> <span data-i18n="city">City</span></label>
                         <select id="mainCity" class="live-input">
-                            <option value="الرياض">الرياض</option>
-                            <option value="جدة">جدة</option>
-                            <option value="الدمام">الدمام</option>
-                            <option value="مكة المكرمة">مكة المكرمة</option>
-                            <option value="المدينة المنورة">المدينة المنورة</option>
+                            <option value="الرياض">Riyadh</option>
+                            <option value="جدة">Jeddah</option>
+                            <option value="الدمام">Dammam</option>
+                            <option value="مكة المكرمة">Makkah</option>
+                            <option value="المدينة المنورة">Madinah</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label><i class="fa-solid fa-map-pin"></i> <span data-i18n="district">اسم الحي</span></label>
-                        <input type="text" id="mainNeighborhood" class="live-input" value="النخيل">
+                        <label><i class="fa-solid fa-map-pin"></i> <span data-i18n="district">District</span></label>
+                        <input type="text" id="mainNeighborhood" class="live-input" value="Al Nakheel">
                     </div>
                     <div class="form-group">
-                        <label><i class="fa-solid fa-building"></i> <span data-i18n="type">نوع العقار</span></label>
+                        <label><i class="fa-solid fa-building"></i> <span data-i18n="type">Property Type</span></label>
                         <select id="mainPropertyType" class="live-input">
-                            <option value="فيلا">فيلا</option>
-                            <option value="شقة سكنية" selected>شقة سكنية</option>
-                            <option value="أرض">أرض</option>
-                            <option value="دوبلكس">دوبلكس</option>
+                            <option value="فيلا">Villa</option>
+                            <option value="شقة سكنية" selected>Apartment</option>
+                            <option value="أرض">Land</option>
+                            <option value="دوبلكس">Duplex</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label><i class="fa-solid fa-ruler-combined"></i> <span data-i18n="area">المساحة (م²)</span></label>
+                        <label><i class="fa-solid fa-ruler-combined"></i> <span data-i18n="area">Area (m²)</span></label>
                         <input type="number" id="mainArea" class="live-input" min="20" value="350">
                     </div>
                     <div class="form-group">
-                        <label><i class="fa-solid fa-bed"></i> <span data-i18n="rooms">عدد الغرف</span></label>
+                        <label><i class="fa-solid fa-bed"></i> <span data-i18n="rooms">Rooms</span></label>
                         <input type="number" id="mainRooms" class="live-input" min="0" value="4">
                     </div>
                     <div class="form-group">
-                        <label><i class="fa-solid fa-hourglass-half"></i> <span data-i18n="age">عمر العقار (سنوات)</span></label>
+                        <label><i class="fa-solid fa-hourglass-half"></i> <span data-i18n="age">Age (Years)</span></label>
                         <input type="number" id="mainAge" class="live-input" min="0" value="2">
                     </div>
                     <div class="form-group">
-                        <label><i class="fa-solid fa-compass"></i> <span data-i18n="facade">الواجهة</span></label>
+                        <label><i class="fa-solid fa-compass"></i> <span data-i18n="facade">Facade</span></label>
                         <select id="mainFacade" class="live-input">
-                            <option value="شرقية">شرقية (+5%)</option>
-                            <option value="شمالية">شمالية (+4%)</option>
-                            <option value="جنوبية" selected>جنوبية</option>
-                            <option value="غربية">غربية (-2%)</option>
+                            <option value="شرقية">East (+5%)</option>
+                            <option value="شمالية">North (+4%)</option>
+                            <option value="جنوبية" selected>South</option>
+                            <option value="غربية">West (-2%)</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label><i class="fa-solid fa-road"></i> <span data-i18n="street_width">عرض الشارع (م)</span></label>
+                        <label><i class="fa-solid fa-road"></i> <span data-i18n="street_width">Street Width (m)</span></label>
                         <input type="number" id="mainStreetWidth" class="live-input" min="5" value="20">
                     </div>
                     <div class="form-group">
-                        <label><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="location_type">تصنيف الحي</span></label>
+                        <label><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="location_type">District Grade</span></label>
                         <select id="mainLocationType" class="live-input">
-                            <option value="حي راقي">حي راقي (+25%)</option>
-                            <option value="حي استثماري">حي استثماري (+15%)</option>
-                            <option value="حي متوسط" selected>حي متوسط</option>
+                            <option value="حي راقي">Premium (+25%)</option>
+                            <option value="حي استثماري">Investment (+15%)</option>
+                            <option value="حي متوسط" selected>Standard</option>
                         </select>
                     </div>
                 </div>
                 <div class="chips">
                     <input type="checkbox" id="elevator" class="chip-input live-input">
-                    <label for="elevator" class="chip-label"><i class="fa-solid fa-elevator"></i> <span data-i18n="elevator">مصعد</span></label>
+                    <label for="elevator" class="chip-label"><i class="fa-solid fa-elevator"></i> <span data-i18n="elevator">Elevator</span></label>
                     <input type="checkbox" id="pool" class="chip-input live-input" checked>
-                    <label for="pool" class="chip-label"><i class="fa-solid fa-water-ladder"></i> <span data-i18n="pool">مسبح</span></label>
+                    <label for="pool" class="chip-label"><i class="fa-solid fa-water-ladder"></i> <span data-i18n="pool">Pool</span></label>
                     <input type="checkbox" id="driver" class="chip-input live-input">
-                    <label for="driver" class="chip-label"><i class="fa-solid fa-user-tie"></i> <span data-i18n="driver">غرفة سائق</span></label>
+                    <label for="driver" class="chip-label"><i class="fa-solid fa-user-tie"></i> <span data-i18n="driver">Driver Room</span></label>
                     <input type="checkbox" id="furnished" class="chip-input live-input">
-                    <label for="furnished" class="chip-label"><i class="fa-solid fa-couch"></i> <span data-i18n="furnished">مفروش</span></label>
+                    <label for="furnished" class="chip-label"><i class="fa-solid fa-couch"></i> <span data-i18n="furnished">Furnished</span></label>
+                    <input type="checkbox" id="centralAc" class="chip-input live-input">
+                    <label for="centralAc" class="chip-label"><i class="fa-solid fa-snowflake"></i> <span data-i18n="central_ac">Central AC</span></label>
+                    <input type="checkbox" id="maidRoom" class="chip-input live-input">
+                    <label for="maidRoom" class="chip-label"><i class="fa-solid fa-user"></i> <span data-i18n="maid_room">Maid Room</span></label>
                 </div>
-                <div class="live-hint"><i class="fa-solid fa-bolt"></i> <span data-i18n="live_hint">النتيجة تتحدث تلقائياً عند تغيير أي حقل</span></div>
-            </div>
-            <div class="results">
-                <div class="result-box highlight" id="priceResultBox">
-                    <div class="label" data-i18n="price_range">النطاق السعري التقديري</div>
-                    <div class="value" id="priceRangeDisplay">—</div>
-                    <div class="sub" id="avgPriceNote"></div>
-                </div>
-                <div class="result-box">
-                    <div class="label" data-i18n="investment">مؤشر الاستثمار</div>
-                    <div class="value" id="investmentIndex">—</div>
-                </div>
-                <div class="result-box">
-                    <div class="label" data-i18n="last_update">تحديث النموذج</div>
-                    <div class="value" style="color:var(--accent); font-size:0.95rem;" data-i18n="model_date">مارس 2026</div>
+                <div class="live-hint">
+                    <i class="fa-solid fa-bolt"></i> 
+                    <span data-i18n="live_hint">Valuation updates automatically with every change</span>
                 </div>
             </div>
+            
+            <div class="results-wrapper">
+                <div class="results">
+                    <div class="result-box highlight" id="priceResultBox">
+                        <div class="label" data-i18n="price_range">💰 Estimated Price Range</div>
+                        <div class="value" id="priceRangeDisplay">—</div>
+                        <div class="sub" id="avgPriceNote"></div>
+                    </div>
+                    <div class="result-box">
+                        <div class="label" data-i18n="investment">📈 Investment Index</div>
+                        <div class="value" id="investmentIndex">—</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="label" data-i18n="last_update">📅 Model Update</div>
+                        <div class="value" style="color:var(--accent); font-size:0.95rem;" data-i18n="model_date">March 2026</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card" id="detailsCard" style="display:none; margin-top:16px; padding:16px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div class="section-title" style="margin:0; font-size:0.95rem;">
+                        <i class="fa-solid fa-calculator"></i> <span data-i18n="details_title">Valuation Details</span>
+                    </div>
+                    <button class="btn btn-outline btn-sm" id="toggleDetailsBtn">
+                        <i class="fa-solid fa-chevron-down"></i> <span data-i18n="show">Show</span>
+                    </button>
+                </div>
+                <div id="detailsContent" style="display:none; margin-top:12px;"></div>
+            </div>
+            
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; justify-content:center;">
+                <button class="btn btn-outline btn-sm" id="shareResultBtn">
+                    <i class="fa-solid fa-share-alt"></i> <span data-i18n="share">Share Results</span>
+                </button>
+                <button class="btn btn-outline btn-sm" id="resetFormBtn">
+                    <i class="fa-solid fa-undo"></i> <span data-i18n="reset">Reset</span>
+                </button>
+            </div>
+            
             <div class="disclaimer">
-                <strong><i class="fa-solid fa-triangle-exclamation"></i> <span data-i18n="disclaimer_title">إخلاء مسؤولية:</span></strong>
-                <span data-i18n="disclaimer_body">النتائج استرشادية فقط ولا تعتبر وثيقة تثمين رسمية.</span>
+                <i class="fa-solid fa-circle-info"></i>
+                <div>
+                    <strong data-i18n="disclaimer_title">⚠️ Important Notice:</strong>
+                    <span data-i18n="disclaimer_body">This valuation is a guide based on public market indicators. It is NOT an official appraisal document. We recommend consulting a certified appraiser for accurate valuations.</span>
+                </div>
             </div>
         </div>
     </div>
@@ -450,34 +549,34 @@
     <!-- ADD -->
     <div class="section-content" id="section-add">
         <div class="card">
-            <div class="section-title"><i class="fa-solid fa-plus-circle"></i> <span data-i18n="add_title">إضافة عقار جديد</span></div>
+            <div class="section-title"><i class="fa-solid fa-plus-circle"></i> <span data-i18n="add_title">Add New Property</span></div>
             <form id="addPropertyForm">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label data-i18n="city">المدينة</label>
+                        <label data-i18n="city">City</label>
                         <select id="addCity">
-                            <option value="الرياض">الرياض</option>
-                            <option value="جدة">جدة</option>
-                            <option value="الدمام">الدمام</option>
-                            <option value="مكة المكرمة">مكة المكرمة</option>
-                            <option value="المدينة المنورة">المدينة المنورة</option>
+                            <option value="الرياض">Riyadh</option>
+                            <option value="جدة">Jeddah</option>
+                            <option value="الدمام">Dammam</option>
+                            <option value="مكة المكرمة">Makkah</option>
+                            <option value="المدينة المنورة">Madinah</option>
                         </select>
                     </div>
-                    <div class="form-group"><label data-i18n="district">الحي</label><input type="text" id="addLocation" required></div>
+                    <div class="form-group"><label data-i18n="district">District</label><input type="text" id="addLocation" required></div>
                     <div class="form-group">
-                        <label data-i18n="type">نوع العقار</label>
+                        <label data-i18n="type">Property Type</label>
                         <select id="addPropertyType">
-                            <option value="شقة سكنية">شقة سكنية</option>
-                            <option value="فيلا">فيلا</option>
-                            <option value="أرض">أرض</option>
-                            <option value="دوبلكس">دوبلكس</option>
+                            <option value="شقة سكنية">Apartment</option>
+                            <option value="فيلا">Villa</option>
+                            <option value="أرض">Land</option>
+                            <option value="دوبلكس">Duplex</option>
                         </select>
                     </div>
-                    <div class="form-group"><label data-i18n="price">السعر (ر.س)</label><input type="number" id="addPrice" required min="10000"></div>
-                    <div class="form-group"><label data-i18n="area">المساحة (م²)</label><input type="number" id="addAreaAdd" required min="20"></div>
+                    <div class="form-group"><label data-i18n="price">Price (SAR)</label><input type="number" id="addPrice" required min="10000"></div>
+                    <div class="form-group"><label data-i18n="area">Area (m²)</label><input type="number" id="addAreaAdd" required min="20"></div>
                 </div>
                 <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;">
-                    <i class="fa-solid fa-plus"></i> <span data-i18n="btn_add">إدراج وتقييم</span>
+                    <i class="fa-solid fa-plus"></i> <span data-i18n="btn_add">Submit & Evaluate</span>
                 </button>
             </form>
         </div>
@@ -487,75 +586,93 @@
     <div class="section-content" id="section-database">
         <div class="card">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
-                <div class="section-title" style="margin:0;"><i class="fa-solid fa-chart-bar"></i> <span data-i18n="db_title">التحليلات وقاعدة البيانات</span></div>
+                <div class="section-title" style="margin:0;"><i class="fa-solid fa-chart-bar"></i> <span data-i18n="db_title">Analytics & Database</span></div>
                 <div class="btn-row">
-                    <button class="btn btn-success" id="exportCsvBtn"><i class="fa-solid fa-table"></i> CSV</button>
-                    <button class="btn btn-outline" id="refreshDataBtn"><i class="fa-solid fa-rotate"></i> <span data-i18n="btn_refresh">تحديث</span></button>
+                    <button class="btn btn-success btn-sm" id="exportCsvBtn"><i class="fa-solid fa-table"></i> CSV</button>
+                    <button class="btn btn-outline btn-sm" id="refreshDataBtn"><i class="fa-solid fa-rotate"></i> <span data-i18n="btn_refresh">Refresh</span></button>
+                    <button class="btn btn-danger btn-sm" id="clearDataBtn"><i class="fa-solid fa-trash"></i> <span data-i18n="clear">Clear</span></button>
                 </div>
             </div>
             <div class="chart-box"><canvas id="analyticsChart"></canvas></div>
             <div class="section-title" style="font-size:1rem; margin-top:22px; color:var(--warning);">
-                <i class="fa-solid fa-magnifying-glass-chart"></i> <span data-i18n="review_title">قيم البحث — تحتاج مراجعة</span>
+                <i class="fa-solid fa-magnifying-glass-chart"></i> <span data-i18n="review_title">Search Values — Periodic Review</span>
             </div>
             <p class="review-note" id="reviewMeta"></p>
             <div class="table-wrap">
                 <table class="data-table"><thead><tr>
-                    <th data-i18n="review_param">المعامل</th><th data-i18n="review_value">القيمة</th><th data-i18n="review_status">الحالة</th>
+                    <th data-i18n="review_param">Parameter</th><th data-i18n="review_value">Value</th><th data-i18n="review_status">Status</th>
                 </tr></thead><tbody id="reviewTableBody"></tbody></table>
             </div>
-            <div class="section-title" style="font-size:1rem; margin-top:24px;"><i class="fa-solid fa-list"></i> <span data-i18n="props_list">العقارات المسجّلة</span></div>
+            <div class="section-title" style="font-size:1rem; margin-top:24px;"><i class="fa-solid fa-list"></i> <span data-i18n="props_list">Registered Properties</span></div>
             <div class="table-wrap">
                 <table class="data-table"><thead><tr>
-                    <th data-i18n="city">المدينة</th><th data-i18n="district">الحي</th>
-                    <th data-i18n="price">السعر</th><th data-i18n="ai_estimate">تقدير AI</th>
+                    <th data-i18n="city">City</th><th data-i18n="district">District</th>
+                    <th data-i18n="price">Price</th><th data-i18n="ai_estimate">AI Estimate</th>
+                    <th data-i18n="date">Date</th>
                 </tr></thead><tbody id="propsTableBody"></tbody></table>
             </div>
-            <div class="empty-msg" id="propsEmpty" data-i18n="props_empty">لا توجد عقارات مسجّلة بعد</div>
+            <div class="empty-msg" id="propsEmpty" data-i18n="props_empty">No properties registered yet</div>
         </div>
     </div>
 
     <!-- ABOUT -->
     <div class="section-content" id="section-about">
         <div class="card">
-            <div class="section-title"><i class="fa-solid fa-circle-info"></i> <span data-i18n="about_heading">عن منصة SaudiAqarAI</span></div>
-            <p style="font-size:0.92rem; line-height:1.85; color:var(--text-secondary); margin-bottom:14px;" data-i18n="about_text">مشروع تقني استرشادي لتقدير أسعار العقارات في المملكة العربية السعودية باستخدام خوارزميات تحليل السوق.</p>
-            <p style="font-size:0.88rem; color:var(--muted); line-height:1.75;" data-i18n="about_sources">مصادر البيانات: مؤشرات السوق 2025-2026 — آخر مراجعة مارس 2026.</p>
+            <div class="section-title"><i class="fa-solid fa-circle-info"></i> <span data-i18n="about_heading">About SaudiAqarAI</span></div>
+            <p style="font-size:0.95rem; line-height:1.9; color:var(--text-secondary); margin-bottom:16px;" data-i18n="about_text">
+                A pioneering technical project providing market valuations for Saudi real estate using intelligent algorithms that analyze actual market indicators.
+            </p>
+            <p style="font-size:0.88rem; color:var(--muted); line-height:1.8;" data-i18n="about_sources">
+                📊 Data sources: Real Estate Market Indicators 2025-2026 — Last updated: March 2026.
+            </p>
+            <div style="margin-top:20px; padding-top:20px; border-top:1px solid var(--border);">
+                <h4 style="font-size:0.95rem; margin-bottom:12px; color:var(--text);">
+                    <i class="fa-solid fa-cogs" style="color:var(--primary);"></i> <span data-i18n="methodology">Valuation Methodology</span>
+                </h4>
+                <ul style="font-size:0.85rem; color:var(--text-secondary); line-height:2.2; padding-right:20px; list-style:none;">
+                    <li>✓ <span data-i18n="m1"><strong>Base Price:</strong> Calculated using city rate per m² × area</span></li>
+                    <li>✓ <span data-i18n="m2"><strong>Adjustments:</strong> Property type, age, rooms, and street width</span></li>
+                    <li>✓ <span data-i18n="m3"><strong>Bonuses:</strong> Premium districts, good facades, and amenities</span></li>
+                    <li>✓ <span data-i18n="m4"><strong>Discounts:</strong> Older properties and less preferred facades</span></li>
+                    <li>✓ <span data-i18n="m5"><strong>Updates:</strong> Regularly reviewed to reflect market changes</span></li>
+                </ul>
+            </div>
         </div>
     </div>
 
     <!-- CONTACT -->
     <div class="section-content" id="section-contact">
         <div class="card">
-            <div class="section-title" style="justify-content:center;"><i class="fa-solid fa-address-card"></i> <span data-i18n="contact_heading">تواصل معنا</span></div>
+            <div class="section-title" style="justify-content:center;"><i class="fa-solid fa-address-card"></i> <span data-i18n="contact_heading">Contact Us</span></div>
             <div class="contact-grid">
                 <div class="contact-card">
                     <div class="icon-wrap"><i class="fa-solid fa-location-dot"></i></div>
                     <div>
-                        <div class="info-label" data-i18n="contact_location">الموقع</div>
-                        <div class="info-value" data-i18n="location_value">الدوحة، قطر</div>
+                        <div class="info-label" data-i18n="contact_location">Location</div>
+                        <div class="info-value" data-i18n="location_value">Doha, Qatar</div>
                     </div>
                 </div>
                 <div class="contact-card">
                     <div class="icon-wrap"><i class="fa-solid fa-envelope"></i></div>
                     <div>
-                        <div class="info-label" data-i18n="contact_email">البريد الإلكتروني</div>
+                        <div class="info-label" data-i18n="contact_email">Email</div>
                         <div class="info-value"><a href="mailto:ahmedvalljemaldine@gmail.com">ahmedvalljemaldine@gmail.com</a></div>
                     </div>
                 </div>
                 <div class="contact-card">
                     <div class="icon-wrap"><i class="fa-solid fa-phone"></i></div>
                     <div>
-                        <div class="info-label" data-i18n="contact_phone">الهاتف</div>
+                        <div class="info-label" data-i18n="contact_phone">Phone</div>
                         <div class="info-value" dir="ltr"><a href="tel:+97474736271">+974 7473 6271</a></div>
                     </div>
                 </div>
             </div>
             <div class="contact-btns">
                 <a href="https://wa.me/97474736271" target="_blank" rel="noopener" class="btn btn-success">
-                    <i class="fa-brands fa-whatsapp"></i> <span data-i18n="contact_whatsapp">واتساب</span>
+                    <i class="fa-brands fa-whatsapp"></i> <span data-i18n="contact_whatsapp">WhatsApp</span>
                 </a>
                 <a href="https://ahmedvall70.github.io/ahmed-vall-cv/" target="_blank" rel="noopener" class="btn btn-outline">
-                    <i class="fa-solid fa-file-pdf"></i> <span data-i18n="contact_cv">السيرة الذاتية</span>
+                    <i class="fa-solid fa-file-pdf"></i> <span data-i18n="contact_cv">Resume</span>
                 </a>
                 <a href="https://ahmedvall70.github.io/Innovision/" target="_blank" rel="noopener" class="btn btn-primary">
                     <i class="fa-solid fa-rocket"></i> <span data-i18n="contact_innovision">Innovision Hub</span>
@@ -564,16 +681,16 @@
         </div>
     </div>
 
-    <div class="footer">© 2026 <strong>SaudiAqarAI</strong> — <span data-i18n="dev_by">تطوير:</span> <strong>أحمد فال جمال الدين سيدنا</strong></div>
+    <div class="footer">© 2026 <strong>SaudiAqarAI</strong> — <span data-i18n="dev_by">Developed by:</span> <strong>Ahmed Vall Jemaldine Sidna</strong></div>
 </div>
 
 <div class="bottom-nav-wrap">
     <nav class="bottom-nav">
-        <button class="nav-item active" data-tab="evaluate"><i class="fa-solid fa-robot"></i><span data-i18n="nav_eval">التقييم</span></button>
-        <button class="nav-item" data-tab="add"><i class="fa-solid fa-plus-circle"></i><span data-i18n="nav_add">إضافة</span></button>
-        <button class="nav-item" data-tab="database"><i class="fa-solid fa-chart-bar"></i><span data-i18n="nav_db">البيانات</span></button>
-        <button class="nav-item" data-tab="about"><i class="fa-solid fa-circle-info"></i><span data-i18n="nav_about">عن</span></button>
-        <button class="nav-item" data-tab="contact"><i class="fa-solid fa-address-card"></i><span data-i18n="nav_contact">تواصل</span></button>
+        <button class="nav-item active" data-tab="evaluate"><i class="fa-solid fa-robot"></i><span data-i18n="nav_eval">Valuation</span></button>
+        <button class="nav-item" data-tab="add"><i class="fa-solid fa-plus-circle"></i><span data-i18n="nav_add">Add</span></button>
+        <button class="nav-item" data-tab="database"><i class="fa-solid fa-chart-bar"></i><span data-i18n="nav_db">Analytics</span></button>
+        <button class="nav-item" data-tab="about"><i class="fa-solid fa-circle-info"></i><span data-i18n="nav_about">About</span></button>
+        <button class="nav-item" data-tab="contact"><i class="fa-solid fa-address-card"></i><span data-i18n="nav_contact">Contact</span></button>
     </nav>
 </div>
 
@@ -582,157 +699,547 @@
         <i class="fa-solid fa-circle-check" id="modalIcon"></i>
         <h4 id="modalTitle">—</h4>
         <p id="modalMessage">—</p>
-        <button class="btn btn-primary" id="modalCloseBtn" data-i18n="modal_ok">حسناً</button>
+        <button class="btn btn-primary" id="modalCloseBtn" data-i18n="modal_ok">OK</button>
     </div>
 </div>
 
 <script>
+// ============================================================
+// 1. CONFIGURATION
+// ============================================================
 const MARKET_CONFIG = {
-    city_base_rates: { riyadh:4800, jeddah:4500, dammam:3900, makkah:5200, madinah:4100 },
-    city_aliases: { "الرياض":"riyadh","جدة":"jeddah","الدمام":"dammam","مكة المكرمة":"makkah","المدينة المنورة":"madinah" },
-    property_type_multipliers: { "فيلا":1.30,"شقة سكنية":1.00,"أرض":0.85,"دوبلكس":1.15 },
-    facade_adjustments: { "شرقية":1.05,"شمالية":1.04,"جنوبية":1.00,"غربية":0.98 },
-    district_grade_adjustments: { "حي راقي":1.25,"حي استثماري":1.15,"حي متوسط":1.00 },
-    amenity_adjustments: { elevator:1.04, pool:1.08, driver_room:1.03, furnished:1.10 },
-    street_width_tiers: [[30,1.08],[20,1.05],[15,1.02],[10,1.00],[0,0.97]],
-    depreciation: { rate:0.008, min_factor:0.55 },
-    rooms: { baseline:3, adjustment:0.025 },
+    city_base_rates: { riyadh: 4800, jeddah: 4500, dammam: 3900, makkah: 5200, madinah: 4100 },
+    city_aliases: { "الرياض": "riyadh", "جدة": "jeddah", "الدمام": "dammam", "مكة المكرمة": "makkah", "المدينة المنورة": "madinah" },
+    property_type_multipliers: { "فيلا": 1.30, "شقة سكنية": 1.00, "أرض": 0.85, "دوبلكس": 1.15 },
+    facade_adjustments: { "شرقية": 1.05, "شمالية": 1.04, "جنوبية": 1.00, "غربية": 0.98 },
+    district_grade_adjustments: { "حي راقي": 1.25, "حي استثماري": 1.15, "حي متوسط": 1.00 },
+    amenity_adjustments: { elevator: 1.04, pool: 1.08, driver_room: 1.03, furnished: 1.10, central_ac: 1.05, maid_room: 1.04 },
+    depreciation: {
+        rate: 0.008,
+        min_factor: 0.55,
+        age_discount: { 0: 1.00, 5: 0.96, 10: 0.90, 15: 0.82, 20: 0.72, 25: 0.62, 30: 0.55 }
+    },
+    rooms: { baseline: 3, adjustment: 0.025, max_rooms: 8 },
     price_range_margin: 0.05,
-    premium_neighborhood_keywords: { "النخيل":1.06,"الملقا":1.08,"العليا":1.07,"الروضة":1.05,"الشاطئ":1.06 },
-    review_meta: { last_reviewed:"2026-03-01", next_review:"2026-06-01", data_source:"Saudi Real Estate Market Indicators 2025-2026" }
-};
-
-const API_BASE = (location.protocol === 'file:' || location.hostname === '127.0.0.1' || location.hostname === 'localhost') ? 'http://127.0.0.1:8000' : '';
-let apiOnline = false, currentLang = 'ar', analyticsChart = null, debounceTimer = null;
-
-const translations = {
-    ar: {
-        nav_eval:"التقييم", nav_add:"إضافة", nav_db:"البيانات", nav_about:"عن المنصة", nav_contact:"تواصل",
-        hero_badge:"ذكاء اصطناعي عقاري",
-        title:"محرك التقييم العقاري الذكي",
-        subtitle:"أدخل مواصفات العقار للحصول على تقييم تقديري فوري يستند لمؤشرات السوق",
-        city:"المدينة", district:"اسم الحي", type:"نوع العقار", area:"المساحة (م²)", rooms:"عدد الغرف", age:"عمر العقار (سنوات)",
-        facade:"الواجهة", street_width:"عرض الشارع (م)", location_type:"تصنيف الحي", price:"السعر (ر.س)",
-        elevator:"مصعد", pool:"مسبح", driver:"غرفة سائق", furnished:"مفروش",
-        live_hint:"النتيجة تتحدث تلقائياً عند تغيير أي حقل",
-        btn_add:"إدراج وتقييم", btn_refresh:"تحديث",
-        price_range:"النطاق السعري التقديري", investment:"مؤشر الاستثمار", last_update:"تحديث النموذج",
-        model_date:"مارس 2026", avg_price:"المتوسط", sar:"ر.س",
-        disclaimer_title:"إخلاء مسؤولية:", disclaimer_body:"النتائج استرشادية فقط ولا تعتبر وثيقة تثمين رسمية.",
-        add_title:"إضافة عقار جديد", db_title:"التحليلات وقاعدة البيانات",
-        about_heading:"عن منصة SaudiAqarAI",
-        about_text:"مشروع تقني استرشادي لتقدير أسعار العقارات في المملكة العربية السعودية باستخدام خوارزميات تحليل السوق.",
-        about_sources:"مصادر البيانات: مؤشرات السوق 2025-2026 — آخر مراجعة مارس 2026.",
-        contact_heading:"تواصل معنا", contact_location:"الموقع", contact_email:"البريد الإلكتروني",
-        contact_phone:"الهاتف", contact_cv:"السيرة الذاتية", contact_whatsapp:"واتساب", contact_innovision:"Innovision Hub",
-        location_value:"الدوحة، قطر", dev_by:"تطوير:",
-        review_title:"قيم البحث — تحتاج مراجعة", review_param:"المعامل", review_value:"القيمة", review_status:"الحالة",
-        review_due:"يحتاج مراجعة", review_ok:"محدّث",
-        props_list:"العقارات المسجّلة", props_empty:"لا توجد عقارات مسجّلة بعد", ai_estimate:"تقدير AI",
-        api_online:"API متصل", api_offline:"وضع محلي", modal_ok:"حسناً",
-        modal_add_ok:"تمت الإضافة!", modal_add_msg:"تم إدراج العقار بنجاح.",
-        modal_export_ok:"تم التصدير", modal_export_msg:"تم تنزيل CSV بنجاح.",
-        modal_no_data:"لا توجد بيانات", modal_no_data_msg:"أضف عقارات أولاً.",
-        cities:{ "الرياض":"الرياض","جدة":"جدة","الدمام":"الدمام","مكة المكرمة":"مكة المكرمة","المدينة المنورة":"المدينة المنورة" },
-        types:{ "فيلا":"فيلا","شقة سكنية":"شقة سكنية","أرض":"أرض","دوبلكس":"دوبلكس" },
-        facades:{ "شرقية":"شرقية (+5%)","شمالية":"شمالية (+4%)","جنوبية":"جنوبية","غربية":"غربية (-2%)" },
-        districts:{ "حي راقي":"حي راقي (+25%)","حي استثماري":"حي استثماري (+15%)","حي متوسط":"حي متوسط" },
-        city_keys:{ riyadh:"الرياض", jeddah:"جدة", dammam:"الدمام", makkah:"مكة", madinah:"المدينة" }
+    premium_neighborhood_keywords: {
+        "النخيل": 1.06, "الملقا": 1.08, "العليا": 1.07, "الروضة": 1.05,
+        "الشاطئ": 1.06, "السفارات": 1.10, "الدرعية": 1.09, "العارض": 1.04,
+        "الرياض": 1.04, "الورود": 1.03, "الملك": 1.05
     },
-    en: {
-        nav_eval:"Valuation", nav_add:"Add", nav_db:"Analytics", nav_about:"About", nav_contact:"Contact",
-        hero_badge:"AI Real Estate",
-        title:"Smart Real Estate Valuation Engine",
-        subtitle:"Enter property specs for an instant AI-estimated valuation based on market indicators",
-        city:"City", district:"District", type:"Property Type", area:"Area (m²)", rooms:"Rooms", age:"Age (Years)",
-        facade:"Facade", street_width:"Street Width (m)", location_type:"District Grade", price:"Price (SAR)",
-        elevator:"Elevator", pool:"Pool", driver:"Driver Room", furnished:"Furnished",
-        live_hint:"Results update automatically when you change any field",
-        btn_add:"Submit & Evaluate", btn_refresh:"Refresh",
-        price_range:"Estimated Price Range", investment:"Investment Index", last_update:"Model Update",
-        model_date:"March 2026", avg_price:"Average", sar:"SAR",
-        disclaimer_title:"Disclaimer:", disclaimer_body:"Results are estimates only — not an official appraisal.",
-        add_title:"Add New Property", db_title:"Analytics & Database",
-        about_heading:"About SaudiAqarAI",
-        about_text:"A technical project estimating real estate prices in Saudi Arabia using market analysis algorithms.",
-        about_sources:"Data sources: Market indicators 2025-2026 — last reviewed March 2026.",
-        contact_heading:"Contact Us", contact_location:"Location", contact_email:"Email",
-        contact_phone:"Phone", contact_cv:"Resume", contact_whatsapp:"WhatsApp", contact_innovision:"Innovision Hub",
-        location_value:"Doha, Qatar", dev_by:"Developed by:",
-        review_title:"Search Values — Periodic Review", review_param:"Parameter", review_value:"Value", review_status:"Status",
-        review_due:"Needs review", review_ok:"Up to date",
-        props_list:"Registered Properties", props_empty:"No properties registered yet", ai_estimate:"AI Estimate",
-        api_online:"API Connected", api_offline:"Local Mode", modal_ok:"OK",
-        modal_add_ok:"Added!", modal_add_msg:"Property saved successfully.",
-        modal_export_ok:"Exported", modal_export_msg:"CSV file downloaded.",
-        modal_no_data:"No Data", modal_no_data_msg:"Add properties first.",
-        cities:{ "الرياض":"Riyadh","جدة":"Jeddah","الدمام":"Dammam","مكة المكرمة":"Makkah","المدينة المنورة":"Madinah" },
-        types:{ "فيلا":"Villa","شقة سكنية":"Apartment","أرض":"Land","دوبلكس":"Duplex" },
-        facades:{ "شرقية":"East (+5%)","شمالية":"North (+4%)","جنوبية":"South","غربية":"West (-2%)" },
-        districts:{ "حي راقي":"Premium (+25%)","حي استثماري":"Investment (+15%)","حي متوسط":"Standard" },
-        city_keys:{ riyadh:"Riyadh", jeddah:"Jeddah", dammam:"Dammam", makkah:"Makkah", madinah:"Madinah" }
-    },
-    fr: {
-        nav_eval:"Évaluation", nav_add:"Ajouter", nav_db:"Données", nav_about:"À propos", nav_contact:"Contact",
-        hero_badge:"IA Immobilière",
-        title:"Moteur d'Évaluation Immobilière Intelligent",
-        subtitle:"Entrez les caractéristiques pour une estimation instantanée basée sur le marché",
-        city:"Ville", district:"Quartier", type:"Type de bien", area:"Surface (m²)", rooms:"Pièces", age:"Âge (ans)",
-        facade:"Façade", street_width:"Largeur rue (m)", location_type:"Catégorie", price:"Prix (SAR)",
-        elevator:"Ascenseur", pool:"Piscine", driver:"Chauffeur", furnished:"Meublé",
-        live_hint:"Le résultat se met à jour automatiquement à chaque modification",
-        btn_add:"Soumettre & Évaluer", btn_refresh:"Actualiser",
-        price_range:"Fourchette estimée", investment:"Indice d'investissement", last_update:"Mise à jour",
-        model_date:"Mars 2026", avg_price:"Moyenne", sar:"SAR",
-        disclaimer_title:"Avertissement:", disclaimer_body:"Estimations indicatives uniquement — pas une expertise officielle.",
-        add_title:"Ajouter un bien", db_title:"Analyses & Données",
-        about_heading:"À propos de SaudiAqarAI",
-        about_text:"Projet d'estimation immobilière en Arabie Saoudite utilisant des algorithmes d'analyse de marché.",
-        about_sources:"Sources: Indicateurs 2025-2026 — dernière révision mars 2026.",
-        contact_heading:"Contact", contact_location:"Lieu", contact_email:"E-mail",
-        contact_phone:"Téléphone", contact_cv:"CV", contact_whatsapp:"WhatsApp", contact_innovision:"Innovision Hub",
-        location_value:"Doha, Qatar", dev_by:"Développé par:",
-        review_title:"Valeurs — Révision périodique", review_param:"Paramètre", review_value:"Valeur", review_status:"Statut",
-        review_due:"À réviser", review_ok:"À jour",
-        props_list:"Biens enregistrés", props_empty:"Aucun bien enregistré", ai_estimate:"Estimation IA",
-        api_online:"API connectée", api_offline:"Mode local", modal_ok:"OK",
-        modal_add_ok:"Ajouté!", modal_add_msg:"Bien enregistré avec succès.",
-        modal_export_ok:"Exporté", modal_export_msg:"Fichier CSV téléchargé.",
-        modal_no_data:"Pas de données", modal_no_data_msg:"Ajoutez des biens d'abord.",
-        cities:{ "الرياض":"Riyad","جدة":"Djeddah","الدمام":"Dammam","مكة المكرمة":"La Mecque","المدينة المنورة":"Médine" },
-        types:{ "فيلا":"Villa","شقة سكنية":"Appartement","أرض":"Terrain","دوبلكس":"Duplex" },
-        facades:{ "شرقية":"Est (+5%)","شمالية":"Nord (+4%)","جنوبية":"Sud","غربية":"Ouest (-2%)" },
-        districts:{ "حي راقي":"Premium (+25%)","حي استثماري":"Investissement (+15%)","حي متوسط":"Standard" },
-        city_keys:{ riyadh:"Riyad", jeddah:"Djeddah", dammam:"Dammam", makkah:"La Mecque", madinah:"Médine" }
-    }
+    review_meta: { last_reviewed: "2026-03-01", next_review: "2026-06-01", data_source: "Saudi Real Estate Market Indicators 2025-2026" },
+    seasonality: { summer: 0.98, winter: 1.02, default: 1.00 }
 };
 
 const GRADES = {
-    excellent: { ar:"ممتاز (A+)", en:"Excellent (A+)", fr:"Excellent (A+)", color:"#d97706" },
-    very_good: { ar:"جيد جداً (A)", en:"Very Good (A)", fr:"Très bon (A)", color:"#059669" },
-    average:   { ar:"متوسط (B)", en:"Average (B)", fr:"Moyen (B)", color:"#2563eb" },
-    needs_study:{ ar:"يحتاج دراسة (C)", en:"Needs Study (C)", fr:"À étudier (C)", color:"#dc2626" }
+    excellent: { ar: "🌟 ممتاز (A+)", en: "🌟 Excellent (A+)", fr: "🌟 Excellent (A+)", color: "#d97706" },
+    very_good: { ar: "✅ جيد جداً (A)", en: "✅ Very Good (A)", fr: "✅ Très bon (A)", color: "#059669" },
+    average: { ar: "📊 متوسط (B)", en: "📊 Average (B)", fr: "📊 Moyen (B)", color: "#2563eb" },
+    needs_study: { ar: "📋 يحتاج دراسة (C)", en: "📋 Needs Study (C)", fr: "📋 À étudier (C)", color: "#dc2626" }
 };
 
-function t(k) { return translations[currentLang]?.[k] ?? translations.ar[k] ?? k; }
+const API_BASE = (location.protocol === 'file:' || location.hostname === '127.0.0.1' || location.hostname === 'localhost') ? 'http://127.0.0.1:8000' : '';
+
+// ============================================================
+// 2. STATE
+// ============================================================
+let currentLang = 'ar';
+let apiOnline = false;
+let analyticsChart = null;
+let debounceTimer = null;
+let lastCalculation = null;
+let isUpdating = false;
+
+// ============================================================
+// 3. COMPLETE TRANSLATIONS - All languages fully translated
+// ============================================================
+const translations = {
+    ar: {
+        // Navigation
+        nav_eval: "التقييم", nav_add: "إضافة", nav_db: "البيانات", nav_about: "عن المنصة", nav_contact: "تواصل",
+        // Hero
+        hero_badge: "🕌 ذكاء اصطناعي عقاري سعودي",
+        title: "المُقيّم العقاري الذكي",
+        subtitle: "أدخل بيانات العقار ليُقدّر الذكاء الاصطناعي القيمة السوقية العادلة في لحظات",
+        // Form
+        city: "المدينة", district: "الحي", type: "نوع العقار", area: "المساحة (م²)", rooms: "عدد الغرف", age: "عمر العقار (سنوات)",
+        facade: "الواجهة", street_width: "عرض الشارع (م)", location_type: "تصنيف الحي", price: "السعر (ر.س)",
+        elevator: "مصعد", pool: "مسبح", driver: "غرفة سائق", furnished: "مفروش", central_ac: "تكييف مركزي", maid_room: "غرفة خادمة",
+        live_hint: "يتحدّث التقييم تلقائياً مع كل تعديل في البيانات",
+        // Buttons
+        btn_add: "إدراج وتقييم", btn_refresh: "تحديث", reset: "إعادة تعيين", share: "مشاركة النتائج", clear: "مسح",
+        show: "عرض", details_title: "تفاصيل التقييم",
+        // Results
+        price_range: "💰 النطاق السعري التقديري", investment: "📈 مؤشر الاستثمار", last_update: "📅 تحديث النموذج",
+        model_date: "مارس 2026", avg_price: "المتوسط", sar: "ر.س",
+        // Disclaimer
+        disclaimer_title: "⚠️ تنبيه مهم:",
+        disclaimer_body: "هذا التقييم هو تقدير استرشادي يستند إلى مؤشرات السوق العامة، ولا يُعتبر وثيقة تثمين رسمية معتمدة من جهة حكومية أو مصرفية. نوصي بالاستعانة بمثمّن عقاري معتمد للحصول على تقييم دقيق وملزم.",
+        // Add
+        add_title: "إضافة عقار جديد",
+        // Database
+        db_title: "التحليلات وقاعدة البيانات",
+        review_title: "قيم البحث — تحتاج مراجعة", review_param: "المعامل", review_value: "القيمة", review_status: "الحالة",
+        review_due: "يحتاج مراجعة", review_ok: "محدّث",
+        props_list: "العقارات المسجّلة", props_empty: "لا توجد عقارات مسجّلة بعد", ai_estimate: "تقدير AI",
+        date: "التاريخ",
+        // About
+        about_heading: "عن منصة SaudiAqarAI",
+        about_text: "مشروع تقني ريادي يُقدّم تقديرات سوقية للعقارات في المملكة العربية السعودية، مستنداً إلى خوارزميات ذكية تحلل مؤشرات السوق الفعلية.",
+        about_sources: "📊 مصادر البيانات: مؤشرات السوق العقارية 2025-2026 — آخر تحديث: مارس 2026.",
+        methodology: "منهجية التقييم",
+        m1: "<strong>السعر الأساسي:</strong> يُحتسب بناءً على سعر المتر في المدينة مضروباً في المساحة",
+        m2: "<strong>معاملات التعديل:</strong> تشمل نوع العقار، العمر، عدد الغرف، وعرض الشارع",
+        m3: "<strong>المكافآت:</strong> تُمنح للأحياء المميزة، الواجهات الجيدة، والمرافق الإضافية",
+        m4: "<strong>الخصومات:</strong> تُطبق على العقارات القديمة والواجهات الأقل تفضيلاً",
+        m5: "<strong>التحديث:</strong> يتم مراجعة المؤشرات دورياً لتعكس تغيرات السوق",
+        // Contact
+        contact_heading: "تواصل معنا", contact_location: "الموقع", contact_email: "البريد الإلكتروني",
+        contact_phone: "الهاتف", contact_cv: "السيرة الذاتية", contact_whatsapp: "واتساب", contact_innovision: "Innovision Hub",
+        location_value: "الدوحة، قطر", dev_by: "تطوير:",
+        // API
+        api_online: "🟢 متصل بالسيرفر", api_offline: "🇸🇦 وضع التقييم المحلي",
+        // Modal
+        modal_ok: "حسناً",
+        modal_add_ok: "تمت الإضافة!", modal_add_msg: "تم إدراج العقار بنجاح.",
+        modal_export_ok: "تم التصدير", modal_export_msg: "تم تنزيل CSV بنجاح.",
+        modal_no_data: "لا توجد بيانات", modal_no_data_msg: "أضف عقارات أولاً.",
+        modal_clear_confirm: "تأكيد المسح", modal_clear_msg: "هل أنت متأكد من حذف جميع العقارات؟",
+        modal_clear_done: "تم المسح", modal_clear_done_msg: "تم حذف جميع العقارات.",
+        // Cities and types
+        cities: { "الرياض": "الرياض", "جدة": "جدة", "الدمام": "الدمام", "مكة المكرمة": "مكة المكرمة", "المدينة المنورة": "المدينة المنورة" },
+        types: { "فيلا": "فيلا", "شقة سكنية": "شقة سكنية", "أرض": "أرض", "دوبلكس": "دوبلكس" },
+        facades: { "شرقية": "شرقية (+5%)", "شمالية": "شمالية (+4%)", "جنوبية": "جنوبية", "غربية": "غربية (-2%)" },
+        districts: { "حي راقي": "حي راقي (+25%)", "حي استثماري": "حي استثماري (+15%)", "حي متوسط": "حي متوسط" },
+        city_keys: { riyadh: "الرياض", jeddah: "جدة", dammam: "الدمام", makkah: "مكة", madinah: "المدينة" }
+    },
+    en: {
+        nav_eval: "Valuation", nav_add: "Add", nav_db: "Analytics", nav_about: "About", nav_contact: "Contact",
+        hero_badge: "🏢 AI Real Estate",
+        title: "Smart Property Valuator",
+        subtitle: "Enter property details and AI will estimate fair market value in real-time",
+        city: "City", district: "District", type: "Property Type", area: "Area (m²)", rooms: "Rooms", age: "Age (Years)",
+        facade: "Facade", street_width: "Street Width (m)", location_type: "District Grade", price: "Price (SAR)",
+        elevator: "Elevator", pool: "Pool", driver: "Driver Room", furnished: "Furnished", central_ac: "Central AC", maid_room: "Maid Room",
+        live_hint: "Valuation updates automatically with every change",
+        btn_add: "Submit & Evaluate", btn_refresh: "Refresh", reset: "Reset", share: "Share Results", clear: "Clear",
+        show: "Show", details_title: "Valuation Details",
+        price_range: "💰 Estimated Price Range", investment: "📈 Investment Index", last_update: "📅 Model Update",
+        model_date: "March 2026", avg_price: "Average", sar: "SAR",
+        disclaimer_title: "⚠️ Important Notice:",
+        disclaimer_body: "This valuation is a guide based on public market indicators. It is NOT an official appraisal document. We recommend consulting a certified appraiser for accurate valuations.",
+        add_title: "Add New Property",
+        db_title: "Analytics & Database",
+        review_title: "Search Values — Periodic Review", review_param: "Parameter", review_value: "Value", review_status: "Status",
+        review_due: "Needs review", review_ok: "Up to date",
+        props_list: "Registered Properties", props_empty: "No properties registered yet", ai_estimate: "AI Estimate",
+        date: "Date",
+        about_heading: "About SaudiAqarAI",
+        about_text: "A pioneering technical project providing market valuations for Saudi real estate using intelligent algorithms that analyze actual market indicators.",
+        about_sources: "📊 Data sources: Real Estate Market Indicators 2025-2026 — Last updated: March 2026.",
+        methodology: "Valuation Methodology",
+        m1: "<strong>Base Price:</strong> Calculated using city rate per m² × area",
+        m2: "<strong>Adjustments:</strong> Property type, age, rooms, and street width",
+        m3: "<strong>Bonuses:</strong> Premium districts, good facades, and amenities",
+        m4: "<strong>Discounts:</strong> Older properties and less preferred facades",
+        m5: "<strong>Updates:</strong> Regularly reviewed to reflect market changes",
+        contact_heading: "Contact Us", contact_location: "Location", contact_email: "Email",
+        contact_phone: "Phone", contact_cv: "Resume", contact_whatsapp: "WhatsApp", contact_innovision: "Innovision Hub",
+        location_value: "Doha, Qatar", dev_by: "Developed by:",
+        api_online: "🟢 Server Connected", api_offline: "🇸🇦 Local Mode",
+        modal_ok: "OK",
+        modal_add_ok: "Added!", modal_add_msg: "Property saved successfully.",
+        modal_export_ok: "Exported", modal_export_msg: "CSV file downloaded.",
+        modal_no_data: "No Data", modal_no_data_msg: "Add properties first.",
+        modal_clear_confirm: "Confirm Clear", modal_clear_msg: "Are you sure you want to delete all properties?",
+        modal_clear_done: "Cleared", modal_clear_done_msg: "All properties deleted.",
+        cities: { "الرياض": "Riyadh", "جدة": "Jeddah", "الدمام": "Dammam", "مكة المكرمة": "Makkah", "المدينة المنورة": "Madinah" },
+        types: { "فيلا": "Villa", "شقة سكنية": "Apartment", "أرض": "Land", "دوبلكس": "Duplex" },
+        facades: { "شرقية": "East (+5%)", "شمالية": "North (+4%)", "جنوبية": "South", "غربية": "West (-2%)" },
+        districts: { "حي راقي": "Premium (+25%)", "حي استثماري": "Investment (+15%)", "حي متوسط": "Standard" },
+        city_keys: { riyadh: "Riyadh", jeddah: "Jeddah", dammam: "Dammam", makkah: "Makkah", madinah: "Madinah" }
+    },
+    fr: {
+        nav_eval: "Évaluation", nav_add: "Ajouter", nav_db: "Données", nav_about: "À propos", nav_contact: "Contact",
+        hero_badge: "🏢 IA Immobilière",
+        title: "Évaluateur Immobilier Intelligent",
+        subtitle: "Entrez les détails du bien pour une estimation en temps réel",
+        city: "Ville", district: "Quartier", type: "Type de bien", area: "Surface (m²)", rooms: "Pièces", age: "Âge (ans)",
+        facade: "Façade", street_width: "Largeur rue (m)", location_type: "Catégorie", price: "Prix (SAR)",
+        elevator: "Ascenseur", pool: "Piscine", driver: "Chauffeur", furnished: "Meublé", central_ac: "Clim. centrale", maid_room: "Chambre bonne",
+        live_hint: "L'estimation se met à jour automatiquement",
+        btn_add: "Soumettre & Évaluer", btn_refresh: "Actualiser", reset: "Réinitialiser", share: "Partager", clear: "Effacer",
+        show: "Afficher", details_title: "Détails de l'évaluation",
+        price_range: "💰 Fourchette estimée", investment: "📈 Indice d'investissement", last_update: "📅 Mise à jour",
+        model_date: "Mars 2026", avg_price: "Moyenne", sar: "SAR",
+        disclaimer_title: "⚠️ Avertissement important:",
+        disclaimer_body: "Cette estimation est indicative basée sur les indicateurs du marché. Ce n'est PAS un document d'expertise officiel. Nous recommandons de consulter un expert agréé.",
+        add_title: "Ajouter un bien",
+        db_title: "Analyses & Données",
+        review_title: "Valeurs — Révision périodique", review_param: "Paramètre", review_value: "Valeur", review_status: "Statut",
+        review_due: "À réviser", review_ok: "À jour",
+        props_list: "Biens enregistrés", props_empty: "Aucun bien enregistré", ai_estimate: "Estimation IA",
+        date: "Date",
+        about_heading: "À propos de SaudiAqarAI",
+        about_text: "Un projet technique innovant fournissant des estimations immobilières pour l'Arabie Saoudite basées sur des algorithmes intelligents.",
+        about_sources: "📊 Sources: Indicateurs du marché 2025-2026 — Dernière mise à jour: Mars 2026.",
+        methodology: "Méthodologie d'évaluation",
+        m1: "<strong>Prix de base:</strong> Calculé avec le taux de la ville × surface",
+        m2: "<strong>Ajustements:</strong> Type, âge, pièces, largeur de rue",
+        m3: "<strong>Bonus:</strong> Quartiers premium, bonnes façades, équipements",
+        m4: "<strong>Remises:</strong> Biens anciens et façades moins prisées",
+        m5: "<strong>Mises à jour:</strong> Révisées régulièrement pour refléter le marché",
+        contact_heading: "Contact", contact_location: "Lieu", contact_email: "E-mail",
+        contact_phone: "Téléphone", contact_cv: "CV", contact_whatsapp: "WhatsApp", contact_innovision: "Innovision Hub",
+        location_value: "Doha, Qatar", dev_by: "Développé par:",
+        api_online: "🟢 Serveur connecté", api_offline: "🇸🇦 Mode local",
+        modal_ok: "OK",
+        modal_add_ok: "Ajouté!", modal_add_msg: "Bien enregistré avec succès.",
+        modal_export_ok: "Exporté", modal_export_msg: "Fichier CSV téléchargé.",
+        modal_no_data: "Pas de données", modal_no_data_msg: "Ajoutez des biens d'abord.",
+        modal_clear_confirm: "Confirmer", modal_clear_msg: "Supprimer tous les biens ?",
+        modal_clear_done: "Effacé", modal_clear_done_msg: "Tous les biens supprimés.",
+        cities: { "الرياض": "Riyad", "جدة": "Djeddah", "الدمام": "Dammam", "مكة المكرمة": "La Mecque", "المدينة المنورة": "Médine" },
+        types: { "فيلا": "Villa", "شقة سكنية": "Appartement", "أرض": "Terrain", "دوبلكس": "Duplex" },
+        facades: { "شرقية": "Est (+5%)", "شمالية": "Nord (+4%)", "جنوبية": "Sud", "غربية": "Ouest (-2%)" },
+        districts: { "حي راقي": "Premium (+25%)", "حي استثماري": "Investissement (+15%)", "حي متوسط": "Standard" },
+        city_keys: { riyadh: "Riyad", jeddah: "Djeddah", dammam: "Dammam", makkah: "La Mecque", madinah: "Médine" }
+    }
+};
+
+// ============================================================
+// 4. UTILITY FUNCTIONS
+// ============================================================
+function t(k) { 
+    return translations[currentLang]?.[k] ?? translations.ar[k] ?? k; 
+}
+
+function showToast(msg, duration = 3000) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(el._hideTimer);
+    el._hideTimer = setTimeout(() => el.classList.remove('show'), duration);
+}
+
+function showModal(title, msg, icon = 'fa-solid fa-circle-check') {
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalMessage').textContent = msg;
+    document.getElementById('modalIcon').className = icon;
+    document.getElementById('customModal').classList.add('show');
+}
+
+function closeModal() { document.getElementById('customModal').classList.remove('show'); }
+
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => { clearTimeout(timeout); func(...args); };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+function normalizeCity(city) {
+    const key = MARKET_CONFIG.city_aliases[city] || 'riyadh';
+    return MARKET_CONFIG.city_base_rates[key] ? key : 'riyadh';
+}
+
+function getAgeDiscount(age) {
+    const discounts = MARKET_CONFIG.depreciation.age_discount;
+    const ages = Object.keys(discounts).map(Number).sort((a, b) => a - b);
+    let factor = 1;
+    for (let i = 0; i < ages.length; i++) {
+        if (age <= ages[i]) { factor = discounts[ages[i]]; break; }
+        if (i === ages.length - 1) factor = discounts[ages[i]];
+    }
+    return Math.max(MARKET_CONFIG.depreciation.min_factor, factor);
+}
+
+function getStreetWidthFactor(width) {
+    if (width >= 30) return 1.10;
+    if (width >= 20) return 1.05;
+    if (width >= 15) return 1.02;
+    if (width >= 10) return 1.00;
+    return 0.97;
+}
+
+function getNeighborhoodBonus(name) {
+    if (!name) return 1;
+    const l = name.trim().toLowerCase();
+    for (const [key, value] of Object.entries(MARKET_CONFIG.premium_neighborhood_keywords)) {
+        if (l.includes(key)) return value;
+    }
+    return 1;
+}
+
+function getSeasonalAdjustment() {
+    const month = new Date().getMonth();
+    if (month >= 5 && month <= 7) return MARKET_CONFIG.seasonality.summer;
+    if (month >= 11 || month <= 1) return MARKET_CONFIG.seasonality.winter;
+    return MARKET_CONFIG.seasonality.default;
+}
+
+function getGradeKey(score) {
+    if (score >= 85) return 'excellent';
+    if (score >= 70) return 'very_good';
+    if (score >= 55) return 'average';
+    return 'needs_study';
+}
+
+function getGradeText(key) {
+    const g = GRADES[key] || GRADES.average;
+    return g[currentLang] || g.ar;
+}
+
+function getGradeColor(key) {
+    return GRADES[key]?.color || GRADES.average.color;
+}
 
 function translateSelect(selectId, mapKey) {
     const sel = document.getElementById(selectId);
     if (!sel) return;
     const map = translations[currentLang][mapKey];
+    if (!map) return;
     [...sel.options].forEach(opt => {
         if (map[opt.value]) opt.textContent = map[opt.value];
     });
 }
 
+// ============================================================
+// 5. CORE VALUATION LOGIC
+// ============================================================
+function calculateLocal(data) {
+    const cityKey = normalizeCity(data.city);
+    const baseRate = MARKET_CONFIG.city_base_rates[cityKey];
+    
+    let total = data.area * baseRate;
+    total *= MARKET_CONFIG.property_type_multipliers[data.property_type] || 1;
+    total *= getAgeDiscount(data.age);
+    
+    const roomFactor = 1 + Math.min(Math.max(data.rooms - MARKET_CONFIG.rooms.baseline, 0), MARKET_CONFIG.rooms.max_rooms) * MARKET_CONFIG.rooms.adjustment;
+    total *= roomFactor;
+    total *= getStreetWidthFactor(data.street_width);
+    total *= MARKET_CONFIG.facade_adjustments[data.facade] || 1;
+    total *= MARKET_CONFIG.district_grade_adjustments[data.location_grade] || 1;
+    total *= getNeighborhoodBonus(data.neighborhood);
+    
+    let amenitiesFactor = 1;
+    if (data.has_elevator) amenitiesFactor *= MARKET_CONFIG.amenity_adjustments.elevator;
+    if (data.has_pool) amenitiesFactor *= MARKET_CONFIG.amenity_adjustments.pool;
+    if (data.has_driver_room) amenitiesFactor *= MARKET_CONFIG.amenity_adjustments.driver_room;
+    if (data.is_furnished) amenitiesFactor *= MARKET_CONFIG.amenity_adjustments.furnished;
+    if (data.has_central_ac) amenitiesFactor *= MARKET_CONFIG.amenity_adjustments.central_ac;
+    if (data.has_maid_room) amenitiesFactor *= MARKET_CONFIG.amenity_adjustments.maid_room;
+    total *= amenitiesFactor;
+    total *= getSeasonalAdjustment();
+    
+    const avg = Math.round(total);
+    const m = MARKET_CONFIG.price_range_margin;
+    const score = calculateInvestmentScore(data, avg, baseRate);
+    
+    return {
+        predicted_price: avg,
+        min_price: Math.round(total * (1 - m)),
+        max_price: Math.round(total * (1 + m)),
+        investment_grade_key: getGradeKey(score),
+        city_key: cityKey,
+        breakdown: {
+            base: Math.round(data.area * baseRate),
+            base_rate: baseRate,
+            type_multiplier: MARKET_CONFIG.property_type_multipliers[data.property_type] || 1,
+            age_factor: getAgeDiscount(data.age),
+            room_factor: roomFactor,
+            street_factor: getStreetWidthFactor(data.street_width),
+            facade_factor: MARKET_CONFIG.facade_adjustments[data.facade] || 1,
+            district_factor: MARKET_CONFIG.district_grade_adjustments[data.location_grade] || 1,
+            neighborhood_bonus: getNeighborhoodBonus(data.neighborhood),
+            amenities_factor: amenitiesFactor,
+            seasonal_factor: getSeasonalAdjustment()
+        }
+    };
+}
+
+function calculateInvestmentScore(data, price, baseRate) {
+    let score = 0;
+    score += Math.min(baseRate / 50, 15);
+    score += Math.min((MARKET_CONFIG.district_grade_adjustments[data.location_grade] - 1) * 50, 15);
+    
+    if (data.area >= 300) score += 20;
+    else if (data.area >= 200) score += 15;
+    else if (data.area >= 100) score += 10;
+    else score += 5;
+    
+    if (data.age <= 5) score += 15;
+    else if (data.age <= 10) score += 10;
+    else if (data.age <= 15) score += 5;
+    
+    if (data.has_pool) score += 7;
+    if (data.has_elevator) score += 4;
+    if (data.has_driver_room) score += 2;
+    if (data.has_central_ac) score += 2;
+    if (data.has_maid_room) score += 2;
+    if (data.is_furnished) score += 3;
+    
+    const facadeFactor = MARKET_CONFIG.facade_adjustments[data.facade] || 1;
+    if (facadeFactor >= 1.04) score += 10;
+    else if (facadeFactor >= 1.02) score += 5;
+    
+    if (data.street_width >= 20) score += 10;
+    else if (data.street_width >= 15) score += 5;
+    
+    const neighBonus = getNeighborhoodBonus(data.neighborhood);
+    if (neighBonus > 1) score += Math.min((neighBonus - 1) * 50, 5);
+    
+    return Math.min(100, Math.round(score));
+}
+
+function validateInput(data) {
+    const errors = [];
+    if (!data.area || data.area < 20) errors.push('⚠️ ' + t('area_error') || 'Area must be at least 20m²');
+    if (!data.city) errors.push('⚠️ ' + t('city_error') || 'Please select a city');
+    if (data.age < 0) errors.push('⚠️ ' + t('age_error') || 'Age cannot be negative');
+    if (data.street_width < 3 || data.street_width > 100) errors.push('⚠️ ' + t('street_error') || 'Street width must be 3-100m');
+    if (data.rooms < 0 || data.rooms > 20) errors.push('⚠️ ' + t('rooms_error') || 'Invalid room count');
+    return errors;
+}
+
+function calculateWithCache(data) {
+    const key = JSON.stringify(data);
+    if (lastCalculation && lastCalculation.key === key) {
+        return lastCalculation.result;
+    }
+    const result = calculateLocal(data);
+    lastCalculation = { key, result };
+    return result;
+}
+
+// ============================================================
+// 6. UI UPDATE FUNCTIONS
+// ============================================================
+function getFormData() {
+    return {
+        city: document.getElementById('mainCity').value,
+        neighborhood: document.getElementById('mainNeighborhood').value,
+        property_type: document.getElementById('mainPropertyType').value,
+        area: parseFloat(document.getElementById('mainArea').value) || 350,
+        rooms: parseInt(document.getElementById('mainRooms').value) || 4,
+        age: parseInt(document.getElementById('mainAge').value) || 0,
+        facade: document.getElementById('mainFacade').value,
+        street_width: parseFloat(document.getElementById('mainStreetWidth').value) || 20,
+        location_grade: document.getElementById('mainLocationType').value,
+        has_elevator: document.getElementById('elevator').checked,
+        has_pool: document.getElementById('pool').checked,
+        has_driver_room: document.getElementById('driver').checked,
+        is_furnished: document.getElementById('furnished').checked,
+        has_central_ac: document.getElementById('centralAc').checked,
+        has_maid_room: document.getElementById('maidRoom').checked
+    };
+}
+
+function displayResults(r) {
+    if (!r) return;
+    const sar = t('sar');
+    
+    const priceDisplay = document.getElementById('priceRangeDisplay');
+    const avgNote = document.getElementById('avgPriceNote');
+    const invEl = document.getElementById('investmentIndex');
+    
+    priceDisplay.textContent = `${(r.min_price || 0).toLocaleString()} - ${(r.max_price || 0).toLocaleString()} ${sar}`;
+    avgNote.textContent = `${t('avg_price')}: ${(r.predicted_price || 0).toLocaleString()} ${sar}`;
+    
+    priceDisplay.classList.remove('price-updated');
+    void priceDisplay.offsetWidth;
+    priceDisplay.classList.add('price-updated');
+    
+    const gradeText = getGradeText(r.investment_grade_key);
+    const gradeColor = getGradeColor(r.investment_grade_key);
+    invEl.textContent = gradeText;
+    invEl.style.color = gradeColor;
+    
+    if (r.breakdown) {
+        const detailsCard = document.getElementById('detailsCard');
+        detailsCard.style.display = 'block';
+        const content = document.getElementById('detailsContent');
+        const b = r.breakdown;
+        const labels = {
+            base_rate: t('city') + ' ' + t('price') + '/m²',
+            base: t('price') + ' ' + t('area'),
+            type_multiplier: t('type') + ' ' + t('facade'),
+            age_factor: t('age'),
+            room_factor: t('rooms'),
+            street_factor: t('street_width'),
+            facade_factor: t('facade'),
+            district_factor: t('location_type'),
+            neighborhood_bonus: t('district'),
+            amenities_factor: t('elevator') + '/' + t('pool'),
+            seasonal_factor: t('last_update')
+        };
+        // Use dynamic labels that work for all languages
+        content.innerHTML = `
+            <div class="details-grid">
+                <div class="item"><span class="label">🏠 ${t('city')} (${t('price')}/m²)</span><span class="value">${b.base_rate.toLocaleString()} ${sar}</span></div>
+                <div class="item"><span class="label">📐 ${t('price')} ${t('area')}</span><span class="value">${b.base.toLocaleString()} ${sar}</span></div>
+                <div class="item"><span class="label">🏗️ ${t('type')}</span><span class="value">×${b.type_multiplier.toFixed(2)}</span></div>
+                <div class="item"><span class="label">⏳ ${t('age')}</span><span class="value">×${b.age_factor.toFixed(3)}</span></div>
+                <div class="item"><span class="label">🛏️ ${t('rooms')}</span><span class="value">×${b.room_factor.toFixed(3)}</span></div>
+                <div class="item"><span class="label">🛣️ ${t('street_width')}</span><span class="value">×${b.street_factor.toFixed(3)}</span></div>
+                <div class="item"><span class="label">🧭 ${t('facade')}</span><span class="value">×${b.facade_factor.toFixed(3)}</span></div>
+                <div class="item"><span class="label">🏘️ ${t('location_type')}</span><span class="value">×${b.district_factor.toFixed(3)}</span></div>
+                <div class="item"><span class="label">⭐ ${t('district')}</span><span class="value">×${b.neighborhood_bonus.toFixed(3)}</span></div>
+                <div class="item"><span class="label">🔧 ${t('elevator')}/${t('pool')}</span><span class="value">×${b.amenities_factor.toFixed(3)}</span></div>
+                <div class="item"><span class="label">🌤️ ${t('model_date')}</span><span class="value">×${b.seasonal_factor.toFixed(3)}</span></div>
+            </div>
+        `;
+    }
+}
+
+function refreshPrediction(animate = true) {
+    if (isUpdating) return;
+    isUpdating = true;
+    
+    try {
+        const data = getFormData();
+        const errors = validateInput(data);
+        if (errors.length > 0) {
+            document.getElementById('priceRangeDisplay').textContent = errors[0];
+            document.getElementById('investmentIndex').textContent = '—';
+            isUpdating = false;
+            return;
+        }
+        
+        const result = calculateWithCache(data);
+        displayResults(result);
+        
+        if (animate) {
+            const box = document.getElementById('priceResultBox');
+            box.classList.remove('glow-active');
+            void box.offsetWidth;
+            box.classList.add('glow-active');
+            setTimeout(() => box.classList.remove('glow-active'), 700);
+        }
+    } catch (e) {
+        console.error('Refresh error:', e);
+        document.getElementById('priceRangeDisplay').textContent = '⚠️ ' + (t('error') || 'Calculation error');
+    }
+    isUpdating = false;
+}
+
+const scheduleRefresh = debounce(() => {
+    requestAnimationFrame(() => refreshPrediction(true));
+}, 100);
+
+// ============================================================
+// 7. LANGUAGE & UI HELPERS
+// ============================================================
 function translateAllSelects() {
-    ['mainCity','addCity'].forEach(id => translateSelect(id, 'cities'));
-    ['mainPropertyType','addPropertyType'].forEach(id => translateSelect(id, 'types'));
+    ['mainCity', 'addCity'].forEach(id => translateSelect(id, 'cities'));
+    ['mainPropertyType', 'addPropertyType'].forEach(id => translateSelect(id, 'types'));
     translateSelect('mainFacade', 'facades');
     translateSelect('mainLocationType', 'districts');
 }
 
 function setLanguage(lang) {
+    if (lang === currentLang) return;
     currentLang = lang;
     document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
@@ -749,256 +1256,397 @@ function setLanguage(lang) {
     initChart();
 }
 
-function normalizeCity(city) {
-    const key = MARKET_CONFIG.city_aliases[city] || 'riyadh';
-    return MARKET_CONFIG.city_base_rates[key] ? key : 'riyadh';
-}
-function neighMult(n) {
-    if (!n) return 1;
-    const l = n.trim().toLowerCase();
-    for (const [k,v] of Object.entries(MARKET_CONFIG.premium_neighborhood_keywords))
-        if (l.includes(k)) return v;
-    return 1;
-}
-function streetMult(w) {
-    for (const [min,m] of MARKET_CONFIG.street_width_tiers) if (w >= min) return m;
-    return 0.97;
-}
-function getGradeKey(score) {
-    if (score >= 85) return 'excellent';
-    if (score >= 70) return 'very_good';
-    if (score >= 55) return 'average';
-    return 'needs_study';
-}
-
-function getFormData() {
-    return {
-        city: document.getElementById('mainCity').value,
-        neighborhood: document.getElementById('mainNeighborhood').value,
-        property_type: document.getElementById('mainPropertyType').value,
-        area: parseFloat(document.getElementById('mainArea').value) || 350,
-        rooms: parseInt(document.getElementById('mainRooms').value) || 4,
-        age: parseInt(document.getElementById('mainAge').value) || 0,
-        facade: document.getElementById('mainFacade').value,
-        street_width: parseFloat(document.getElementById('mainStreetWidth').value) || 20,
-        location_grade: document.getElementById('mainLocationType').value,
-        has_elevator: document.getElementById('elevator').checked,
-        has_pool: document.getElementById('pool').checked,
-        has_driver_room: document.getElementById('driver').checked,
-        is_furnished: document.getElementById('furnished').checked
-    };
-}
-
-function calculateLocal(data) {
-    const cityKey = normalizeCity(data.city);
-    const base = MARKET_CONFIG.city_base_rates[cityKey];
-    let total = data.area * base;
-    total *= MARKET_CONFIG.property_type_multipliers[data.property_type] || 1;
-    total *= Math.max(MARKET_CONFIG.depreciation.min_factor, 1 - data.age * MARKET_CONFIG.depreciation.rate);
-    total *= 1 + (data.rooms - MARKET_CONFIG.rooms.baseline) * MARKET_CONFIG.rooms.adjustment;
-    total *= streetMult(data.street_width);
-    total *= MARKET_CONFIG.facade_adjustments[data.facade] || 1;
-    total *= MARKET_CONFIG.district_grade_adjustments[data.location_grade] || 1;
-    total *= neighMult(data.neighborhood);
-    if (data.has_elevator) total *= MARKET_CONFIG.amenity_adjustments.elevator;
-    if (data.has_pool) total *= MARKET_CONFIG.amenity_adjustments.pool;
-    if (data.has_driver_room) total *= MARKET_CONFIG.amenity_adjustments.driver_room;
-    if (data.is_furnished) total *= MARKET_CONFIG.amenity_adjustments.furnished;
-    const m = MARKET_CONFIG.price_range_margin;
-    const avg = Math.round(total);
-    const fAdj = MARKET_CONFIG.facade_adjustments[data.facade] || 1;
-    const dAdj = MARKET_CONFIG.district_grade_adjustments[data.location_grade] || 1;
-    const score = Math.min(100, Math.round(
-        base/50 + (data.area>200?15:data.area/15) + (data.street_width>=20?10:0) +
-        (fAdj>=1.04?10:0) + (dAdj>=1.15?15:0) + (data.age<=5?10:data.age<=10?5:0) +
-        (data.has_pool?10:0) + (data.has_elevator?8:0) + (neighMult(data.neighborhood)>1?5:0)
-    ));
-    return {
-        predicted_price: avg,
-        min_price: Math.round(total*(1-m)),
-        max_price: Math.round(total*(1+m)),
-        investment_grade_key: getGradeKey(score),
-        city_key: cityKey
-    };
-}
-
-function displayResults(r) {
-    if (!r) return;
-    const sar = t('sar');
-    document.getElementById('priceRangeDisplay').textContent =
-        `${(r.min_price||0).toLocaleString()} - ${(r.max_price||0).toLocaleString()} ${sar}`;
-    document.getElementById('avgPriceNote').textContent =
-        `${t('avg_price')}: ${(r.predicted_price||0).toLocaleString()} ${sar}`;
-    const g = GRADES[r.investment_grade_key] || GRADES.average;
-    const el = document.getElementById('investmentIndex');
-    el.textContent = g[currentLang] || g.ar;
-    el.style.color = g.color;
-}
-
-function refreshPrediction(animate) {
-    displayResults(calculateLocal(getFormData()));
-    if (animate !== false) {
-        const box = document.getElementById('priceResultBox');
-        box.classList.remove('glow-active');
-        void box.offsetWidth;
-        box.classList.add('glow-active');
-        setTimeout(() => box.classList.remove('glow-active'), 700);
+function updateApiBadge() {
+    const dot = document.getElementById('apiDot');
+    const label = document.getElementById('apiLabel');
+    if (apiOnline) {
+        dot.className = 'api-dot online';
+        label.textContent = t('api_online');
+    } else {
+        dot.className = 'api-dot offline';
+        label.textContent = t('api_offline');
     }
 }
 
-function scheduleRefresh() {
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => refreshPrediction(true), 120);
-}
-
-function showModal(title, msg, icon) {
-    document.getElementById('modalTitle').textContent = title;
-    document.getElementById('modalMessage').textContent = msg;
-    document.getElementById('modalIcon').className = icon || 'fa-solid fa-circle-check';
-    document.getElementById('customModal').classList.add('show');
-}
-function closeModal() { document.getElementById('customModal').classList.remove('show'); }
-
-function updateApiBadge() {
-    document.getElementById('apiStatus').innerHTML =
-        `<span class="api-dot ${apiOnline?'':'offline'}"></span><span>${t(apiOnline?'api_online':'api_offline')}</span>`;
-}
-
+// ============================================================
+// 8. API & DATA FUNCTIONS
+// ============================================================
 async function checkApi() {
     if (!API_BASE) { apiOnline = false; updateApiBadge(); return; }
     try {
         const ctrl = new AbortController();
         setTimeout(() => ctrl.abort(), 2500);
-        apiOnline = (await fetch(API_BASE+'/api/health', {signal:ctrl.signal})).ok;
-    } catch(e) { apiOnline = false; }
+        const res = await fetch(API_BASE + '/api/health', { signal: ctrl.signal });
+        apiOnline = res.ok;
+    } catch (e) { apiOnline = false; }
     updateApiBadge();
 }
 
+function getLocalProps() {
+    try { return JSON.parse(localStorage.getItem('saudiaqarai_props') || '[]'); }
+    catch (e) { return []; }
+}
+
+function saveLocalProps(p) {
+    localStorage.setItem('saudiaqarai_props', JSON.stringify(p));
+}
+
+async function loadProperties() {
+    let props = getLocalProps();
+    if (apiOnline && API_BASE) {
+        try {
+            const res = await fetch(API_BASE + '/properties');
+            if (res.ok) {
+                const d = await res.json();
+                if (d.properties?.length) props = d.properties;
+            }
+        } catch (e) { /* fallback to local */ }
+    }
+    const tbody = document.getElementById('propsTableBody');
+    const empty = document.getElementById('propsEmpty');
+    if (!props.length) {
+        tbody.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+    }
+    empty.style.display = 'none';
+    tbody.innerHTML = props.map(p => `
+        <tr>
+            <td>${translations[currentLang].cities[p.city] || p.city}</td>
+            <td>${p.neighborhood || '—'}</td>
+            <td>${(p.price || 0).toLocaleString()} ${t('sar')}</td>
+            <td>${(p.ai_estimate || 0).toLocaleString()} ${t('sar')}</td>
+            <td style="font-size:0.7rem;color:var(--muted);">${p.created_at ? new Date(p.created_at).toLocaleDateString() : '—'}</td>
+        </tr>
+    `).join('');
+}
+
+async function addProperty(data) {
+    const val = calculateLocal({
+        city: data.city,
+        neighborhood: data.neighborhood,
+        property_type: data.property_type,
+        area: data.area,
+        rooms: 4,
+        age: 0,
+        facade: 'جنوبية',
+        street_width: 20,
+        location_grade: 'حي متوسط',
+        has_elevator: false,
+        has_pool: false,
+        has_driver_room: false,
+        is_furnished: false,
+        has_central_ac: false,
+        has_maid_room: false
+    });
+    const entry = {
+        id: Date.now().toString(36),
+        ...data,
+        price: Math.round(data.price),
+        ai_estimate: val.predicted_price,
+        created_at: new Date().toISOString()
+    };
+    
+    if (apiOnline && API_BASE) {
+        try {
+            const res = await fetch(API_BASE + '/properties', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            if (res.ok) { await loadProperties(); return; }
+        } catch (e) { /* fallback to local */ }
+    }
+    const props = getLocalProps();
+    props.push(entry);
+    saveLocalProps(props);
+    loadProperties();
+}
+
+function clearAllData() {
+    showModal(t('modal_clear_confirm'), t('modal_clear_msg'), 'fa-solid fa-triangle-exclamation');
+    const closeBtn = document.getElementById('modalCloseBtn');
+    const originalClick = closeBtn.onclick;
+    closeBtn.onclick = function() {
+        saveLocalProps([]);
+        loadProperties();
+        initChart();
+        closeModal();
+        showToast('🗑️ ' + t('modal_clear_done_msg'));
+        closeBtn.onclick = originalClick;
+    };
+}
+
+function exportCsv() {
+    const props = getLocalProps();
+    if (!props.length) {
+        showModal(t('modal_no_data'), t('modal_no_data_msg'), 'fa-solid fa-circle-exclamation');
+        return;
+    }
+    const headers = ['city', 'neighborhood', 'price', 'area', 'ai_estimate', 'created_at'];
+    const csvRows = props.map(p => headers.map(h => p[h] || '').join(','));
+    const csv = headers.join(',') + '\n' + csvRows.join('\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+    a.download = 'saudiaqarai_export.csv';
+    a.click();
+    showModal(t('modal_export_ok'), t('modal_export_msg'));
+}
+
+// ============================================================
+// 9. RENDER FUNCTIONS
+// ============================================================
 function renderReview() {
     const meta = MARKET_CONFIG.review_meta;
     document.getElementById('reviewMeta').textContent =
         `${meta.data_source} | ${t('last_update')}: ${meta.last_reviewed} → ${meta.next_review}`;
     const ck = translations[currentLang].city_keys;
     const rows = [];
-    for (const [k,v] of Object.entries(MARKET_CONFIG.city_base_rates))
-        rows.push(`<tr><td>${t('city')} — ${ck[k]||k}</td><td>${v.toLocaleString()} ${t('sar')}/m²</td><td><span class="badge-tag badge-ok">${t('review_ok')}</span></td></tr>`);
-    for (const [k,v] of Object.entries(MARKET_CONFIG.property_type_multipliers)) {
+    
+    for (const [k, v] of Object.entries(MARKET_CONFIG.city_base_rates)) {
+        rows.push(`<tr>
+            <td>${t('city')} — ${ck[k] || k}</td>
+            <td>${v.toLocaleString()} ${t('sar')}/m²</td>
+            <td><span class="badge-tag badge-ok">${t('review_ok')}</span></td>
+        </tr>`);
+    }
+    
+    for (const [k, v] of Object.entries(MARKET_CONFIG.property_type_multipliers)) {
         const label = translations[currentLang].types[k] || k;
-        rows.push(`<tr><td>${t('type')} — ${label}</td><td>×${v}</td><td><span class="badge-tag badge-ok">${t('review_ok')}</span></td></tr>`);
+        rows.push(`<tr>
+            <td>${t('type')} — ${label}</td>
+            <td>×${v.toFixed(2)}</td>
+            <td><span class="badge-tag badge-ok">${t('review_ok')}</span></td>
+        </tr>`);
     }
-    for (const [k,v] of Object.entries(MARKET_CONFIG.premium_neighborhood_keywords))
-        rows.push(`<tr><td>${t('district')} — ${k}</td><td>+${Math.round((v-1)*100)}%</td><td><span class="badge-tag badge-warn">${t('review_due')}</span></td></tr>`);
+    
+    for (const [k, v] of Object.entries(MARKET_CONFIG.premium_neighborhood_keywords)) {
+        rows.push(`<tr>
+            <td>${t('district')} — ${k}</td>
+            <td>+${Math.round((v - 1) * 100)}%</td>
+            <td><span class="badge-tag badge-warn">${t('review_due')}</span></td>
+        </tr>`);
+    }
     document.getElementById('reviewTableBody').innerHTML = rows.join('');
-}
-
-function getLocalProps() { try { return JSON.parse(localStorage.getItem('saudiaqarai_props')||'[]'); } catch(e) { return []; } }
-function saveLocalProps(p) { localStorage.setItem('saudiaqarai_props', JSON.stringify(p)); }
-
-async function loadProperties() {
-    let props = getLocalProps();
-    if (apiOnline && API_BASE) {
-        try {
-            const res = await fetch(API_BASE+'/properties');
-            if (res.ok) { const d = await res.json(); if (d.properties?.length) props = d.properties; }
-        } catch(e) {}
-    }
-    const tbody = document.getElementById('propsTableBody');
-    const empty = document.getElementById('propsEmpty');
-    if (!props.length) { tbody.innerHTML = ''; empty.style.display = 'block'; return; }
-    empty.style.display = 'none';
-    tbody.innerHTML = props.map(p =>
-        `<tr><td>${translations[currentLang].cities[p.city]||p.city}</td><td>${p.neighborhood||'—'}</td><td>${(p.price||0).toLocaleString()} ${t('sar')}</td><td>${(p.ai_estimate||0).toLocaleString()} ${t('sar')}</td></tr>`
-    ).join('');
-}
-
-async function addProperty(data) {
-    const val = calculateLocal({ city:data.city, neighborhood:data.neighborhood, property_type:data.property_type, area:data.area });
-    const entry = { id:Date.now().toString(36), ...data, price:Math.round(data.price), ai_estimate:val.predicted_price, created_at:new Date().toISOString() };
-    if (apiOnline && API_BASE) {
-        try {
-            const res = await fetch(API_BASE+'/properties', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) });
-            if (res.ok) { await loadProperties(); return; }
-        } catch(e) {}
-    }
-    const props = getLocalProps(); props.push(entry); saveLocalProps(props);
-    loadProperties();
-}
-
-function exportCsv() {
-    const props = getLocalProps();
-    if (!props.length) { showModal(t('modal_no_data'), t('modal_no_data_msg'), 'fa-solid fa-circle-exclamation'); return; }
-    const csv = 'city,neighborhood,price,area,ai_estimate\n' + props.map(p => `${p.city},${p.neighborhood},${p.price},${p.area},${p.ai_estimate}`).join('\n');
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv'}));
-    a.download = 'saudiaqarai.csv'; a.click();
-    showModal(t('modal_export_ok'), t('modal_export_msg'));
 }
 
 function initChart() {
     if (typeof Chart === 'undefined') return;
-    const cities = ['riyadh','jeddah','dammam','makkah','madinah'];
+    const cities = ['riyadh', 'jeddah', 'dammam', 'makkah', 'madinah'];
     const ck = translations[currentLang].city_keys;
-    const labels = cities.map(c => ck[c]);
+    const labels = cities.map(c => ck[c] || c);
     const ctx = document.getElementById('analyticsChart');
     if (!ctx) return;
     if (analyticsChart) analyticsChart.destroy();
+    
+    const props = getLocalProps();
+    const cityData = cities.map(c => {
+        const propsInCity = props.filter(p => normalizeCity(p.city) === c);
+        if (propsInCity.length === 0) return MARKET_CONFIG.city_base_rates[c];
+        const avg = propsInCity.reduce((sum, p) => sum + (p.ai_estimate || p.price || 0) / (p.area || 100), 0) / propsInCity.length;
+        return Math.round(avg);
+    });
+    
     analyticsChart = new Chart(ctx.getContext('2d'), {
-        type:'bar',
-        data:{ labels, datasets:[{ label:t('city')+' ('+t('sar')+'/m²)', data:cities.map(c=>MARKET_CONFIG.city_base_rates[c]), backgroundColor:['#2563eb','#7c3aed','#059669','#d97706','#dc2626'], borderRadius:10 }] },
-        options:{
-            responsive:true, maintainAspectRatio:false,
-            plugins:{ legend:{ labels:{ color:'#64748b', font:{ family:'Tajawal', weight:'700' } } } },
-            scales:{
-                y:{ ticks:{ color:'#64748b' }, grid:{ color:'rgba(0,0,0,0.05)' } },
-                x:{ ticks:{ color:'#64748b' }, grid:{ display:false } }
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: t('city') + ' (' + t('sar') + '/m²)',
+                data: cityData,
+                backgroundColor: ['#2563eb', '#7c3aed', '#059669', '#d97706', '#dc2626'],
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: { color: '#64748b', font: { family: 'Tajawal', weight: '700' } }
+                }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#64748b', callback: (v) => v.toLocaleString() },
+                    grid: { color: 'rgba(0,0,0,0.05)' }
+                },
+                x: {
+                    ticks: { color: '#64748b' },
+                    grid: { display: false }
+                }
             }
         }
     });
 }
 
+// ============================================================
+// 10. TAB NAVIGATION
+// ============================================================
 function switchTab(tab) {
-    document.querySelectorAll('.nav-tab,.bottom-nav .nav-item').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('[data-tab="'+tab+'"]').forEach(el => el.classList.add('active'));
+    document.querySelectorAll('.nav-tab, .bottom-nav .nav-item').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('[data-tab="' + tab + '"]').forEach(el => el.classList.add('active'));
     document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
-    document.getElementById('section-'+tab).classList.add('active');
-    if (tab === 'database') { renderReview(); loadProperties(); initChart(); }
+    document.getElementById('section-' + tab).classList.add('active');
+    
+    if (tab === 'database') {
+        renderReview();
+        loadProperties();
+        setTimeout(initChart, 100);
+    }
 }
 
-// Events
-document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => setLanguage(b.dataset.lang)));
-document.querySelectorAll('.nav-tab,.bottom-nav .nav-item').forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
-document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
-document.getElementById('customModal').addEventListener('click', e => { if (e.target.id === 'customModal') closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+// ============================================================
+// 11. SHARE FUNCTION
+// ============================================================
+function shareResults() {
+    const price = document.getElementById('priceRangeDisplay').textContent;
+    const investment = document.getElementById('investmentIndex').textContent;
+    const text = `🏠 ${t('title')}\n💰 ${t('price_range')}: ${price}\n📈 ${t('investment')}: ${investment}\n🔗 ${window.location.href}`;
+    
+    if (navigator.share) {
+        navigator.share({
+            title: 'SaudiAqarAI - ' + t('title'),
+            text: text,
+            url: window.location.href
+        }).catch(() => {});
+    } else {
+        navigator.clipboard.writeText(text).then(() => {
+            showToast('✅ ' + (t('copied') || 'Results copied to clipboard'));
+        }).catch(() => {
+            showModal(t('share'), text, 'fa-regular fa-copy');
+        });
+    }
+}
 
-document.querySelectorAll('.live-input').forEach(el => {
-    el.addEventListener('input', scheduleRefresh);
-    el.addEventListener('change', scheduleRefresh);
-});
-
-document.getElementById('addPropertyForm').addEventListener('submit', async e => {
-    e.preventDefault();
-    await addProperty({
-        city: document.getElementById('addCity').value,
-        neighborhood: document.getElementById('addLocation').value,
-        property_type: document.getElementById('addPropertyType').value,
-        price: +document.getElementById('addPrice').value,
-        area: +document.getElementById('addAreaAdd').value
-    });
-    showModal(t('modal_add_ok'), t('modal_add_msg'));
-    document.getElementById('addPropertyForm').reset();
-});
-
-document.getElementById('exportCsvBtn').addEventListener('click', exportCsv);
-document.getElementById('refreshDataBtn').addEventListener('click', () => { renderReview(); loadProperties(); initChart(); });
-
+// ============================================================
+// 12. EVENT LISTENERS
+// ============================================================
 document.addEventListener('DOMContentLoaded', () => {
+    // Language
+    document.querySelectorAll('.lang-btn').forEach(b => {
+        b.addEventListener('click', () => setLanguage(b.dataset.lang));
+    });
+    
+    // Navigation
+    document.querySelectorAll('.nav-tab, .bottom-nav .nav-item').forEach(b => {
+        b.addEventListener('click', () => switchTab(b.dataset.tab));
+    });
+    
+    // Modal
+    document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+    document.getElementById('customModal').addEventListener('click', e => {
+        if (e.target.id === 'customModal') closeModal();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    
+    // Live inputs
+    document.querySelectorAll('.live-input').forEach(el => {
+        el.addEventListener('input', scheduleRefresh);
+        el.addEventListener('change', scheduleRefresh);
+    });
+    
+    // Add property
+    document.getElementById('addPropertyForm').addEventListener('submit', async e => {
+        e.preventDefault();
+        const data = {
+            city: document.getElementById('addCity').value,
+            neighborhood: document.getElementById('addLocation').value,
+            property_type: document.getElementById('addPropertyType').value,
+            price: +document.getElementById('addPrice').value,
+            area: +document.getElementById('addAreaAdd').value
+        };
+        if (!data.neighborhood || data.price < 10000 || data.area < 20) {
+            showToast('⚠️ ' + (t('form_error') || 'Please fill all fields correctly'), 4000);
+            return;
+        }
+        await addProperty(data);
+        showModal(t('modal_add_ok'), t('modal_add_msg'));
+        document.getElementById('addPropertyForm').reset();
+    });
+    
+    // Export CSV
+    document.getElementById('exportCsvBtn').addEventListener('click', exportCsv);
+    
+    // Refresh data
+    document.getElementById('refreshDataBtn').addEventListener('click', () => {
+        renderReview();
+        loadProperties();
+        initChart();
+        showToast('🔄 ' + (t('refreshed') || 'Refreshed'), 2000);
+    });
+    
+    // Clear data
+    document.getElementById('clearDataBtn').addEventListener('click', clearAllData);
+    
+    // Share results
+    document.getElementById('shareResultBtn').addEventListener('click', shareResults);
+    
+    // Reset form
+    document.getElementById('resetFormBtn').addEventListener('click', () => {
+        document.getElementById('mainCity').value = 'الرياض';
+        document.getElementById('mainNeighborhood').value = 'النخيل';
+        document.getElementById('mainPropertyType').value = 'شقة سكنية';
+        document.getElementById('mainArea').value = '350';
+        document.getElementById('mainRooms').value = '4';
+        document.getElementById('mainAge').value = '2';
+        document.getElementById('mainFacade').value = 'جنوبية';
+        document.getElementById('mainStreetWidth').value = '20';
+        document.getElementById('mainLocationType').value = 'حي متوسط';
+        document.querySelectorAll('.chip-input').forEach(c => c.checked = false);
+        document.getElementById('pool').checked = true;
+        refreshPrediction(true);
+        showToast('🔄 ' + (t('reset_done') || 'Form reset'), 2000);
+    });
+    
+    // Toggle details
+    document.getElementById('toggleDetailsBtn').addEventListener('click', function() {
+        const content = document.getElementById('detailsContent');
+        const isHidden = content.style.display === 'none';
+        content.style.display = isHidden ? 'block' : 'none';
+        this.innerHTML = isHidden 
+            ? '<i class="fa-solid fa-chevron-up"></i> ' + t('show')
+            : '<i class="fa-solid fa-chevron-down"></i> ' + t('show');
+    });
+    
+    // ============================================================
+    // 13. GLOBAL ERROR HANDLER
+    // ============================================================
+    window.addEventListener('error', function(e) {
+        console.error('Global error:', e.message);
+        showToast('⚠️ ' + (t('error_occurred') || 'An error occurred'), 4000);
+    });
+    
+    // ============================================================
+    // 14. INITIALIZATION
+    // ============================================================
+    // Set default language to Arabic for first load
+    setLanguage('ar');
     refreshPrediction(false);
     renderReview();
     loadProperties();
-    initChart();
+    setTimeout(initChart, 200);
     checkApi();
 });
+
+// ============================================================
+// 15. EXPOSE FOR CONSOLE DEBUGGING
+// ============================================================
+window.SaudiAqarAI = {
+    calculate: calculateLocal,
+    getData: getFormData,
+    refresh: refreshPrediction,
+    config: MARKET_CONFIG,
+    grades: GRADES,
+    translations: translations,
+    version: '2.0.0'
+};
+
+console.log('🏠 SaudiAqarAI v2.0.0 loaded');
+console.log('📊 Type window.SaudiAqarAI for debugging');
+console.log('🌍 Current language:', currentLang);
 </script>
 </body>
 </html>
