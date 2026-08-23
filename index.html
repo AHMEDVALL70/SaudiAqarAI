@@ -43,6 +43,7 @@
             --radius-lg: 20px;
             --gradient-primary: linear-gradient(135deg, #1a3a5c 0%, #2d5a8a 50%, #1a3a5c 100%);
             --gradient-hero: linear-gradient(135deg, #0f2440 0%, #1a3a5c 40%, #2d5a8a 100%);
+            --gradient-evaluate: linear-gradient(135deg, #0a1a2e 0%, #1a3a5c 40%, #2d5a8a 100%);
             --header-height: 64px;
         }
 
@@ -178,45 +179,55 @@
         .fixed-header .header-actions {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .fixed-header .lang-group {
             display: flex;
-            gap: 3px;
+            gap: 4px;
             background: rgba(255, 255, 255, 0.06);
-            padding: 3px 4px;
+            padding: 4px 6px;
             border-radius: 999px;
             border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
         }
 
         .fixed-header .lang-btn {
             border: none;
             background: transparent;
             color: rgba(255, 255, 255, 0.5);
-            padding: 4px 8px;
+            padding: 5px 12px;
             border-radius: 999px;
             cursor: pointer;
-            font-size: 0.6rem;
+            font-size: 0.7rem;
             font-weight: 700;
-            transition: 0.2s;
+            transition: 0.3s;
             display: flex;
             align-items: center;
-            gap: 3px;
+            gap: 4px;
+            letter-spacing: 0.5px;
         }
 
         .fixed-header .lang-btn .flag {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
         }
 
         .fixed-header .lang-btn.active {
             background: var(--gold-gradient);
             color: var(--primary);
-            box-shadow: 0 2px 12px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4), 0 0 40px rgba(212, 175, 55, 0.15);
+            transform: scale(1.05);
         }
 
         .fixed-header .lang-btn:hover:not(.active) {
             color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+            transform: scale(1.02);
+        }
+
+        .fixed-header .lang-btn.active:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5), 0 0 60px rgba(212, 175, 55, 0.2);
         }
 
         .fixed-header .menu-toggle {
@@ -230,7 +241,7 @@
         }
 
         /* ============================================================
-           HERO
+           HERO - الرئيسية
            ============================================================ */
         .hero-section {
             display: none;
@@ -422,94 +433,122 @@
         }
 
         /* ============================================================
-           EVALUATE PAGE - تحسينات التناسق
+           EVALUATE PAGE - مصغرة
            ============================================================ */
         .evaluate-wrapper {
-            background: linear-gradient(135deg, rgba(26, 58, 92, 0.02) 0%, rgba(212, 175, 55, 0.02) 100%);
+            background: var(--gradient-evaluate);
             border-radius: var(--radius-lg);
             padding: 4px;
-            border: 1px solid rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 40px rgba(26, 58, 92, 0.2);
+        }
+
+        .evaluate-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -20%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(ellipse, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .evaluate-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -20%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(ellipse, rgba(212, 175, 55, 0.03) 0%, transparent 70%);
+            pointer-events: none;
         }
 
         .evaluate-card {
-            background: var(--card);
-            border-radius: var(--radius-lg);
-            padding: 24px 20px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: calc(var(--radius-lg) - 4px);
+            padding: 16px 14px;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Hero inside evaluate */
         .evaluate-hero {
-            background: var(--gradient-soft);
-            border-color: rgba(26, 58, 92, 0.08);
+            background: linear-gradient(135deg, rgba(26, 58, 92, 0.04) 0%, rgba(212, 175, 55, 0.04) 100%);
+            border-color: rgba(212, 175, 55, 0.15);
             text-align: center;
-            padding: 18px 16px 14px;
+            padding: 10px 12px 8px;
             border-top: 3px solid var(--gold);
             border-radius: var(--radius);
-            margin-bottom: 16px;
+            margin-bottom: 10px;
         }
 
         .evaluate-hero .badge-top {
             display: inline-block;
             background: var(--gold-gradient);
             color: var(--primary);
-            padding: 4px 14px;
+            padding: 2px 12px;
             border-radius: 999px;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .evaluate-hero h2 {
-            font-size: 1.2rem;
-            font-weight: 900;
-            color: var(--primary);
             margin-bottom: 4px;
         }
 
+        .evaluate-hero h2 {
+            font-size: 1rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 2px;
+        }
+
         .evaluate-hero p {
-            font-size: 0.82rem;
+            font-size: 0.7rem;
             color: var(--text-secondary);
             max-width: 500px;
             margin: 0 auto;
         }
 
-        /* Form Grid */
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
-            gap: 10px;
-            margin-bottom: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 6px;
+            margin-bottom: 8px;
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 2px;
         }
 
         .form-group label {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             font-weight: 700;
             color: var(--text-secondary);
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
         }
 
         .form-group label i {
             color: var(--gold);
-            font-size: 0.7rem;
+            font-size: 0.6rem;
         }
 
         .form-group input,
         .form-group select {
-            height: 38px;
-            padding: 0 12px;
-            border-radius: 10px;
-            background: var(--bg);
+            height: 30px;
+            padding: 0 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.8);
             border: 1.5px solid var(--border);
             color: var(--text);
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             outline: none;
             width: 100%;
             transition: 0.2s;
@@ -531,13 +570,12 @@
             -webkit-appearance: none;
         }
 
-        /* Chips - متناسقة */
         .chips {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 4px;
             justify-content: center;
-            margin: 10px 0;
+            margin: 6px 0;
         }
 
         .chip-input {
@@ -545,17 +583,17 @@
         }
 
         .chip-label {
-            padding: 5px 14px;
+            padding: 3px 10px;
             border-radius: 999px;
             cursor: pointer;
-            background: var(--bg);
+            background: rgba(255, 255, 255, 0.7);
             border: 1.5px solid var(--border);
             color: var(--text-secondary);
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             transition: 0.2s;
         }
 
@@ -573,13 +611,13 @@
 
         .live-hint {
             text-align: center;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             color: var(--gold);
-            margin: 8px 0 2px;
+            margin: 4px 0 2px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 4px;
             font-weight: 600;
         }
 
@@ -596,26 +634,25 @@
             }
         }
 
-        /* ===== RESULTS - متناسقة وأنيقة ===== */
         .results-wrapper {
-            background: linear-gradient(135deg, rgba(26, 58, 92, 0.02) 0%, rgba(212, 175, 55, 0.02) 100%);
+            background: linear-gradient(135deg, rgba(26, 58, 92, 0.03) 0%, rgba(212, 175, 55, 0.03) 100%);
             border-radius: var(--radius);
-            padding: 12px;
-            margin-top: 12px;
+            padding: 8px;
+            margin-top: 8px;
             border: 1px solid rgba(212, 175, 55, 0.08);
         }
 
         .results {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr;
-            gap: 10px;
+            gap: 6px;
         }
 
         .result-box {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 12px 10px;
+            padding: 8px 6px;
             text-align: center;
             transition: 0.3s;
             box-shadow: var(--shadow-sm);
@@ -628,31 +665,31 @@
         }
 
         .result-box.highlight {
-            background: linear-gradient(135deg, rgba(26, 58, 92, 0.03) 0%, rgba(212, 175, 55, 0.03) 100%);
+            background: linear-gradient(135deg, rgba(26, 58, 92, 0.04) 0%, rgba(212, 175, 55, 0.04) 100%);
             border-color: rgba(212, 175, 55, 0.25);
             border-width: 2px;
         }
 
         .result-box .label {
-            font-size: 0.6rem;
+            font-size: 0.5rem;
             color: var(--muted);
             font-weight: 700;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
             text-transform: uppercase;
             letter-spacing: 0.03em;
         }
 
         .result-box .value {
-            font-size: 1rem;
+            font-size: 0.85rem;
             font-weight: 900;
             color: var(--success);
             word-break: break-word;
         }
 
         .result-box .sub {
-            font-size: 0.65rem;
+            font-size: 0.55rem;
             color: var(--muted);
-            margin-top: 3px;
+            margin-top: 2px;
         }
 
         .result-box .value.price-updated {
@@ -683,21 +720,20 @@
             animation: glowLight 0.5s ease-out;
         }
 
-        /* ===== DETAILS ===== */
         .details-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4px;
-            font-size: 0.75rem;
+            gap: 3px;
+            font-size: 0.65rem;
             background: var(--bg);
-            padding: 10px;
+            padding: 6px;
             border-radius: var(--radius);
         }
 
         .details-grid .item {
             display: flex;
             justify-content: space-between;
-            padding: 4px 6px;
+            padding: 3px 4px;
             border-bottom: 1px solid var(--border);
         }
 
@@ -715,17 +751,16 @@
             font-weight: 700;
         }
 
-        /* ===== BUTTONS ===== */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            padding: 0 18px;
-            height: 38px;
-            border-radius: 10px;
+            gap: 4px;
+            padding: 0 14px;
+            height: 32px;
+            border-radius: 8px;
             font-weight: 700;
-            font-size: 0.78rem;
+            font-size: 0.7rem;
             cursor: pointer;
             border: none;
             transition: 0.25s;
@@ -781,42 +816,41 @@
         }
 
         .btn-sm {
-            height: 30px;
-            padding: 0 12px;
-            font-size: 0.7rem;
-            border-radius: 8px;
+            height: 26px;
+            padding: 0 10px;
+            font-size: 0.6rem;
+            border-radius: 6px;
         }
 
         .btn-row {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             flex-wrap: wrap;
         }
 
-        /* ===== DISCLAIMER ===== */
         .disclaimer {
-            margin-top: 12px;
-            padding: 10px 14px;
+            margin-top: 8px;
+            padding: 6px 10px;
             border-radius: var(--radius);
             background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, rgba(220, 38, 38, 0.02) 100%);
             border: 1px solid rgba(220, 38, 38, 0.1);
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             color: #7f1d1d;
-            line-height: 1.6;
+            line-height: 1.5;
             display: flex;
             align-items: flex-start;
-            gap: 8px;
+            gap: 6px;
         }
 
         .disclaimer i {
             color: var(--danger);
-            font-size: 0.9rem;
-            margin-top: 2px;
+            font-size: 0.7rem;
+            margin-top: 1px;
             flex-shrink: 0;
         }
 
         /* ============================================================
-           ABOUT PAGE
+           ABOUT PAGE - مترجمة بالكامل
            ============================================================ */
         .about-wrapper {
             background: linear-gradient(135deg, rgba(26, 58, 92, 0.02) 0%, rgba(212, 175, 55, 0.02) 100%);
@@ -828,7 +862,7 @@
         .about-card {
             background: var(--card);
             border-radius: var(--radius-lg);
-            padding: 28px 24px;
+            padding: 24px 20px;
             position: relative;
             overflow: hidden;
         }
@@ -847,28 +881,28 @@
         .about-card .about-header {
             display: flex;
             align-items: center;
-            gap: 16px;
-            margin-bottom: 20px;
+            gap: 14px;
+            margin-bottom: 16px;
             position: relative;
             z-index: 1;
         }
 
         .about-card .about-icon {
-            width: 56px;
-            height: 56px;
+            width: 48px;
+            height: 48px;
             background: var(--gold-gradient);
-            border-radius: 16px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
+            font-size: 1.3rem;
             color: var(--primary);
             box-shadow: 0 8px 30px rgba(212, 175, 55, 0.25);
             flex-shrink: 0;
         }
 
         .about-card .about-title {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: 900;
             color: var(--primary);
         }
@@ -878,15 +912,15 @@
         }
 
         .about-card .about-subtitle {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: var(--muted);
         }
 
         .about-card .about-description {
-            font-size: 0.92rem;
-            line-height: 1.9;
+            font-size: 0.82rem;
+            line-height: 1.8;
             color: var(--text-secondary);
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             position: relative;
             z-index: 1;
         }
@@ -895,11 +929,25 @@
             color: var(--primary);
         }
 
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-title i {
+            color: var(--gold);
+        }
+
         .methodology-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 16px;
+            gap: 8px;
+            margin-top: 10px;
             position: relative;
             z-index: 1;
         }
@@ -908,10 +956,10 @@
             background: linear-gradient(135deg, rgba(26, 58, 92, 0.03) 0%, rgba(212, 175, 55, 0.03) 100%);
             border: 1px solid rgba(212, 175, 55, 0.08);
             border-radius: var(--radius);
-            padding: 14px 16px;
+            padding: 10px 12px;
             display: flex;
             align-items: flex-start;
-            gap: 12px;
+            gap: 10px;
             transition: 0.3s;
             cursor: default;
         }
@@ -923,15 +971,15 @@
         }
 
         .methodology-item .m-icon {
-            width: 36px;
-            height: 36px;
+            width: 30px;
+            height: 30px;
             background: var(--gold-gradient);
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--primary);
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             flex-shrink: 0;
         }
 
@@ -940,27 +988,27 @@
         }
 
         .methodology-item .m-title {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: 800;
             color: var(--primary);
-            margin-bottom: 2px;
+            margin-bottom: 1px;
         }
 
         .methodology-item .m-desc {
-            font-size: 0.72rem;
+            font-size: 0.6rem;
             color: var(--muted);
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
         .about-card .about-footer {
-            margin-top: 18px;
-            padding-top: 16px;
+            margin-top: 14px;
+            padding-top: 12px;
             border-top: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
             position: relative;
             z-index: 1;
         }
@@ -968,11 +1016,11 @@
         .about-card .about-footer .data-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             background: var(--bg);
-            padding: 6px 14px;
+            padding: 4px 10px;
             border-radius: 999px;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             color: var(--muted);
             border: 1px solid var(--border);
         }
@@ -994,7 +1042,7 @@
         .contact-card-main {
             background: var(--card);
             border-radius: var(--radius-lg);
-            padding: 28px 24px;
+            padding: 24px 20px;
             position: relative;
             overflow: hidden;
         }
@@ -1012,41 +1060,41 @@
 
         .contact-card-main .contact-header {
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 18px;
             position: relative;
             z-index: 1;
         }
 
         .contact-card-main .contact-header .contact-big-icon {
-            width: 72px;
-            height: 72px;
+            width: 56px;
+            height: 56px;
             background: var(--gold-gradient);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 12px;
-            font-size: 2rem;
+            margin: 0 auto 8px;
+            font-size: 1.5rem;
             color: var(--primary);
             box-shadow: 0 8px 40px rgba(212, 175, 55, 0.25);
         }
 
         .contact-card-main .contact-header h2 {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: 900;
             color: var(--primary);
         }
 
         .contact-card-main .contact-header p {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: var(--muted);
         }
 
         .contact-grid-enhanced {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 16px;
             position: relative;
             z-index: 1;
         }
@@ -1055,7 +1103,7 @@
             background: linear-gradient(135deg, rgba(26, 58, 92, 0.02) 0%, rgba(212, 175, 55, 0.02) 100%);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 20px 18px;
+            padding: 14px 12px;
             text-align: center;
             transition: 0.3s;
             cursor: default;
@@ -1068,15 +1116,15 @@
         }
 
         .contact-card-enhanced .c-icon {
-            width: 48px;
-            height: 48px;
+            width: 38px;
+            height: 38px;
             background: var(--gold-gradient);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 10px;
-            font-size: 1.2rem;
+            margin: 0 auto 6px;
+            font-size: 1rem;
             color: var(--primary);
             box-shadow: 0 4px 16px rgba(212, 175, 55, 0.15);
             transition: 0.3s;
@@ -1088,7 +1136,7 @@
         }
 
         .contact-card-enhanced .c-label {
-            font-size: 0.65rem;
+            font-size: 0.55rem;
             color: var(--muted);
             font-weight: 700;
             text-transform: uppercase;
@@ -1096,10 +1144,10 @@
         }
 
         .contact-card-enhanced .c-value {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 700;
             color: var(--text);
-            margin-top: 4px;
+            margin-top: 2px;
             word-break: break-word;
         }
 
@@ -1120,26 +1168,26 @@
 
         .contact-buttons-enhanced {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
             justify-content: center;
-            padding-top: 18px;
+            padding-top: 14px;
             border-top: 1px solid var(--border);
             position: relative;
             z-index: 1;
         }
 
         .contact-btn-enhanced {
-            padding: 10px 24px;
+            padding: 8px 18px;
             border: none;
-            border-radius: 12px;
-            font-size: 0.8rem;
+            border-radius: 10px;
+            font-size: 0.7rem;
             font-weight: 700;
             cursor: pointer;
             transition: 0.3s;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             text-decoration: none;
         }
 
@@ -1174,22 +1222,8 @@
         }
 
         /* ============================================================
-           OTHER SECTIONS (Tables, Upload, etc.)
+           OTHER SECTIONS
            ============================================================ */
-        .section-title {
-            font-size: 0.95rem;
-            font-weight: 800;
-            color: var(--text);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .section-title i {
-            color: var(--gold);
-        }
-
         .table-wrap {
             overflow-x: auto;
             border-radius: var(--radius);
@@ -1201,20 +1235,20 @@
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
         }
 
         .data-table th {
             background: var(--bg);
             color: var(--text-secondary);
-            padding: 8px 12px;
+            padding: 6px 10px;
             text-align: start;
             font-weight: 700;
             white-space: nowrap;
         }
 
         .data-table td {
-            padding: 8px 12px;
+            padding: 6px 10px;
             border-top: 1px solid var(--border);
             color: var(--text);
         }
@@ -1225,9 +1259,9 @@
 
         .badge-tag {
             display: inline-block;
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-size: 0.6rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.55rem;
             font-weight: 700;
         }
 
@@ -1241,36 +1275,36 @@
         }
         .empty-msg {
             text-align: center;
-            padding: 20px;
+            padding: 16px;
             color: var(--muted);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
         .chart-box {
-            height: 200px;
-            margin: 10px 0;
+            height: 180px;
+            margin: 8px 0;
             background: var(--bg);
             border-radius: var(--radius);
-            padding: 8px;
+            padding: 6px;
             border: 1px solid var(--border);
         }
 
         .review-note {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             color: var(--muted);
-            margin-bottom: 8px;
-            line-height: 1.6;
+            margin-bottom: 6px;
+            line-height: 1.5;
         }
 
         .upload-area {
             border: 2px dashed var(--border);
             border-radius: var(--radius);
-            padding: 20px;
+            padding: 16px;
             text-align: center;
             cursor: pointer;
             transition: 0.3s;
             background: var(--bg);
-            margin: 8px 0;
+            margin: 6px 0;
         }
 
         .upload-area:hover {
@@ -1284,27 +1318,26 @@
         }
 
         .upload-area i {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: var(--gold);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .upload-area p {
             color: var(--muted);
-            font-size: 0.78rem;
+            font-size: 0.7rem;
         }
 
         .upload-area .file-name {
             color: var(--primary);
             font-weight: 700;
-            margin-top: 4px;
+            margin-top: 3px;
         }
 
         .upload-area input[type="file"] {
             display: none;
         }
 
-        /* ===== BOTTOM NAV ===== */
         .bottom-nav-wrap {
             display: none;
             position: fixed;
@@ -1356,7 +1389,6 @@
             color: #fff;
         }
 
-        /* ===== MODAL ===== */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -1376,7 +1408,7 @@
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
-            padding: 24px 28px;
+            padding: 20px 24px;
             text-align: center;
             max-width: 380px;
             width: 90%;
@@ -1396,22 +1428,22 @@
         }
 
         .modal-box i {
-            font-size: 2.2rem;
+            font-size: 2rem;
             color: var(--gold);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .modal-box h4 {
-            font-size: 1rem;
-            margin-bottom: 6px;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
             color: var(--text);
         }
 
         .modal-box p {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--muted);
-            margin-bottom: 16px;
-            line-height: 1.6;
+            margin-bottom: 14px;
+            line-height: 1.5;
         }
 
         .toast {
@@ -1421,9 +1453,9 @@
             transform: translateX(-50%);
             background: var(--text);
             color: #fff;
-            padding: 8px 18px;
-            border-radius: 10px;
-            font-size: 0.78rem;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-size: 0.7rem;
             font-weight: 600;
             opacity: 0;
             transition: opacity 0.3s;
@@ -1439,9 +1471,9 @@
 
         .footer {
             text-align: center;
-            padding: 16px 0 8px;
+            padding: 12px 0 8px;
             color: var(--muted);
-            font-size: 0.7rem;
+            font-size: 0.65rem;
         }
 
         /* ============================================================
@@ -1501,11 +1533,11 @@
             }
 
             .fixed-header .lang-btn {
-                padding: 3px 6px;
-                font-size: 0.5rem;
+                padding: 4px 8px;
+                font-size: 0.6rem;
             }
             .fixed-header .lang-btn .flag {
-                font-size: 0.7rem;
+                font-size: 0.8rem;
             }
 
             .bottom-nav-wrap {
@@ -1536,19 +1568,19 @@
             }
             .form-grid {
                 grid-template-columns: 1fr 1fr;
-                gap: 8px;
+                gap: 6px;
             }
             .chips {
                 gap: 4px;
             }
             .chip-label {
-                padding: 4px 10px;
-                font-size: 0.6rem;
+                padding: 3px 8px;
+                font-size: 0.55rem;
             }
             .btn {
-                padding: 0 14px;
-                height: 34px;
-                font-size: 0.7rem;
+                padding: 0 12px;
+                height: 30px;
+                font-size: 0.65rem;
             }
             .disclaimer {
                 flex-direction: column;
@@ -1556,7 +1588,7 @@
                 text-align: center;
             }
             .results-wrapper {
-                padding: 8px;
+                padding: 6px;
             }
 
             .methodology-grid {
@@ -1578,7 +1610,18 @@
             }
 
             .evaluate-card {
-                padding: 16px 12px;
+                padding: 12px 10px;
+            }
+
+            .evaluate-wrapper {
+                padding: 3px;
+            }
+
+            .evaluate-hero h2 {
+                font-size: 0.9rem;
+            }
+            .evaluate-hero p {
+                font-size: 0.65rem;
             }
         }
 
@@ -1595,11 +1638,11 @@
                 font-size: 0.65rem;
             }
             .fixed-header .lang-btn {
-                padding: 2px 4px;
-                font-size: 0.45rem;
+                padding: 3px 6px;
+                font-size: 0.5rem;
             }
             .fixed-header .lang-btn .flag {
-                font-size: 0.6rem;
+                font-size: 0.7rem;
             }
 
             .hero-section .hero-title {
@@ -1619,33 +1662,33 @@
             }
 
             .result-box .value {
-                font-size: 0.85rem;
+                font-size: 0.75rem;
             }
             .result-box {
-                padding: 8px 6px;
+                padding: 6px 4px;
             }
             .results {
-                gap: 6px;
+                gap: 4px;
             }
 
             .about-card {
-                padding: 18px 14px;
+                padding: 16px 12px;
             }
             .contact-card-main {
-                padding: 18px 14px;
+                padding: 16px 12px;
             }
             .contact-card-enhanced {
-                padding: 14px 12px;
+                padding: 12px 10px;
             }
 
             .evaluate-card {
-                padding: 12px 10px;
+                padding: 10px 8px;
             }
             .evaluate-hero h2 {
-                font-size: 1rem;
+                font-size: 0.8rem;
             }
             .evaluate-hero p {
-                font-size: 0.75rem;
+                font-size: 0.6rem;
             }
         }
     </style>
@@ -1769,20 +1812,18 @@
         </div>
 
         <!-- ==========================================================
-        EVALUATE - صفحة التقييم المحسنة
+        EVALUATE - صفحة مصغرة
         ========================================================== -->
         <div class="section-content" id="section-evaluate">
             <div class="evaluate-wrapper">
                 <div class="evaluate-card">
 
-                    <!-- Hero -->
                     <div class="evaluate-hero">
                         <div class="badge-top"><i class="fa-solid fa-sparkles"></i> 🤖 تقييم فوري</div>
                         <h2 data-i18n="title">المُقيّم العقاري الذكي</h2>
                         <p data-i18n="subtitle">أدخل بيانات العقار ليُقدّر الذكاء الاصطناعي القيمة السوقية العادلة في لحظات</p>
                     </div>
 
-                    <!-- Form -->
                     <div id="predictForm">
                         <div class="form-grid">
                             <div class="form-group">
@@ -1860,15 +1901,14 @@
 
                         <div class="live-hint">
                             <i class="fa-solid fa-bolt"></i>
-                            <span data-i18n="live_hint">يتحدّث التقييم تلقائياً مع كل تعديل في البيانات</span>
+                            <span data-i18n="live_hint">يتحدّث التقييم تلقائياً مع كل تعديل</span>
                         </div>
                     </div>
 
-                    <!-- RESULTS - متناسقة -->
                     <div class="results-wrapper">
                         <div class="results">
                             <div class="result-box highlight" id="priceResultBox">
-                                <div class="label" data-i18n="price_range">💰 النطاق السعري التقديري</div>
+                                <div class="label" data-i18n="price_range">💰 النطاق السعري</div>
                                 <div class="value" id="priceRangeDisplay">—</div>
                                 <div class="sub" id="avgPriceNote"></div>
                             </div>
@@ -1878,40 +1918,37 @@
                             </div>
                             <div class="result-box">
                                 <div class="label" data-i18n="last_update">📅 تحديث النموذج</div>
-                                <div class="value" style="color:var(--gold); font-size:0.85rem;" data-i18n="model_date">مارس 2026</div>
+                                <div class="value" style="color:var(--gold); font-size:0.75rem;" data-i18n="model_date">مارس 2026</div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- DETAILS -->
-                    <div class="card" id="detailsCard" style="display:none; margin-top:10px; padding:12px;">
+                    <div class="card" id="detailsCard" style="display:none; margin-top:6px; padding:8px;">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <div class="section-title" style="margin:0; font-size:0.8rem;">
+                            <div class="section-title" style="margin:0; font-size:0.7rem;">
                                 <i class="fa-solid fa-calculator"></i> <span data-i18n="details_title">تفاصيل التقييم</span>
                             </div>
                             <button class="btn btn-gold btn-sm" id="toggleDetailsBtn">
                                 <i class="fa-solid fa-chevron-down"></i> <span data-i18n="show">عرض</span>
                             </button>
                         </div>
-                        <div id="detailsContent" style="display:none; margin-top:8px;"></div>
+                        <div id="detailsContent" style="display:none; margin-top:6px;"></div>
                     </div>
 
-                    <!-- Action Buttons -->
-                    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; justify-content:center;">
+                    <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:6px; justify-content:center;">
                         <button class="btn btn-gold btn-sm" id="shareResultBtn">
-                            <i class="fa-solid fa-share-alt"></i> <span data-i18n="share">مشاركة النتائج</span>
+                            <i class="fa-solid fa-share-alt"></i> <span data-i18n="share">مشاركة</span>
                         </button>
                         <button class="btn btn-outline btn-sm" id="resetFormBtn">
                             <i class="fa-solid fa-undo"></i> <span data-i18n="reset">إعادة تعيين</span>
                         </button>
                     </div>
 
-                    <!-- Disclaimer -->
                     <div class="disclaimer">
                         <i class="fa-solid fa-circle-info"></i>
                         <div>
-                            <strong data-i18n="disclaimer_title">⚠️ تنبيه مهم:</strong>
-                            <span data-i18n="disclaimer_body">هذا التقييم هو تقدير استرشادي يستند إلى مؤشرات السوق العامة، ولا يُعتبر وثيقة تثمين رسمية معتمدة. نوصي بالاستعانة بمثمّن عقاري معتمد لتقييم دقيق.</span>
+                            <strong data-i18n="disclaimer_title">⚠️ تنبيه:</strong>
+                            <span data-i18n="disclaimer_body">تقدير استرشادي، ليس وثيقة تثمين رسمية.</span>
                         </div>
                     </div>
 
@@ -1929,13 +1966,13 @@
                 <div class="upload-area" id="uploadArea">
                     <i class="fa-solid fa-file-excel"></i>
                     <p><strong data-i18n="import_excel">📂 اسحب ملف Excel هنا أو اضغط للاختيار</strong></p>
-                    <p style="font-size:0.65rem; color:var(--muted);" data-i18n="import_hint">يدعم: .xlsx, .xls — الأعمدة: المدينة, الحي, النوع, السعر, المساحة</p>
+                    <p style="font-size:0.6rem; color:var(--muted);" data-i18n="import_hint">يدعم: .xlsx, .xls — الأعمدة: المدينة, الحي, النوع, السعر, المساحة</p>
                     <div class="file-name" id="fileName"></div>
                     <input type="file" id="excelFile" accept=".xlsx,.xls">
                 </div>
 
-                <div style="text-align:center; margin:4px 0 10px;">
-                    <span style="color:var(--muted); font-size:0.7rem;" data-i18n="or_manual">— أو أدخل البيانات يدوياً —</span>
+                <div style="text-align:center; margin:4px 0 8px;">
+                    <span style="color:var(--muted); font-size:0.65rem;" data-i18n="or_manual">— أو أدخل البيانات يدوياً —</span>
                 </div>
 
                 <form id="addPropertyForm">
@@ -1963,12 +2000,12 @@
                         <div class="form-group"><label data-i18n="price">السعر (ر.س)</label><input type="number" id="addPrice" required min="10000"></div>
                         <div class="form-group"><label data-i18n="area">المساحة (م²)</label><input type="number" id="addAreaAdd" required min="20"></div>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width:100%; margin-top:6px;">
+                    <button type="submit" class="btn btn-primary" style="width:100%; margin-top:4px;">
                         <i class="fa-solid fa-plus"></i> <span data-i18n="btn_add">إدراج وتقييم</span>
                     </button>
                 </form>
 
-                <div id="excelStatus" style="margin-top:8px; display:none; padding:8px; border-radius:var(--radius); background:var(--success-light); border:1px solid var(--success);">
+                <div id="excelStatus" style="margin-top:6px; display:none; padding:6px; border-radius:var(--radius); background:var(--success-light); border:1px solid var(--success);">
                     <i class="fa-solid fa-check-circle" style="color:var(--success);"></i>
                     <span id="excelStatusText">تم استيراد 0 عقار</span>
                 </div>
@@ -1980,7 +2017,7 @@
         ========================================================== -->
         <div class="section-content" id="section-database">
             <div class="card">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:8px;">
                     <div class="section-title" style="margin:0;"><i class="fa-solid fa-chart-bar"></i> <span data-i18n="db_title">التحليلات وقاعدة البيانات</span></div>
                     <div class="btn-row">
                         <button class="btn btn-success btn-sm" id="exportCsvBtn"><i class="fa-solid fa-table"></i> CSV</button>
@@ -1989,7 +2026,7 @@
                     </div>
                 </div>
                 <div class="chart-box"><canvas id="analyticsChart"></canvas></div>
-                <div class="section-title" style="font-size:0.85rem; margin-top:14px; color:var(--warning);">
+                <div class="section-title" style="font-size:0.7rem; margin-top:10px; color:var(--warning);">
                     <i class="fa-solid fa-magnifying-glass-chart"></i> <span data-i18n="review_title">قيم البحث — تحتاج مراجعة</span>
                 </div>
                 <p class="review-note" id="reviewMeta"></p>
@@ -1998,7 +2035,7 @@
                         <th data-i18n="review_param">المعامل</th><th data-i18n="review_value">القيمة</th><th data-i18n="review_status">الحالة</th>
                     </tr></thead><tbody id="reviewTableBody"></tbody></table>
                 </div>
-                <div class="section-title" style="font-size:0.85rem; margin-top:14px;"><i class="fa-solid fa-list"></i> <span data-i18n="props_list">العقارات المسجّلة</span></div>
+                <div class="section-title" style="font-size:0.7rem; margin-top:10px;"><i class="fa-solid fa-list"></i> <span data-i18n="props_list">العقارات المسجّلة</span></div>
                 <div class="table-wrap">
                     <table class="data-table"><thead><tr>
                         <th data-i18n="city">المدينة</th><th data-i18n="district">الحي</th>
@@ -2011,7 +2048,7 @@
         </div>
 
         <!-- ==========================================================
-        ABOUT
+        ABOUT - مترجمة بالكامل
         ========================================================== -->
         <div class="section-content" id="section-about">
             <div class="about-wrapper">
@@ -2027,14 +2064,14 @@
                         </div>
                     </div>
 
-                    <div class="about-description">
+                    <div class="about-description" data-i18n="about_text">
                         <strong>SaudiAqarAI</strong> مشروع تقني ريادي يُقدّم تقديرات سوقية للعقارات في المملكة العربية السعودية،
                         مستنداً إلى <strong>خوارزميات ذكية</strong> تحلل مؤشرات السوق الفعلية.
                         نهدف إلى تمكين المستثمرين والمشترين والبائعين من <strong>اتخاذ قرارات مدروسة</strong>
                         بناءً على تحليل دقيق وموثوق.
                     </div>
 
-                    <div class="section-title" style="margin-bottom:10px;">
+                    <div class="section-title" style="margin-bottom:6px;">
                         <i class="fa-solid fa-cogs"></i> <span data-i18n="methodology">منهجية التقييم</span>
                     </div>
 
@@ -2042,36 +2079,36 @@
                         <div class="methodology-item">
                             <div class="m-icon"><i class="fa-solid fa-calculator"></i></div>
                             <div class="m-content">
-                                <div class="m-title">السعر الأساسي</div>
-                                <div class="m-desc">يُحتسب بناءً على سعر المتر في المدينة مضروباً في المساحة</div>
+                                <div class="m-title" data-i18n="m1_title">السعر الأساسي</div>
+                                <div class="m-desc" data-i18n="m1_desc">يُحتسب بناءً على سعر المتر في المدينة مضروباً في المساحة</div>
                             </div>
                         </div>
                         <div class="methodology-item">
                             <div class="m-icon"><i class="fa-solid fa-sliders-h"></i></div>
                             <div class="m-content">
-                                <div class="m-title">معاملات التعديل</div>
-                                <div class="m-desc">تشمل نوع العقار، العمر، عدد الغرف، وعرض الشارع</div>
+                                <div class="m-title" data-i18n="m2_title">معاملات التعديل</div>
+                                <div class="m-desc" data-i18n="m2_desc">تشمل نوع العقار، العمر، عدد الغرف، وعرض الشارع</div>
                             </div>
                         </div>
                         <div class="methodology-item">
                             <div class="m-icon"><i class="fa-solid fa-star"></i></div>
                             <div class="m-content">
-                                <div class="m-title">المكافآت</div>
-                                <div class="m-desc">تُمنح للأحياء المميزة، الواجهات الجيدة، والمرافق الإضافية</div>
+                                <div class="m-title" data-i18n="m3_title">المكافآت</div>
+                                <div class="m-desc" data-i18n="m3_desc">تُمنح للأحياء المميزة، الواجهات الجيدة، والمرافق الإضافية</div>
                             </div>
                         </div>
                         <div class="methodology-item">
                             <div class="m-icon"><i class="fa-solid fa-tag"></i></div>
                             <div class="m-content">
-                                <div class="m-title">الخصومات</div>
-                                <div class="m-desc">تُطبق على العقارات القديمة والواجهات الأقل تفضيلاً</div>
+                                <div class="m-title" data-i18n="m4_title">الخصومات</div>
+                                <div class="m-desc" data-i18n="m4_desc">تُطبق على العقارات القديمة والواجهات الأقل تفضيلاً</div>
                             </div>
                         </div>
                         <div class="methodology-item" style="grid-column: 1 / -1;">
                             <div class="m-icon"><i class="fa-solid fa-sync-alt"></i></div>
                             <div class="m-content">
-                                <div class="m-title">التحديث الدوري</div>
-                                <div class="m-desc">يتم مراجعة المؤشرات دورياً لتعكس تغيرات السوق</div>
+                                <div class="m-title" data-i18n="m5_title">التحديث الدوري</div>
+                                <div class="m-desc" data-i18n="m5_desc">يتم مراجعة المؤشرات دورياً لتعكس تغيرات السوق</div>
                             </div>
                         </div>
                     </div>
@@ -2079,11 +2116,11 @@
                     <div class="about-footer">
                         <div class="data-badge">
                             <i class="fa-solid fa-database"></i>
-                            <span>مصادر البيانات: مؤشرات السوق العقارية 2025-2026</span>
+                            <span data-i18n="about_sources">مصادر البيانات: مؤشرات السوق العقارية 2025-2026</span>
                         </div>
                         <div class="data-badge">
                             <i class="fa-solid fa-calendar-check"></i>
-                            <span>آخر تحديث: مارس 2026</span>
+                            <span data-i18n="last_update">آخر تحديث: مارس 2026</span>
                         </div>
                     </div>
 
@@ -2092,7 +2129,7 @@
         </div>
 
         <!-- ==========================================================
-        CONTACT
+        CONTACT - مترجمة بالكامل
         ========================================================== -->
         <div class="section-content" id="section-contact">
             <div class="contact-wrapper">
@@ -2102,20 +2139,20 @@
                         <div class="contact-big-icon">
                             <i class="fa-solid fa-address-card"></i>
                         </div>
-                        <h2>تواصل معنا</h2>
-                        <p>📬 فريقنا في انتظارك — تواصل معنا لأي استفسار أو اقتراح</p>
+                        <h2 data-i18n="contact_heading">تواصل معنا</h2>
+                        <p data-i18n="contact_sub">📬 فريقنا في انتظارك — تواصل معنا لأي استفسار أو اقتراح</p>
                     </div>
 
                     <div class="contact-grid-enhanced">
                         <div class="contact-card-enhanced">
                             <div class="c-icon"><i class="fa-solid fa-location-dot"></i></div>
-                            <div class="c-label">📍 الموقع</div>
-                            <div class="c-value">الدوحة، قطر</div>
+                            <div class="c-label" data-i18n="contact_location">📍 الموقع</div>
+                            <div class="c-value" data-i18n="location_value">الدوحة، قطر</div>
                         </div>
 
                         <div class="contact-card-enhanced">
                             <div class="c-icon"><i class="fa-solid fa-envelope"></i></div>
-                            <div class="c-label">📧 البريد الإلكتروني</div>
+                            <div class="c-label" data-i18n="contact_email">📧 البريد الإلكتروني</div>
                             <div class="c-value">
                                 <a href="mailto:ahmedvalljemaldine@gmail.com">ahmedvalljemaldine@gmail.com</a>
                             </div>
@@ -2123,7 +2160,7 @@
 
                         <div class="contact-card-enhanced">
                             <div class="c-icon"><i class="fa-solid fa-phone"></i></div>
-                            <div class="c-label">📞 الهاتف</div>
+                            <div class="c-label" data-i18n="contact_phone">📞 الهاتف</div>
                             <div class="c-value">
                                 <a href="tel:+97474736271" class="phone">+974 7473 6271</a>
                             </div>
@@ -2132,13 +2169,13 @@
 
                     <div class="contact-buttons-enhanced">
                         <a href="https://wa.me/97474736271" target="_blank" rel="noopener" class="contact-btn-enhanced whatsapp">
-                            <i class="fa-brands fa-whatsapp"></i> واتساب
+                            <i class="fa-brands fa-whatsapp"></i> <span data-i18n="contact_whatsapp">واتساب</span>
                         </a>
                         <a href="https://ahmedvall70.github.io/ahmed-vall-cv/" target="_blank" rel="noopener" class="contact-btn-enhanced gold">
-                            <i class="fa-solid fa-file-pdf"></i> السيرة الذاتية
+                            <i class="fa-solid fa-file-pdf"></i> <span data-i18n="contact_cv">السيرة الذاتية</span>
                         </a>
                         <a href="https://ahmedvall70.github.io/Innovision/" target="_blank" rel="noopener" class="contact-btn-enhanced primary">
-                            <i class="fa-solid fa-rocket"></i> Innovision Hub
+                            <i class="fa-solid fa-rocket"></i> <span data-i18n="contact_innovision">Innovision Hub</span>
                         </a>
                     </div>
 
@@ -2233,7 +2270,7 @@
         let importedProperties = [];
 
         // ============================================================
-        // 3. TRANSLATIONS (مختصرة)
+        // 3. TRANSLATIONS - كاملة
         // ============================================================
         const translations = {
             ar: {
@@ -2244,7 +2281,7 @@
                 nav_about: "عن المنصة",
                 nav_contact: "تواصل",
                 title: "المُقيّم العقاري الذكي",
-                subtitle: "أدخل بيانات العقار ليُقدّر الذكاء الاصطناعي القيمة السوقية العادلة في لحظات",
+                subtitle: "أدخل بيانات العقار ليُقدّر الذكاء الاصطناعي القيمة السوقية العادلة",
                 city: "المدينة",
                 district: "الحي",
                 type: "نوع العقار",
@@ -2261,22 +2298,22 @@
                 furnished: "مفروش",
                 central_ac: "تكييف مركزي",
                 maid_room: "غرفة خادمة",
-                live_hint: "يتحدّث التقييم تلقائياً مع كل تعديل في البيانات",
+                live_hint: "يتحدّث التقييم تلقائياً مع كل تعديل",
                 btn_add: "إدراج وتقييم",
                 btn_refresh: "تحديث",
                 reset: "إعادة تعيين",
-                share: "مشاركة النتائج",
+                share: "مشاركة",
                 clear: "مسح",
                 show: "عرض",
                 details_title: "تفاصيل التقييم",
-                price_range: "💰 النطاق السعري التقديري",
+                price_range: "💰 النطاق السعري",
                 investment: "📈 مؤشر الاستثمار",
                 last_update: "📅 تحديث النموذج",
                 model_date: "مارس 2026",
                 avg_price: "المتوسط",
                 sar: "ر.س",
-                disclaimer_title: "⚠️ تنبيه مهم:",
-                disclaimer_body: "هذا التقييم هو تقدير استرشادي يستند إلى مؤشرات السوق العامة، ولا يُعتبر وثيقة تثمين رسمية معتمدة. نوصي بالاستعانة بمثمّن عقاري معتمد لتقييم دقيق.",
+                disclaimer_title: "⚠️ تنبيه:",
+                disclaimer_body: "تقدير استرشادي، ليس وثيقة تثمين رسمية.",
                 add_title: "إضافة عقار جديد",
                 db_title: "التحليلات وقاعدة البيانات",
                 review_title: "قيم البحث — تحتاج مراجعة",
@@ -2289,16 +2326,21 @@
                 props_empty: "لا توجد عقارات مسجّلة بعد",
                 ai_estimate: "تقدير AI",
                 date: "التاريخ",
-                about_heading: "عن منصة SaudiAqarAI",
-                about_text: "مشروع تقني ريادي يُقدّم تقديرات سوقية للعقارات في المملكة العربية السعودية، مستنداً إلى خوارزميات ذكية تحلل مؤشرات السوق الفعلية.",
-                about_sources: "📊 مصادر البيانات: مؤشرات السوق العقارية 2025-2026 — آخر تحديث: مارس 2026.",
+                about_text: "<strong>SaudiAqarAI</strong> مشروع تقني ريادي يُقدّم تقديرات سوقية للعقارات في المملكة العربية السعودية، مستنداً إلى <strong>خوارزميات ذكية</strong> تحلل مؤشرات السوق الفعلية. نهدف إلى تمكين المستثمرين والمشترين والبائعين من <strong>اتخاذ قرارات مدروسة</strong> بناءً على تحليل دقيق وموثوق.",
+                about_sources: "مصادر البيانات: مؤشرات السوق العقارية 2025-2026",
                 methodology: "منهجية التقييم",
-                m1: "<strong>السعر الأساسي:</strong> يُحتسب بناءً على سعر المتر في المدينة مضروباً في المساحة",
-                m2: "<strong>معاملات التعديل:</strong> تشمل نوع العقار، العمر، عدد الغرف، وعرض الشارع",
-                m3: "<strong>المكافآت:</strong> تُمنح للأحياء المميزة، الواجهات الجيدة، والمرافق الإضافية",
-                m4: "<strong>الخصومات:</strong> تُطبق على العقارات القديمة والواجهات الأقل تفضيلاً",
-                m5: "<strong>التحديث:</strong> يتم مراجعة المؤشرات دورياً لتعكس تغيرات السوق",
+                m1_title: "السعر الأساسي",
+                m1_desc: "يُحتسب بناءً على سعر المتر في المدينة مضروباً في المساحة",
+                m2_title: "معاملات التعديل",
+                m2_desc: "تشمل نوع العقار، العمر، عدد الغرف، وعرض الشارع",
+                m3_title: "المكافآت",
+                m3_desc: "تُمنح للأحياء المميزة، الواجهات الجيدة، والمرافق الإضافية",
+                m4_title: "الخصومات",
+                m4_desc: "تُطبق على العقارات القديمة والواجهات الأقل تفضيلاً",
+                m5_title: "التحديث الدوري",
+                m5_desc: "يتم مراجعة المؤشرات دورياً لتعكس تغيرات السوق",
                 contact_heading: "تواصل معنا",
+                contact_sub: "📬 فريقنا في انتظارك — تواصل معنا لأي استفسار أو اقتراح",
                 contact_location: "📍 الموقع",
                 contact_email: "📧 البريد الإلكتروني",
                 contact_phone: "📞 الهاتف",
@@ -2345,7 +2387,7 @@
                 nav_about: "About",
                 nav_contact: "Contact",
                 title: "Smart Property Valuator",
-                subtitle: "Enter property details and AI will estimate fair market value in real-time",
+                subtitle: "Enter property details for AI to estimate fair market value",
                 city: "City",
                 district: "District",
                 type: "Property Type",
@@ -2366,18 +2408,18 @@
                 btn_add: "Submit & Evaluate",
                 btn_refresh: "Refresh",
                 reset: "Reset",
-                share: "Share Results",
+                share: "Share",
                 clear: "Clear",
                 show: "Show",
                 details_title: "Valuation Details",
-                price_range: "💰 Estimated Price Range",
+                price_range: "💰 Price Range",
                 investment: "📈 Investment Index",
                 last_update: "📅 Model Update",
                 model_date: "March 2026",
                 avg_price: "Average",
                 sar: "SAR",
-                disclaimer_title: "⚠️ Important Notice:",
-                disclaimer_body: "This valuation is a guide based on public market indicators. It is NOT an official appraisal document. We recommend consulting a certified appraiser.",
+                disclaimer_title: "⚠️ Notice:",
+                disclaimer_body: "Estimates only, not an official appraisal.",
                 add_title: "Add New Property",
                 db_title: "Analytics & Database",
                 review_title: "Search Values — Periodic Review",
@@ -2390,16 +2432,21 @@
                 props_empty: "No properties registered yet",
                 ai_estimate: "AI Estimate",
                 date: "Date",
-                about_heading: "About SaudiAqarAI",
-                about_text: "A pioneering technical project providing market valuations for Saudi real estate using intelligent algorithms.",
-                about_sources: "📊 Data sources: Real Estate Market Indicators 2025-2026 — Last updated: March 2026.",
+                about_text: "<strong>SaudiAqarAI</strong> is a pioneering technical project providing market valuations for Saudi real estate using <strong>intelligent algorithms</strong> that analyze actual market indicators. We aim to empower investors, buyers, and sellers to make <strong>informed decisions</strong> based on accurate and reliable analysis.",
+                about_sources: "Data sources: Real Estate Market Indicators 2025-2026",
                 methodology: "Valuation Methodology",
-                m1: "<strong>Base Price:</strong> Calculated using city rate per m² × area",
-                m2: "<strong>Adjustments:</strong> Property type, age, rooms, and street width",
-                m3: "<strong>Bonuses:</strong> Premium districts, good facades, and amenities",
-                m4: "<strong>Discounts:</strong> Older properties and less preferred facades",
-                m5: "<strong>Updates:</strong> Regularly reviewed to reflect market changes",
+                m1_title: "Base Price",
+                m1_desc: "Calculated using city rate per m² × area",
+                m2_title: "Adjustments",
+                m2_desc: "Include property type, age, rooms, and street width",
+                m3_title: "Bonuses",
+                m3_desc: "Awarded for premium districts, good facades, and amenities",
+                m4_title: "Discounts",
+                m4_desc: "Applied to older properties and less preferred facades",
+                m5_title: "Periodic Updates",
+                m5_desc: "Regularly reviewed to reflect market changes",
                 contact_heading: "Contact Us",
+                contact_sub: "📬 Our team is waiting — Contact us for any inquiry or suggestion",
                 contact_location: "📍 Location",
                 contact_email: "📧 Email",
                 contact_phone: "📞 Phone",
@@ -2479,7 +2526,7 @@
                 avg_price: "Moyenne",
                 sar: "SAR",
                 disclaimer_title: "⚠️ Avertissement:",
-                disclaimer_body: "Cette estimation est indicative. Ce n'est PAS un document officiel. Consultez un expert.",
+                disclaimer_body: "Estimations indicatives uniquement.",
                 add_title: "Ajouter un bien",
                 db_title: "Analyses & Données",
                 review_title: "Valeurs — Révision",
@@ -2492,16 +2539,21 @@
                 props_empty: "Aucun bien enregistré",
                 ai_estimate: "Estimation IA",
                 date: "Date",
-                about_heading: "À propos de SaudiAqarAI",
-                about_text: "Un projet innovant d'estimation immobilière pour l'Arabie Saoudite.",
-                about_sources: "📊 Sources: Indicateurs 2025-2026 — Mars 2026.",
-                methodology: "Méthodologie",
-                m1: "<strong>Prix de base:</strong> Taux de la ville × surface",
-                m2: "<strong>Ajustements:</strong> Type, âge, pièces, largeur",
-                m3: "<strong>Bonus:</strong> Quartiers premium, façades, équipements",
-                m4: "<strong>Remises:</strong> Biens anciens",
-                m5: "<strong>Mises à jour:</strong> Révisées régulièrement",
+                about_text: "<strong>SaudiAqarAI</strong> est un projet technique innovant fournissant des estimations immobilières pour l'Arabie Saoudite basées sur des <strong>algorithmes intelligents</strong>. Nous visons à aider les investisseurs, acheteurs et vendeurs à prendre des <strong>décisions éclairées</strong> basées sur une analyse précise.",
+                about_sources: "Sources: Indicateurs du marché 2025-2026",
+                methodology: "Méthodologie d'évaluation",
+                m1_title: "Prix de base",
+                m1_desc: "Calculé avec le taux de la ville × surface",
+                m2_title: "Ajustements",
+                m2_desc: "Type, âge, pièces, largeur de rue",
+                m3_title: "Bonus",
+                m3_desc: "Quartiers premium, bonnes façades, équipements",
+                m4_title: "Remises",
+                m4_desc: "Biens anciens et façades moins prisées",
+                m5_title: "Mises à jour",
+                m5_desc: "Révisées régulièrement pour refléter le marché",
                 contact_heading: "Contactez-nous",
+                contact_sub: "📬 Notre équipe vous attend — Contactez-nous pour toute question",
                 contact_location: "📍 Lieu",
                 contact_email: "📧 E-mail",
                 contact_phone: "📞 Téléphone",
@@ -2876,6 +2928,10 @@
                 const k = el.dataset.i18n;
                 if (translations[lang]?.[k]) el.textContent = translations[lang][k];
             });
+            // Update about page text dynamically
+            const aboutDesc = document.querySelector('.about-description');
+            if (aboutDesc) aboutDesc.innerHTML = t('about_text');
+
             translateAllSelects();
             refreshPrediction(false);
             renderReview();
@@ -2927,7 +2983,7 @@
                             <td>${p.neighborhood || '—'}</td>
                             <td>${(p.price || 0).toLocaleString()} ${t('sar')}</td>
                             <td>${(p.ai_estimate || 0).toLocaleString()} ${t('sar')}</td>
-                            <td style="font-size:0.6rem;color:var(--muted);">${p.created_at ? new Date(p.created_at).toLocaleDateString() : '—'}</td>
+                            <td style="font-size:0.55rem;color:var(--muted);">${p.created_at ? new Date(p.created_at).toLocaleDateString() : '—'}</td>
                         </tr>
                     `).join('');
         }
@@ -3302,7 +3358,9 @@
 
             // Navigation
             document.querySelectorAll('.nav-link, .bottom-nav .nav-item, .header-nav .nav-link').forEach(b => {
-                b.addEventListener('click', () => switchTab(b.dataset.tab));
+                b.addEventListener('click', function() {
+                    switchTab(this.dataset.tab);
+                });
             });
 
             // Mobile menu
