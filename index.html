@@ -433,7 +433,7 @@
         }
 
         /* ============================================================
-           EVALUATE PAGE - مصغرة
+           EVALUATE PAGE
            ============================================================ */
         .evaluate-wrapper {
             background: var(--gradient-evaluate);
@@ -850,7 +850,7 @@
         }
 
         /* ============================================================
-           ABOUT PAGE - مترجمة بالكامل
+           ABOUT PAGE
            ============================================================ */
         .about-wrapper {
             background: linear-gradient(135deg, rgba(26, 58, 92, 0.02) 0%, rgba(212, 175, 55, 0.02) 100%);
@@ -1706,7 +1706,7 @@
                 </div>
                 <div>
                     <span class="logo-text">Saudi<span class="gold">Aqar</span>AI</span>
-                    <span class="logo-sub">🇸🇦 الذكاء العقاري</span>
+                    <span class="logo-sub">🇸🇦 <span data-i18n="header_sub">الذكاء العقاري</span></span>
                 </div>
             </div>
 
@@ -1777,51 +1777,51 @@
                 <h1 class="hero-title">
                     Saudi<span class="gold">Aqar</span>AI
                 </h1>
-                <p class="hero-subtitle">🏛️ الذكاء الاصطناعي العقاري السعودي</p>
-                <p class="hero-desc">
+                <p class="hero-subtitle" data-i18n="hero_subtitle">🏛️ الذكاء الاصطناعي العقاري السعودي</p>
+                <p class="hero-desc" data-i18n="hero_desc">
                     منصتك الذكية لتقدير القيم السوقية للعقارات في المملكة<br>
                     بدقة وسرعة باستخدام أحدث خوارزميات الذكاء الاصطناعي
                 </p>
                 <div class="hero-buttons">
                     <button class="hero-btn hero-btn-primary" onclick="switchTab('evaluate')">
-                        <i class="fa-solid fa-robot"></i> ابدأ التقييم الآن
+                        <i class="fa-solid fa-robot"></i> <span data-i18n="hero_btn_start">ابدأ التقييم الآن</span>
                     </button>
                     <button class="hero-btn hero-btn-secondary" onclick="switchTab('about')">
-                        <i class="fa-solid fa-circle-info"></i> تعرف على المنصة
+                        <i class="fa-solid fa-circle-info"></i> <span data-i18n="hero_btn_about">تعرف على المنصة</span>
                     </button>
                 </div>
                 <div class="hero-stats">
                     <div class="stat-item">
                         <div class="stat-number">5+</div>
-                        <div class="stat-label">مدن مدعومة</div>
+                        <div class="stat-label" data-i18n="stat_cities">مدن مدعومة</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">10+</div>
-                        <div class="stat-label">عامل تقييم</div>
+                        <div class="stat-label" data-i18n="stat_factors">عامل تقييم</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">100%</div>
-                        <div class="stat-label">تلقائي</div>
+                        <div class="stat-label" data-i18n="stat_auto">تلقائي</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">📊</div>
-                        <div class="stat-label">تحليل فوري</div>
+                        <div class="stat-label" data-i18n="stat_instant">تحليل فوري</div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- ==========================================================
-        EVALUATE - صفحة مصغرة
+        EVALUATE
         ========================================================== -->
         <div class="section-content" id="section-evaluate">
             <div class="evaluate-wrapper">
                 <div class="evaluate-card">
 
                     <div class="evaluate-hero">
-                        <div class="badge-top"><i class="fa-solid fa-sparkles"></i> 🤖 تقييم فوري</div>
-                        <h2 data-i18n="title">المُقيّم العقاري الذكي</h2>
-                        <p data-i18n="subtitle">أدخل بيانات العقار ليُقدّر الذكاء الاصطناعي القيمة السوقية العادلة في لحظات</p>
+                        <div class="badge-top"><i class="fa-solid fa-sparkles"></i> <span data-i18n="badge_instant">🤖 تقييم فوري</span></div>
+                        <h2 data-i18n="eval_title">المُقيّم العقاري الذكي</h2>
+                        <p data-i18n="eval_sub">أدخل بيانات العقار ليُقدّر الذكاء الاصطناعي القيمة السوقية العادلة</p>
                     </div>
 
                     <div id="predictForm">
@@ -2059,8 +2059,8 @@
                             <i class="fa-solid fa-circle-info"></i>
                         </div>
                         <div>
-                            <div class="about-title">عن منصة <span class="gold">SaudiAqarAI</span></div>
-                            <div class="about-subtitle">🕌 منصة الذكاء الاصطناعي العقاري في المملكة</div>
+                            <div class="about-title"><span data-i18n="about_title">عن منصة</span> <span class="gold">SaudiAqarAI</span></div>
+                            <div class="about-subtitle" data-i18n="about_subtitle">🕌 منصة الذكاء الاصطناعي العقاري في المملكة</div>
                         </div>
                     </div>
 
@@ -2270,18 +2270,33 @@
         let importedProperties = [];
 
         // ============================================================
-        // 3. TRANSLATIONS - كاملة
+        // 3. TRANSLATIONS - FULLY COMPLETE
         // ============================================================
         const translations = {
             ar: {
+                // Header
+                header_sub: "الذكاء العقاري",
                 nav_home: "الرئيسية",
                 nav_eval: "التقييم",
                 nav_add: "إضافة",
                 nav_db: "البيانات",
                 nav_about: "عن المنصة",
                 nav_contact: "تواصل",
-                title: "المُقيّم العقاري الذكي",
-                subtitle: "أدخل بيانات العقار ليُقدّر الذكاء الاصطناعي القيمة السوقية العادلة",
+
+                // Hero
+                hero_subtitle: "🏛️ الذكاء الاصطناعي العقاري السعودي",
+                hero_desc: "منصتك الذكية لتقدير القيم السوقية للعقارات في المملكة<br>بدقة وسرعة باستخدام أحدث خوارزميات الذكاء الاصطناعي",
+                hero_btn_start: "ابدأ التقييم الآن",
+                hero_btn_about: "تعرف على المنصة",
+                stat_cities: "مدن مدعومة",
+                stat_factors: "عامل تقييم",
+                stat_auto: "تلقائي",
+                stat_instant: "تحليل فوري",
+
+                // Evaluate
+                badge_instant: "🤖 تقييم فوري",
+                eval_title: "المُقيّم العقاري الذكي",
+                eval_sub: "أدخل بيانات العقار ليُقدّر الذكاء الاصطناعي القيمة السوقية العادلة",
                 city: "المدينة",
                 district: "الحي",
                 type: "نوع العقار",
@@ -2314,7 +2329,15 @@
                 sar: "ر.س",
                 disclaimer_title: "⚠️ تنبيه:",
                 disclaimer_body: "تقدير استرشادي، ليس وثيقة تثمين رسمية.",
+
+                // Add
                 add_title: "إضافة عقار جديد",
+                import_excel: "📂 اسحب ملف Excel هنا أو اضغط للاختيار",
+                import_hint: "يدعم: .xlsx, .xls — الأعمدة: المدينة, الحي, النوع, السعر, المساحة",
+                import_status: "تم استيراد {count} عقار",
+                or_manual: "— أو أدخل البيانات يدوياً —",
+
+                // Database
                 db_title: "التحليلات وقاعدة البيانات",
                 review_title: "قيم البحث — تحتاج مراجعة",
                 review_param: "المعامل",
@@ -2326,6 +2349,10 @@
                 props_empty: "لا توجد عقارات مسجّلة بعد",
                 ai_estimate: "تقدير AI",
                 date: "التاريخ",
+
+                // About
+                about_title: "عن منصة",
+                about_subtitle: "🕌 منصة الذكاء الاصطناعي العقاري في المملكة",
                 about_text: "<strong>SaudiAqarAI</strong> مشروع تقني ريادي يُقدّم تقديرات سوقية للعقارات في المملكة العربية السعودية، مستنداً إلى <strong>خوارزميات ذكية</strong> تحلل مؤشرات السوق الفعلية. نهدف إلى تمكين المستثمرين والمشترين والبائعين من <strong>اتخاذ قرارات مدروسة</strong> بناءً على تحليل دقيق وموثوق.",
                 about_sources: "مصادر البيانات: مؤشرات السوق العقارية 2025-2026",
                 methodology: "منهجية التقييم",
@@ -2339,6 +2366,8 @@
                 m4_desc: "تُطبق على العقارات القديمة والواجهات الأقل تفضيلاً",
                 m5_title: "التحديث الدوري",
                 m5_desc: "يتم مراجعة المؤشرات دورياً لتعكس تغيرات السوق",
+
+                // Contact
                 contact_heading: "تواصل معنا",
                 contact_sub: "📬 فريقنا في انتظارك — تواصل معنا لأي استفسار أو اقتراح",
                 contact_location: "📍 الموقع",
@@ -2349,6 +2378,8 @@
                 contact_innovision: "Innovision Hub",
                 location_value: "الدوحة، قطر",
                 dev_by: "تطوير:",
+
+                // Modal
                 modal_ok: "حسناً",
                 modal_add_ok: "تمت الإضافة!",
                 modal_add_msg: "تم إدراج العقار بنجاح.",
@@ -2362,14 +2393,14 @@
                 modal_clear_done_msg: "تم حذف جميع العقارات.",
                 modal_import_ok: "تم الاستيراد!",
                 modal_import_msg: "تم استيراد {count} عقار بنجاح.",
-                import_excel: "📂 اسحب ملف Excel هنا أو اضغط للاختيار",
-                import_hint: "يدعم: .xlsx, .xls — الأعمدة: المدينة, الحي, النوع, السعر, المساحة",
-                import_status: "تم استيراد {count} عقار",
-                or_manual: "— أو أدخل البيانات يدوياً —",
+
+                // Misc
                 copied: "تم النسخ",
                 error_occurred: "حدث خطأ",
                 refreshed: "تم التحديث",
                 reset_done: "تم إعادة التعيين",
+
+                // Cities and types
                 cities: { "الرياض": "الرياض", "جدة": "جدة", "الدمام": "الدمام", "مكة المكرمة": "مكة المكرمة",
                     "المدينة المنورة": "المدينة المنورة" },
                 types: { "فيلا": "فيلا", "شقة سكنية": "شقة سكنية", "أرض": "أرض", "دوبلكس": "دوبلكس" },
@@ -2380,14 +2411,24 @@
                 city_keys: { riyadh: "الرياض", jeddah: "جدة", dammam: "الدمام", makkah: "مكة", madinah: "المدينة" }
             },
             en: {
+                header_sub: "Real Estate AI",
                 nav_home: "Home",
                 nav_eval: "Valuation",
                 nav_add: "Add",
                 nav_db: "Analytics",
                 nav_about: "About",
                 nav_contact: "Contact",
-                title: "Smart Property Valuator",
-                subtitle: "Enter property details for AI to estimate fair market value",
+                hero_subtitle: "🏛️ Saudi Real Estate AI",
+                hero_desc: "Your smart platform to estimate market values for properties in the Kingdom<br>with accuracy and speed using the latest AI algorithms",
+                hero_btn_start: "Start Valuation Now",
+                hero_btn_about: "Learn About Platform",
+                stat_cities: "Cities Supported",
+                stat_factors: "Factors",
+                stat_auto: "Automatic",
+                stat_instant: "Instant Analysis",
+                badge_instant: "🤖 Instant Valuation",
+                eval_title: "Smart Property Valuator",
+                eval_sub: "Enter property details for AI to estimate fair market value",
                 city: "City",
                 district: "District",
                 type: "Property Type",
@@ -2419,8 +2460,12 @@
                 avg_price: "Average",
                 sar: "SAR",
                 disclaimer_title: "⚠️ Notice:",
-                disclaimer_body: "Estimates only, not an official appraisal.",
+                disclaimer_body: "Estimate only, not an official appraisal document.",
                 add_title: "Add New Property",
+                import_excel: "📂 Drag Excel file here or click to select",
+                import_hint: "Supports: .xlsx, .xls — Columns: city, district, type, price, area",
+                import_status: "{count} properties imported",
+                or_manual: "— Or enter data manually —",
                 db_title: "Analytics & Database",
                 review_title: "Search Values — Periodic Review",
                 review_param: "Parameter",
@@ -2432,6 +2477,8 @@
                 props_empty: "No properties registered yet",
                 ai_estimate: "AI Estimate",
                 date: "Date",
+                about_title: "About",
+                about_subtitle: "🕌 AI Real Estate Platform in the Kingdom",
                 about_text: "<strong>SaudiAqarAI</strong> is a pioneering technical project providing market valuations for Saudi real estate using <strong>intelligent algorithms</strong> that analyze actual market indicators. We aim to empower investors, buyers, and sellers to make <strong>informed decisions</strong> based on accurate and reliable analysis.",
                 about_sources: "Data sources: Real Estate Market Indicators 2025-2026",
                 methodology: "Valuation Methodology",
@@ -2468,10 +2515,6 @@
                 modal_clear_done_msg: "All properties deleted.",
                 modal_import_ok: "Imported!",
                 modal_import_msg: "{count} properties imported.",
-                import_excel: "📂 Drag Excel file here or click to select",
-                import_hint: "Supports: .xlsx, .xls — Columns: city, district, type, price, area",
-                import_status: "{count} properties imported",
-                or_manual: "— Or enter data manually —",
                 copied: "Copied",
                 error_occurred: "An error occurred",
                 refreshed: "Refreshed",
@@ -2487,14 +2530,24 @@
                     madinah: "Madinah" }
             },
             fr: {
+                header_sub: "IA Immobilière",
                 nav_home: "Accueil",
                 nav_eval: "Évaluation",
                 nav_add: "Ajouter",
                 nav_db: "Données",
                 nav_about: "À propos",
                 nav_contact: "Contact",
-                title: "Évaluateur Immobilier Intelligent",
-                subtitle: "Entrez les détails du bien pour une estimation en temps réel",
+                hero_subtitle: "🏛️ IA Immobilière Saoudienne",
+                hero_desc: "Votre plateforme intelligente pour estimer les valeurs du marché immobilier au Royaume<br>avec précision et rapidité grâce aux derniers algorithmes d'IA",
+                hero_btn_start: "Commencer l'évaluation",
+                hero_btn_about: "Découvrir la plateforme",
+                stat_cities: "Villes supportées",
+                stat_factors: "Facteurs",
+                stat_auto: "Automatique",
+                stat_instant: "Analyse instantanée",
+                badge_instant: "🤖 Évaluation instantanée",
+                eval_title: "Évaluateur Immobilier Intelligent",
+                eval_sub: "Entrez les détails du bien pour une estimation en temps réel",
                 city: "Ville",
                 district: "Quartier",
                 type: "Type de bien",
@@ -2526,8 +2579,12 @@
                 avg_price: "Moyenne",
                 sar: "SAR",
                 disclaimer_title: "⚠️ Avertissement:",
-                disclaimer_body: "Estimations indicatives uniquement.",
+                disclaimer_body: "Estimation indicative uniquement.",
                 add_title: "Ajouter un bien",
+                import_excel: "📂 Glissez Excel ici ou cliquez",
+                import_hint: "Support: .xlsx, .xls — Colonnes: ville, quartier, type, prix, surface",
+                import_status: "{count} biens importés",
+                or_manual: "— Ou saisissez manuellement —",
                 db_title: "Analyses & Données",
                 review_title: "Valeurs — Révision",
                 review_param: "Paramètre",
@@ -2539,6 +2596,8 @@
                 props_empty: "Aucun bien enregistré",
                 ai_estimate: "Estimation IA",
                 date: "Date",
+                about_title: "À propos de",
+                about_subtitle: "🕌 Plateforme d'IA Immobilière au Royaume",
                 about_text: "<strong>SaudiAqarAI</strong> est un projet technique innovant fournissant des estimations immobilières pour l'Arabie Saoudite basées sur des <strong>algorithmes intelligents</strong>. Nous visons à aider les investisseurs, acheteurs et vendeurs à prendre des <strong>décisions éclairées</strong> basées sur une analyse précise.",
                 about_sources: "Sources: Indicateurs du marché 2025-2026",
                 methodology: "Méthodologie d'évaluation",
@@ -2575,10 +2634,6 @@
                 modal_clear_done_msg: "Tous les biens supprimés.",
                 modal_import_ok: "Importé!",
                 modal_import_msg: "{count} biens importés.",
-                import_excel: "📂 Glissez Excel ici ou cliquez",
-                import_hint: "Support: .xlsx, .xls — Colonnes: ville, quartier, type, prix, surface",
-                import_status: "{count} biens importés",
-                or_manual: "— Ou saisissez manuellement —",
                 copied: "Copié",
                 error_occurred: "Erreur",
                 refreshed: "Actualisé",
@@ -2928,7 +2983,8 @@
                 const k = el.dataset.i18n;
                 if (translations[lang]?.[k]) el.textContent = translations[lang][k];
             });
-            // Update about page text dynamically
+
+            // Update about description
             const aboutDesc = document.querySelector('.about-description');
             if (aboutDesc) aboutDesc.innerHTML = t('about_text');
 
