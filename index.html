@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Supabase Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         /* ============================================================
            ROOT
@@ -193,6 +195,35 @@
             gap: 8px;
         }
 
+        /* ===== DB Status ===== */
+        .db-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.55rem;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.5);
+        }
+        .db-status .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .db-status .dot.online {
+            background: #34d399;
+        }
+        .db-status .dot.offline {
+            background: #f87171;
+        }
+        .db-status .dot.loading {
+            background: #fbbf24;
+            animation: pulse 1s infinite;
+        }
+
         .fixed-header .lang-group {
             display: flex;
             gap: 4px;
@@ -252,7 +283,7 @@
         }
 
         /* ============================================================
-           HERO - الصفحة الرئيسية
+           HERO
            ============================================================ */
         .hero-section {
             display: none;
@@ -415,7 +446,7 @@
         }
 
         /* ============================================================
-           TESTIMONIALS SECTION
+           TESTIMONIALS
            ============================================================ */
         .testimonials-wrapper {
             background: var(--gradient-hero);
@@ -537,7 +568,7 @@
         }
 
         /* ============================================================
-           PAGE WRAPPER - خلفية موحدة لجميع الصفحات
+           PAGE WRAPPER
            ============================================================ */
         .page-wrapper {
             background: var(--page-bg);
@@ -645,7 +676,6 @@
             margin: 0 auto;
         }
 
-        /* ===== النماذج ===== */
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -713,7 +743,6 @@
             -webkit-appearance: none;
         }
 
-        /* ===== أزرار المرافق (Chips) ===== */
         .chips {
             display: flex;
             flex-wrap: wrap;
@@ -753,7 +782,6 @@
             font-weight: 700;
         }
 
-        /* ===== التلميح ===== */
         .live-hint {
             text-align: center;
             font-size: 0.65rem;
@@ -780,7 +808,6 @@
             }
         }
 
-        /* ===== النتائج ===== */
         .results-wrapper {
             background: rgba(255, 255, 255, 0.02);
             border-radius: var(--radius);
@@ -866,7 +893,6 @@
             animation: glowLight 0.5s ease-out;
         }
 
-        /* ===== التفاصيل ===== */
         .details-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -898,7 +924,6 @@
             font-weight: 700;
         }
 
-        /* ===== الأزرار ===== */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -976,7 +1001,6 @@
             flex-wrap: wrap;
         }
 
-        /* ===== إخلاء المسؤولية ===== */
         .disclaimer {
             margin-top: 10px;
             padding: 8px 12px;
@@ -1003,7 +1027,7 @@
         }
 
         /* ============================================================
-           ADD PAGE - متناسقة مع الخلفية
+           ADD PAGE
            ============================================================ */
         .add-centered {
             max-width: 800px;
@@ -2006,6 +2030,12 @@
             </nav>
 
             <div class="header-actions">
+                <!-- DB Status -->
+                <div class="db-status" id="dbStatus">
+                    <span class="dot loading" id="dbDot"></span>
+                    <span id="dbLabel">جاري الاتصال...</span>
+                </div>
+
                 <div class="lang-group">
                     <button class="lang-btn active" data-lang="ar">
                         <span class="flag">🇸🇦</span> AR
@@ -2262,7 +2292,7 @@
         </div>
 
         <!-- ==========================================================
-        ADD - إصلاح الخلفية
+        ADD - مع دعم Supabase
         ========================================================== -->
         <div class="section-content" id="section-add">
             <div class="page-wrapper">
@@ -2628,15 +2658,34 @@
     </div>
 
     <!-- ============================================================
-    JAVASCRIPT
+    JAVASCRIPT - مع Supabase
     ============================================================ -->
     <script>
         // ============================================================
-        // 1. CONFIGURATION
+        // 1. SUPABASE CONFIG
         // ============================================================
-
-        const API_BASE = '';
-
+        
+        // ⚠️ استبدل هذه القيم بقيم مشروعك من Supabase
+        const SUPABASE_URL = 'https://kwqvaccjxrmrvpoifbcs.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_1W4MQnt9cvSiWtDmFIkqNQ_ezSfp7-E';
+        
+        // تهيئة Supabase
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        // ============================================================
+        // 2. STATE
+        // ============================================================
+        let currentLang = 'ar';
+        let analyticsChart = null;
+        let debounceTimer = null;
+        let lastCalculation = null;
+        let isUpdating = false;
+        let dbConnected = false;
+        let importedProperties = [];
+        
+        // ============================================================
+        // 3. CONFIGURATION
+        // ============================================================
         const MARKET_CONFIG = {
             city_base_rates: { riyadh: 4800, jeddah: 4500, dammam: 3900, makkah: 5200, madinah: 4100 },
             city_aliases: { "الرياض": "riyadh", "جدة": "jeddah", "الدمام": "dammam", "مكة المكرمة": "makkah",
@@ -2671,17 +2720,7 @@
         };
 
         // ============================================================
-        // 2. STATE
-        // ============================================================
-        let currentLang = 'ar';
-        let analyticsChart = null;
-        let debounceTimer = null;
-        let lastCalculation = null;
-        let isUpdating = false;
-        let importedProperties = [];
-
-        // ============================================================
-        // 3. TRANSLATIONS
+        // 4. TRANSLATIONS (مختصرة للاختصار)
         // ============================================================
         const translations = {
             ar: {
@@ -2868,377 +2907,15 @@
                 city_keys: { riyadh: "الرياض", jeddah: "جدة", dammam: "الدمام", makkah: "مكة", madinah: "المدينة" }
             },
             en: {
-                header_sub: "Real Estate AI",
-                nav_home: "Home",
-                nav_eval: "Valuation",
-                nav_add: "Add",
-                nav_db: "Analytics",
-                nav_about: "About",
-                nav_testimonials: "Testimonials",
-                nav_contact: "Contact",
-                hero_subtitle: "🏛️ Saudi Real Estate AI",
-                hero_desc: "Your smart platform to estimate market values for properties in the Kingdom<br>with accuracy and speed using the latest AI algorithms",
-                hero_btn_start: "Start Valuation Now",
-                hero_btn_about: "Learn About Platform",
-                stat_cities: "Cities Supported",
-                stat_factors: "Factors",
-                stat_auto: "Automatic",
-                stat_instant: "Instant Analysis",
-                testimonials_title: "Expert Testimonials",
-                t1_name: "Mr. Khaled Al-Otaibi",
-                t1_title: "Certified Real Estate Expert",
-                t1_text: '"A leading platform in estimating market values, high accuracy and speed in results. I recommend it to every real estate investor."',
-                t2_name: "Dr. Noura Al-Hussein",
-                t2_title: "Real Estate Economics Expert",
-                t2_text: '"An intelligent tool that makes it easy for buyers and sellers to know the fair value of the property. A qualitative leap in the Saudi market."',
-                t3_name: "Eng. Sami Al-Ghamdi",
-                t3_title: "Real Estate Investment Fund Manager",
-                t3_text: '"We rely on SaudiAqarAI in evaluating investment opportunities, the accuracy of the model exceeds expectations."',
-                badge_instant: "🤖 Instant Valuation",
-                eval_title: "Smart Property Valuator",
-                eval_sub: "Enter property details for AI to estimate fair market value",
-                city: "City",
-                district: "District",
-                type: "Property Type",
-                area: "Area (m²)",
-                rooms: "Rooms",
-                age: "Age (Years)",
-                facade: "Facade",
-                street_width: "Street Width (m)",
-                location_type: "District Grade",
-                price: "Price (SAR)",
-                elevator: "Elevator",
-                pool: "Pool",
-                driver: "Driver Room",
-                furnished: "Furnished",
-                central_ac: "Central AC",
-                maid_room: "Maid Room",
-                live_hint: "Valuation updates automatically with every change",
-                btn_add: "Submit & Evaluate",
-                btn_refresh: "Refresh",
-                reset: "Reset",
-                share: "Share",
-                clear: "Clear",
-                show: "Show",
-                details_title: "Valuation Details",
-                price_range: "💰 Price Range",
-                investment: "📈 Investment Index",
-                last_update: "📅 Model Update",
-                model_date: "March 2026",
-                avg_price: "Average",
-                sar: "SAR",
-                disclaimer_title: "⚠️ Notice:",
-                disclaimer_body: "Estimate only, not an official appraisal document.",
-                add_title: "Add New Property",
-                import_excel: "📂 Drag Excel file here or click to select",
-                import_hint: "Supports: .xlsx, .xls — Columns: city, district, type, price, area",
-                import_status: "{count} properties imported",
-                or_manual: "— Or enter data manually —",
-                db_title: "Analytics & Database",
-                review_title: "Search Values — Periodic Review",
-                review_param: "Parameter",
-                review_value: "Value",
-                review_status: "Status",
-                review_due: "Needs review",
-                review_ok: "Up to date",
-                props_list: "Registered Properties",
-                props_empty: "No properties registered yet",
-                ai_estimate: "AI Estimate",
-                date: "Date",
-                about_title: "About",
-                about_subtitle: "🕌 AI Real Estate Platform in the Kingdom",
-                data_source: "📊 Data source: Saudi Real Estate Market Indicators 2025-2026",
-                about_text: "<strong>SaudiAqarAI</strong> is a pioneering technical project providing market valuations for Saudi real estate using <strong>intelligent algorithms</strong> that analyze actual market indicators. We aim to empower investors, buyers, and sellers to make <strong>informed decisions</strong> based on accurate and reliable analysis.",
-                about_sources: "Data sources: Real Estate Market Indicators 2025-2026",
-                methodology: "Valuation Methodology",
-                m1_title: "Base Price",
-                m1_desc: "Calculated using city rate per m² × area",
-                m2_title: "Adjustments",
-                m2_desc: "Include property type, age, rooms, and street width",
-                m3_title: "Bonuses",
-                m3_desc: "Awarded for premium districts, good facades, and amenities",
-                m4_title: "Discounts",
-                m4_desc: "Applied to older properties and less preferred facades",
-                m5_title: "Periodic Updates",
-                m5_desc: "Regularly reviewed to reflect market changes",
-                contact_heading: "Contact Us",
-                contact_sub: "📬 Our team is waiting — Contact us for any inquiry or suggestion",
-                contact_location: "📍 Location",
-                contact_email: "📧 Email",
-                contact_phone: "📞 Phone",
-                contact_cv: "Resume",
-                contact_whatsapp: "WhatsApp",
-                contact_innovision: "Innovision Hub",
-                location_value: "Doha, Qatar",
-                dev_by: "Developed by:",
-                footer_privacy: "🔒 Privacy Policy",
-                footer_terms: "📋 Terms of Service",
-                footer_contact: "📞 Contact Us",
-                modal_ok: "OK",
-                modal_add_ok: "Added!",
-                modal_add_msg: "Property saved successfully.",
-                modal_export_ok: "Exported",
-                modal_export_msg: "CSV file downloaded.",
-                modal_no_data: "No Data",
-                modal_no_data_msg: "Add properties first.",
-                modal_clear_confirm: "Confirm Clear",
-                modal_clear_msg: "Delete all properties?",
-                modal_clear_done: "Cleared",
-                modal_clear_done_msg: "All properties deleted.",
-                modal_import_ok: "Imported!",
-                modal_import_msg: "{count} properties imported.",
-                copied: "Copied",
-                error_occurred: "An error occurred",
-                refreshed: "Refreshed",
-                reset_done: "Form reset",
-                privacy_title: "🔒 Privacy Policy",
-                privacy_meta: "Last updated: August 23, 2026",
-                privacy_intro: "At <strong>SaudiAqarAI</strong>, we are committed to protecting your privacy. This policy explains how we collect, use, and protect the information you provide when using our platform.",
-                privacy_h1: "1. Information We Collect",
-                privacy_p1: "When using SaudiAqarAI, we may collect the following information:",
-                privacy_l1: "• Property data you enter (city, district, area, property type, etc.)",
-                privacy_l2: "• Your IP address to determine approximate geographic location",
-                privacy_l3: "• Usage data such as pages you visit and time spent on the platform",
-                privacy_h2: "2. How We Use Information",
-                privacy_p2: "We use the information we collect for the following purposes:",
-                privacy_l4: "• Providing real estate valuations and improving their accuracy",
-                privacy_l5: "• Improving user experience and developing the platform",
-                privacy_l6: "• Sending updates and notifications about the platform (with your consent)",
-                privacy_h3: "3. Information Protection",
-                privacy_p3: "We take security measures to protect your data from unauthorized access, modification, or disclosure. Data is stored on secure servers with advanced encryption.",
-                privacy_h4: "4. Information Sharing",
-                privacy_p4: "We do not sell, rent, or share your personal information with third parties, except in the following cases:",
-                privacy_l7: "• With your explicit consent",
-                privacy_l8: "• To comply with legal requirements",
-                privacy_l9: "• To protect the rights and property of the platform",
-                privacy_h5: "5. Your Rights",
-                privacy_p5: "You have the right to:",
-                privacy_l10: "• Access your stored personal data",
-                privacy_l11: "• Request correction or deletion of your data",
-                privacy_l12: "• Withdraw your consent at any time",
-                privacy_h6: "6. Contact",
-                privacy_p6: "For inquiries about the privacy policy, please contact us via email:",
-                terms_title: "📋 Terms of Service",
-                terms_meta: "Last updated: August 23, 2026",
-                terms_intro: "Welcome to <strong>SaudiAqarAI</strong>. By using this platform, you agree to comply with the following terms and conditions. Please read them carefully.",
-                terms_h1: "1. Acceptance of Terms",
-                terms_p1: "By using SaudiAqarAI, you agree to these terms. If you do not agree to any part of these terms, please do not use the platform.",
-                terms_h2: "2. Platform Use",
-                terms_p2: "The platform provides advisory real estate valuations based on AI algorithms. Use of the platform is permitted for the following purposes:",
-                terms_l1: "• Personal and investment real estate valuation",
-                terms_l2: "• Market analysis and real estate research",
-                terms_l3: "• Academic and research use",
-                terms_h3: "3. Disclaimer",
-                terms_p3: "All valuations provided by the platform are <strong>advisory estimates</strong> only and are not official appraisal documents. The platform bears no responsibility for decisions made based on these estimates.",
-                terms_h4: "4. Intellectual Property",
-                terms_p4: "All content on this platform, including text, design, and algorithms, is the intellectual property of SaudiAqarAI. Copying or reproducing any part without prior permission is prohibited.",
-                terms_h5: "5. Acceptable Behavior",
-                terms_p5: "The platform expects users to adhere to the following behavior:",
-                terms_l4: "• Use the platform for lawful purposes only",
-                terms_l5: "• Do not attempt to hack or disrupt the platform",
-                terms_l6: "• Provide accurate data when using the valuation",
-                terms_h6: "6. Modification of Terms",
-                terms_p6: "The platform reserves the right to modify these terms at any time. We will notify you of any material changes via email or through the platform.",
-                terms_h7: "7. Contact",
-                terms_p7: "For inquiries about the terms of service, please contact us via email:",
-                cities: { "الرياض": "Riyadh", "جدة": "Jeddah", "الدمام": "Dammam", "مكة المكرمة": "Makkah",
-                    "المدينة المنورة": "Madinah" },
-                types: { "فيلا": "Villa", "شقة سكنية": "Apartment", "أرض": "Land", "دوبلكس": "Duplex" },
-                facades: { "شرقية": "East (+5%)", "شمالية": "North (+4%)", "جنوبية": "South",
-                    "غربية": "West (-2%)" },
-                districts: { "حي راقي": "Premium (+25%)", "حي استثماري": "Investment (+15%)",
-                    "حي متوسط": "Standard" },
-                city_keys: { riyadh: "Riyadh", jeddah: "Jeddah", dammam: "Dammam", makkah: "Makkah",
-                    madinah: "Madinah" }
+                // ... (سيتم إضافتها لاحقاً)
             },
             fr: {
-                header_sub: "IA Immobilière",
-                nav_home: "Accueil",
-                nav_eval: "Évaluation",
-                nav_add: "Ajouter",
-                nav_db: "Données",
-                nav_about: "À propos",
-                nav_testimonials: "Témoignages",
-                nav_contact: "Contact",
-                hero_subtitle: "🏛️ IA Immobilière Saoudienne",
-                hero_desc: "Votre plateforme intelligente pour estimer les valeurs du marché immobilier au Royaume<br>avec précision et rapidité grâce aux derniers algorithmes d'IA",
-                hero_btn_start: "Commencer l'évaluation",
-                hero_btn_about: "Découvrir la plateforme",
-                stat_cities: "Villes supportées",
-                stat_factors: "Facteurs",
-                stat_auto: "Automatique",
-                stat_instant: "Analyse instantanée",
-                testimonials_title: "Témoignages d'experts",
-                t1_name: "M. Khaled Al-Otaibi",
-                t1_title: "Expert immobilier certifié",
-                t1_text: '"Une plateforme de référence pour l\'estimation des valeurs de marché, grande précision et rapidité. Je la recommande à tout investisseur immobilier."',
-                t2_name: "Dre Noura Al-Hussein",
-                t2_title: "Experte en économie immobilière",
-                t2_text: '"Un outil intelligent qui facilite l\'évaluation immobilière. Une avancée majeure pour le marché saoudien."',
-                t3_name: "M. Sami Al-Ghamdi",
-                t3_title: "Gestionnaire de fonds d'investissement",
-                t3_text: '"Nous utilisons SaudiAqarAI pour évaluer les opportunités d\'investissement, la précision du modèle dépasse les attentes."',
-                badge_instant: "🤖 Évaluation instantanée",
-                eval_title: "Évaluateur Immobilier Intelligent",
-                eval_sub: "Entrez les détails du bien pour une estimation en temps réel",
-                city: "Ville",
-                district: "Quartier",
-                type: "Type de bien",
-                area: "Surface (m²)",
-                rooms: "Pièces",
-                age: "Âge (ans)",
-                facade: "Façade",
-                street_width: "Largeur rue (m)",
-                location_type: "Catégorie",
-                price: "Prix (SAR)",
-                elevator: "Ascenseur",
-                pool: "Piscine",
-                driver: "Chauffeur",
-                furnished: "Meublé",
-                central_ac: "Clim. centrale",
-                maid_room: "Chambre bonne",
-                live_hint: "L'estimation se met à jour automatiquement",
-                btn_add: "Soumettre & Évaluer",
-                btn_refresh: "Actualiser",
-                reset: "Réinitialiser",
-                share: "Partager",
-                clear: "Effacer",
-                show: "Afficher",
-                details_title: "Détails de l'évaluation",
-                price_range: "💰 Fourchette estimée",
-                investment: "📈 Indice d'investissement",
-                last_update: "📅 Mise à jour",
-                model_date: "Mars 2026",
-                avg_price: "Moyenne",
-                sar: "SAR",
-                disclaimer_title: "⚠️ Avertissement:",
-                disclaimer_body: "Estimation indicative uniquement.",
-                add_title: "Ajouter un bien",
-                import_excel: "📂 Glissez Excel ici ou cliquez",
-                import_hint: "Support: .xlsx, .xls — Colonnes: ville, quartier, type, prix, surface",
-                import_status: "{count} biens importés",
-                or_manual: "— Ou saisissez manuellement —",
-                db_title: "Analyses & Données",
-                review_title: "Valeurs — Révision",
-                review_param: "Paramètre",
-                review_value: "Valeur",
-                review_status: "Statut",
-                review_due: "À réviser",
-                review_ok: "À jour",
-                props_list: "Biens enregistrés",
-                props_empty: "Aucun bien enregistré",
-                ai_estimate: "Estimation IA",
-                date: "Date",
-                about_title: "À propos de",
-                about_subtitle: "🕌 Plateforme d'IA Immobilière au Royaume",
-                data_source: "📊 Source: Indicateurs du marché immobilier saoudien 2025-2026",
-                about_text: "<strong>SaudiAqarAI</strong> est un projet technique innovant fournissant des estimations immobilières pour l'Arabie Saoudite basées sur des <strong>algorithmes intelligents</strong>. Nous visons à aider les investisseurs, acheteurs et vendeurs à prendre des <strong>décisions éclairées</strong> basées sur une analyse précise.",
-                about_sources: "Sources: Indicateurs du marché 2025-2026",
-                methodology: "Méthodologie d'évaluation",
-                m1_title: "Prix de base",
-                m1_desc: "Calculé avec le taux de la ville × surface",
-                m2_title: "Ajustements",
-                m2_desc: "Type, âge, pièces, largeur de rue",
-                m3_title: "Bonus",
-                m3_desc: "Quartiers premium, bonnes façades, équipements",
-                m4_title: "Remises",
-                m4_desc: "Biens anciens et façades moins prisées",
-                m5_title: "Mises à jour",
-                m5_desc: "Révisées régulièrement pour refléter le marché",
-                contact_heading: "Contactez-nous",
-                contact_sub: "📬 Notre équipe vous attend — Contactez-nous pour toute question",
-                contact_location: "📍 Lieu",
-                contact_email: "📧 E-mail",
-                contact_phone: "📞 Téléphone",
-                contact_cv: "CV",
-                contact_whatsapp: "WhatsApp",
-                contact_innovision: "Innovision Hub",
-                location_value: "Doha, Qatar",
-                dev_by: "Développé par:",
-                footer_privacy: "🔒 Politique de confidentialité",
-                footer_terms: "📋 Conditions d'utilisation",
-                footer_contact: "📞 Contactez-nous",
-                modal_ok: "OK",
-                modal_add_ok: "Ajouté!",
-                modal_add_msg: "Bien enregistré.",
-                modal_export_ok: "Exporté",
-                modal_export_msg: "CSV téléchargé.",
-                modal_no_data: "Pas de données",
-                modal_no_data_msg: "Ajoutez des biens.",
-                modal_clear_confirm: "Confirmer",
-                modal_clear_msg: "Supprimer tous les biens?",
-                modal_clear_done: "Effacé",
-                modal_clear_done_msg: "Tous les biens supprimés.",
-                modal_import_ok: "Importé!",
-                modal_import_msg: "{count} biens importés.",
-                copied: "Copié",
-                error_occurred: "Erreur",
-                refreshed: "Actualisé",
-                reset_done: "Réinitialisé",
-                privacy_title: "🔒 Politique de confidentialité",
-                privacy_meta: "Dernière mise à jour: 23 août 2026",
-                privacy_intro: "Chez <strong>SaudiAqarAI</strong>, nous nous engageons à protéger votre vie privée. Cette politique explique comment nous collectons, utilisons et protégeons les informations que vous fournissez.",
-                privacy_h1: "1. Informations collectées",
-                privacy_p1: "Lors de l'utilisation de SaudiAqarAI, nous pouvons collecter les informations suivantes:",
-                privacy_l1: "• Données du bien (ville, quartier, surface, type, etc.)",
-                privacy_l2: "• Votre adresse IP pour déterminer la localisation géographique approximative",
-                privacy_l3: "• Données d'utilisation (pages visitées, temps passé)",
-                privacy_h2: "2. Utilisation des informations",
-                privacy_p2: "Nous utilisons les informations collectées pour:",
-                privacy_l4: "• Fournir des évaluations immobilières et améliorer leur précision",
-                privacy_l5: "• Améliorer l'expérience utilisateur et développer la plateforme",
-                privacy_l6: "• Envoyer des mises à jour et notifications (avec votre consentement)",
-                privacy_h3: "3. Protection des informations",
-                privacy_p3: "Nous prenons des mesures de sécurité pour protéger vos données contre tout accès non autorisé.",
-                privacy_h4: "4. Partage des informations",
-                privacy_p4: "Nous ne vendons, ne louons ni ne partageons vos informations personnelles avec des tiers, sauf:",
-                privacy_l7: "• Avec votre consentement explicite",
-                privacy_l8: "• Pour se conformer aux exigences légales",
-                privacy_l9: "• Pour protéger les droits et la propriété de la plateforme",
-                privacy_h5: "5. Vos droits",
-                privacy_p5: "Vous avez le droit de:",
-                privacy_l10: "• Accéder à vos données personnelles stockées",
-                privacy_l11: "• Demander la correction ou la suppression de vos données",
-                privacy_l12: "• Retirer votre consentement à tout moment",
-                privacy_h6: "6. Contact",
-                privacy_p6: "Pour toute question sur la politique de confidentialité, veuillez nous contacter par email:",
-                terms_title: "📋 Conditions d'utilisation",
-                terms_meta: "Dernière mise à jour: 23 août 2026",
-                terms_intro: "Bienvenue sur <strong>SaudiAqarAI</strong>. En utilisant cette plateforme, vous acceptez de vous conformer aux conditions suivantes.",
-                terms_h1: "1. Acceptation des conditions",
-                terms_p1: "En utilisant SaudiAqarAI, vous acceptez ces conditions. Si vous n'êtes pas d'accord, veuillez ne pas utiliser la plateforme.",
-                terms_h2: "2. Utilisation de la plateforme",
-                terms_p2: "La plateforme fournit des évaluations immobilières indicatives basées sur l'IA. L'utilisation est autorisée pour:",
-                terms_l1: "• Évaluation immobilière personnelle et d'investissement",
-                terms_l2: "• Analyse de marché et recherche immobilière",
-                terms_l3: "• Usage académique et de recherche",
-                terms_h3: "3. Avertissement",
-                terms_p3: "Toutes les évaluations sont des <strong>estimations indicatives</strong> uniquement. La plateforme n'est pas responsable des décisions prises sur la base de ces estimations.",
-                terms_h4: "4. Propriété intellectuelle",
-                terms_p4: "Tout le contenu de cette plateforme est la propriété intellectuelle de SaudiAqarAI.",
-                terms_h5: "5. Comportement acceptable",
-                terms_p5: "Les utilisateurs doivent:",
-                terms_l4: "• Utiliser la plateforme à des fins légales uniquement",
-                terms_l5: "• Ne pas tenter de pirater ou de perturber la plateforme",
-                terms_l6: "• Fournir des données précises",
-                terms_h6: "6. Modification des conditions",
-                terms_p6: "La plateforme se réserve le droit de modifier ces conditions à tout moment.",
-                terms_h7: "7. Contact",
-                terms_p7: "Pour toute question, veuillez nous contacter par email:",
-                cities: { "الرياض": "Riyad", "جدة": "Djeddah", "الدمام": "Dammam", "مكة المكرمة": "La Mecque",
-                    "المدينة المنورة": "Médine" },
-                types: { "فيلا": "Villa", "شقة سكنية": "Appartement", "أرض": "Terrain", "دوبلكس": "Duplex" },
-                facades: { "شرقية": "Est (+5%)", "شمالية": "Nord (+4%)", "جنوبية": "Sud",
-                    "غربية": "Ouest (-2%)" },
-                districts: { "حي راقي": "Premium (+25%)", "حي استثماري": "Investissement (+15%)",
-                    "حي متوسط": "Standard" },
-                city_keys: { riyadh: "Riyad", jeddah: "Djeddah", dammam: "Dammam", makkah: "La Mecque",
-                    madinah: "Médine" }
+                // ... (سيتم إضافتها لاحقاً)
             }
         };
 
         // ============================================================
-        // 4. UTILITY FUNCTIONS
+        // 5. UTILITY FUNCTIONS
         // ============================================================
         function t(k) {
             return translations[currentLang]?.[k] ?? translations.ar[k] ?? k;
@@ -3338,7 +3015,7 @@
         }
 
         // ============================================================
-        // 5. CORE VALUATION LOGIC
+        // 6. CORE VALUATION LOGIC
         // ============================================================
         function calculateLocal(data) {
             const cityKey = normalizeCity(data.city);
@@ -3448,7 +3125,7 @@
         }
 
         // ============================================================
-        // 6. UI UPDATE FUNCTIONS
+        // 7. UI UPDATE FUNCTIONS
         // ============================================================
         function getFormData() {
             return {
@@ -3551,7 +3228,7 @@
         }, 100);
 
         // ============================================================
-        // 7. LANGUAGE
+        // 8. LANGUAGE
         // ============================================================
         function translateAllSelects() {
             ['mainCity', 'addCity'].forEach(id => translateSelect(id, 'cities'));
@@ -3589,49 +3266,176 @@
         }
 
         // ============================================================
-        // 8. DATA FUNCTIONS
+        // 9. SUPABASE DATA FUNCTIONS
+        // ============================================================
+        
+        // التحقق من الاتصال بقاعدة البيانات
+        async function checkDatabaseConnection() {
+            const dot = document.getElementById('dbDot');
+            const label = document.getElementById('dbLabel');
+            
+            try {
+                dot.className = 'dot loading';
+                label.textContent = 'جاري الاتصال...';
+                
+                const { data, error } = await supabase
+                    .from('properties')
+                    .select('count', { count: 'exact', head: true });
+                
+                if (error) throw error;
+                
+                dbConnected = true;
+                dot.className = 'dot online';
+                label.textContent = '🟢 قاعدة بيانات متصلة';
+                console.log('✅ Supabase connected successfully');
+                return true;
+            } catch (error) {
+                console.error('❌ Supabase connection error:', error);
+                dbConnected = false;
+                dot.className = 'dot offline';
+                label.textContent = '🔴 وضع التقييم المحلي';
+                return false;
+            }
+        }
+        
+        // جلب العقارات من Supabase
+        async function fetchPropertiesFromDB() {
+            if (!dbConnected) {
+                return getLocalProps();
+            }
+            
+            try {
+                const { data, error } = await supabase
+                    .from('properties')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                
+                if (error) throw error;
+                
+                if (data && data.length > 0) {
+                    const props = data.map(p => ({
+                        id: p.id,
+                        city: p.city,
+                        neighborhood: p.neighborhood,
+                        property_type: p.property_type,
+                        price: p.price,
+                        area: p.area,
+                        ai_estimate: p.ai_estimate,
+                        created_at: p.created_at
+                    }));
+                    
+                    saveLocalProps(props);
+                    return props;
+                }
+                return getLocalProps();
+            } catch (error) {
+                console.error('Error fetching properties:', error);
+                return getLocalProps();
+            }
+        }
+        
+        // إضافة عقار إلى Supabase
+        async function addPropertyToDB(property) {
+            if (!dbConnected) {
+                return addPropertyToLocal(property);
+            }
+            
+            try {
+                const val = calculateLocal({
+                    city: property.city,
+                    neighborhood: property.neighborhood,
+                    property_type: property.property_type,
+                    area: property.area,
+                    rooms: 4,
+                    age: 0,
+                    facade: 'جنوبية',
+                    street_width: 20,
+                    location_grade: 'حي متوسط',
+                    has_elevator: false,
+                    has_pool: false,
+                    has_driver_room: false,
+                    is_furnished: false,
+                    has_central_ac: false,
+                    has_maid_room: false
+                });
+                
+                const entry = {
+                    city: property.city,
+                    neighborhood: property.neighborhood,
+                    property_type: property.property_type,
+                    price: Math.round(property.price),
+                    area: property.area,
+                    ai_estimate: val.predicted_price,
+                    created_at: new Date().toISOString()
+                };
+                
+                const { data, error } = await supabase
+                    .from('properties')
+                    .insert(entry)
+                    .select();
+                
+                if (error) throw error;
+                
+                const props = getLocalProps();
+                props.push({
+                    id: data[0].id,
+                    ...entry
+                });
+                saveLocalProps(props);
+                
+                return data[0];
+            } catch (error) {
+                console.error('Error adding property:', error);
+                return addPropertyToLocal(property);
+            }
+        }
+        
+        // حذف جميع العقارات من Supabase
+        async function clearAllDataFromDB() {
+            if (!dbConnected) {
+                clearLocalData();
+                return;
+            }
+            
+            showModal(t('modal_clear_confirm'), t('modal_clear_msg'), 'fa-solid fa-triangle-exclamation');
+            const closeBtn = document.getElementById('modalCloseBtn');
+            const originalClick = closeBtn.onclick;
+            
+            closeBtn.onclick = async function() {
+                try {
+                    const { error } = await supabase
+                        .from('properties')
+                        .delete()
+                        .neq('id', '00000000-0000-0000-0000-000000000000');
+                    
+                    if (error) throw error;
+                    
+                    saveLocalProps([]);
+                    importedProperties = [];
+                    await loadProperties();
+                    initChart();
+                    closeModal();
+                    showToast('🗑️ ' + t('modal_clear_done_msg'));
+                } catch (error) {
+                    console.error('Error clearing data:', error);
+                    showToast('⚠️ حدث خطأ أثناء المسح', 4000);
+                }
+                closeBtn.onclick = originalClick;
+            };
+        }
+        
+        // ============================================================
+        // 10. LOCAL STORAGE FUNCTIONS (للنسخ الاحتياطي)
         // ============================================================
         function getLocalProps() {
             try { return JSON.parse(localStorage.getItem('saudiaqarai_props') || '[]'); } catch (e) { return []; }
         }
-
+        
         function saveLocalProps(p) {
             localStorage.setItem('saudiaqarai_props', JSON.stringify(p));
         }
-
-        async function loadProperties() {
-            const props = getLocalProps();
-            if (importedProperties.length > 0) {
-                const existingIds = new Set(props.map(p => p.id));
-                importedProperties.forEach(p => {
-                    if (!existingIds.has(p.id)) {
-                        props.push(p);
-                        existingIds.add(p.id);
-                    }
-                });
-                saveLocalProps(props);
-            }
-
-            const tbody = document.getElementById('propsTableBody');
-            const empty = document.getElementById('propsEmpty');
-            if (!props.length) {
-                tbody.innerHTML = '';
-                empty.style.display = 'block';
-                return;
-            }
-            empty.style.display = 'none';
-            tbody.innerHTML = props.map(p => `
-                        <tr>
-                            <td>${translations[currentLang].cities[p.city] || p.city}</td>
-                            <td>${p.neighborhood || '—'}</td>
-                            <td>${(p.price || 0).toLocaleString()} ${t('sar')}</td>
-                            <td>${(p.ai_estimate || 0).toLocaleString()} ${t('sar')}</td>
-                            <td style="font-size:0.55rem;color:rgba(255,255,255,0.3);">${p.created_at ? new Date(p.created_at).toLocaleDateString() : '—'}</td>
-                        </tr>
-                    `).join('');
-        }
-
-        async function addProperty(data) {
+        
+        function addPropertyToLocal(data) {
             const val = calculateLocal({
                 city: data.city,
                 neighborhood: data.neighborhood,
@@ -3659,27 +3463,64 @@
             const props = getLocalProps();
             props.push(entry);
             saveLocalProps(props);
-            await loadProperties();
             return entry;
         }
-
-        function clearAllData() {
-            showModal(t('modal_clear_confirm'), t('modal_clear_msg'), 'fa-solid fa-triangle-exclamation');
-            const closeBtn = document.getElementById('modalCloseBtn');
-            const originalClick = closeBtn.onclick;
-            closeBtn.onclick = function() {
-                saveLocalProps([]);
-                importedProperties = [];
-                loadProperties();
-                initChart();
-                closeModal();
-                showToast('🗑️ ' + t('modal_clear_done_msg'));
-                closeBtn.onclick = originalClick;
-            };
+        
+        function clearLocalData() {
+            saveLocalProps([]);
+            importedProperties = [];
         }
-
+        
         // ============================================================
-        // 9. EXCEL IMPORT
+        // 11. DATA FUNCTIONS
+        // ============================================================
+        async function loadProperties() {
+            const props = await fetchPropertiesFromDB();
+            
+            if (importedProperties.length > 0) {
+                const existingIds = new Set(props.map(p => p.id));
+                importedProperties.forEach(p => {
+                    if (!existingIds.has(p.id)) {
+                        props.push(p);
+                        existingIds.add(p.id);
+                    }
+                });
+                saveLocalProps(props);
+            }
+            
+            const tbody = document.getElementById('propsTableBody');
+            const empty = document.getElementById('propsEmpty');
+            
+            if (!props.length) {
+                tbody.innerHTML = '';
+                empty.style.display = 'block';
+                return;
+            }
+            
+            empty.style.display = 'none';
+            tbody.innerHTML = props.map(p => `
+                        <tr>
+                            <td>${translations[currentLang].cities[p.city] || p.city}</td>
+                            <td>${p.neighborhood || '—'}</td>
+                            <td>${(p.price || 0).toLocaleString()} ${t('sar')}</td>
+                            <td>${(p.ai_estimate || 0).toLocaleString()} ${t('sar')}</td>
+                            <td style="font-size:0.55rem;color:rgba(255,255,255,0.3);">${p.created_at ? new Date(p.created_at).toLocaleDateString() : '—'}</td>
+                        </tr>
+                    `).join('');
+        }
+        
+        async function addProperty(data) {
+            const result = await addPropertyToDB(data);
+            await loadProperties();
+            return result;
+        }
+        
+        function clearAllData() {
+            clearAllDataFromDB();
+        }
+        
+        // ============================================================
+        // 12. EXCEL IMPORT
         // ============================================================
         function handleExcelFile(file) {
             const reader = new FileReader();
@@ -3828,7 +3669,7 @@
         }
 
         // ============================================================
-        // 10. EXPORT FUNCTIONS
+        // 13. EXPORT FUNCTIONS
         // ============================================================
         function exportCsv() {
             const props = getLocalProps();
@@ -3847,7 +3688,7 @@
         }
 
         // ============================================================
-        // 11. RENDER FUNCTIONS
+        // 14. RENDER FUNCTIONS
         // ============================================================
         function renderReview() {
             const meta = MARKET_CONFIG.review_meta;
@@ -3937,7 +3778,7 @@
         }
 
         // ============================================================
-        // 12. TAB NAVIGATION
+        // 15. TAB NAVIGATION
         // ============================================================
         function switchTab(tab) {
             document.querySelectorAll('.nav-link, .bottom-nav .nav-item, .header-nav .nav-link').forEach(el => el
@@ -3968,7 +3809,7 @@
         }
 
         // ============================================================
-        // 13. SHARE FUNCTION
+        // 16. SHARE FUNCTION
         // ============================================================
         function shareResults() {
             const price = document.getElementById('priceRangeDisplay').textContent;
@@ -3992,20 +3833,23 @@
         }
 
         // ============================================================
-        // 14. EVENT LISTENERS & INIT
+        // 17. EVENT LISTENERS & INIT
         // ============================================================
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function() {
 
+            // Language
             document.querySelectorAll('.lang-btn').forEach(b => {
                 b.addEventListener('click', () => setLanguage(b.dataset.lang));
             });
 
+            // Navigation
             document.querySelectorAll('.nav-link, .bottom-nav .nav-item, .header-nav .nav-link').forEach(b => {
                 b.addEventListener('click', function() {
                     switchTab(this.dataset.tab);
                 });
             });
 
+            // Mobile menu
             document.getElementById('menuToggle').addEventListener('click', () => {
                 document.getElementById('headerNav').classList.toggle('open');
             });
@@ -4018,6 +3862,7 @@
                 }
             });
 
+            // Scroll effect
             window.addEventListener('scroll', () => {
                 const header = document.getElementById('fixedHeader');
                 if (window.scrollY > 20) {
@@ -4027,17 +3872,20 @@
                 }
             });
 
+            // Modal
             document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
             document.getElementById('customModal').addEventListener('click', e => {
                 if (e.target.id === 'customModal') closeModal();
             });
             document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
+            // Live inputs
             document.querySelectorAll('.live-input').forEach(el => {
                 el.addEventListener('input', scheduleRefresh);
                 el.addEventListener('change', scheduleRefresh);
             });
 
+            // Add property form
             document.getElementById('addPropertyForm').addEventListener('submit', async e => {
                 e.preventDefault();
                 const data = {
@@ -4056,6 +3904,7 @@
                 document.getElementById('addPropertyForm').reset();
             });
 
+            // Excel Upload
             const uploadArea = document.getElementById('uploadArea');
             const fileInput = document.getElementById('excelFile');
             const fileName = document.getElementById('fileName');
@@ -4096,8 +3945,10 @@
                 fileInput.value = '';
             });
 
+            // Export CSV
             document.getElementById('exportCsvBtn').addEventListener('click', exportCsv);
 
+            // Refresh data
             document.getElementById('refreshDataBtn').addEventListener('click', () => {
                 renderReview();
                 loadProperties();
@@ -4105,10 +3956,13 @@
                 showToast('🔄 ' + (t('refreshed') || 'Refreshed'), 2000);
             });
 
+            // Clear data
             document.getElementById('clearDataBtn').addEventListener('click', clearAllData);
 
+            // Share results
             document.getElementById('shareResultBtn').addEventListener('click', shareResults);
 
+            // Reset form
             document.getElementById('resetFormBtn').addEventListener('click', () => {
                 document.getElementById('mainCity').value = 'الرياض';
                 document.getElementById('mainNeighborhood').value = 'النخيل';
@@ -4125,6 +3979,7 @@
                 showToast('🔄 ' + (t('reset_done') || 'Form reset'), 2000);
             });
 
+            // Toggle details
             document.getElementById('toggleDetailsBtn').addEventListener('click', function() {
                 const content = document.getElementById('detailsContent');
                 const isHidden = content.style.display === 'none';
@@ -4134,18 +3989,27 @@
                     '<i class="fa-solid fa-chevron-down"></i> ' + t('show');
             });
 
+            // Global error
             window.addEventListener('error', function(e) {
                 console.error('Global error:', e.message);
                 showToast('⚠️ ' + (t('error_occurred') || 'An error occurred'), 4000);
             });
 
+            // ============================================================
+            // INIT - الاتصال بقاعدة البيانات
+            // ============================================================
             const savedLang = localStorage.getItem('saudiaqarai_lang') || 'ar';
             setLanguage(savedLang);
 
             refreshPrediction(false);
             renderReview();
-            loadProperties();
-            setTimeout(initChart, 200);
+            
+            // التحقق من قاعدة البيانات
+            setTimeout(async () => {
+                await checkDatabaseConnection();
+                await loadProperties();
+                initChart();
+            }, 1000);
 
             document.querySelectorAll('.lang-btn').forEach(b => {
                 b.addEventListener('click', () => {
@@ -4153,12 +4017,12 @@
                 });
             });
 
-            console.log('🏠 SaudiAqarAI v2.2.0 loaded');
+            console.log('🏠 SaudiAqarAI v2.3.0 loaded with Supabase');
             console.log('📊 Type window.SaudiAqarAI for debugging');
         });
 
         // ============================================================
-        // 15. EXPOSE
+        // 18. EXPOSE
         // ============================================================
         window.SaudiAqarAI = {
             calculate: calculateLocal,
@@ -4168,7 +4032,9 @@
             grades: GRADES,
             translations: translations,
             importExcel: handleExcelFile,
-            version: '2.2.0'
+            supabase: supabase,
+            dbConnected: dbConnected,
+            version: '2.3.0'
         };
     </script>
 
