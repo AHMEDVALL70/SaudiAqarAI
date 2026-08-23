@@ -241,7 +241,7 @@
         }
 
         /* ============================================================
-           HERO - الرئيسية
+           HERO - الصفحة الرئيسية (بدون تقييم سريع)
            ============================================================ */
         .hero-section {
             display: none;
@@ -249,7 +249,7 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 30px 20px;
+            padding: 40px 20px;
             background: var(--gradient-hero);
             border-radius: var(--radius-lg);
             position: relative;
@@ -283,7 +283,8 @@
         .hero-section .hero-content {
             position: relative;
             z-index: 1;
-            max-width: 650px;
+            max-width: 700px;
+            width: 100%;
         }
 
         .hero-section .hero-logo {
@@ -335,11 +336,12 @@
         .hero-section .hero-desc {
             font-size: 0.88rem;
             color: rgba(255, 255, 255, 0.4);
-            max-width: 460px;
-            margin: 0 auto 24px;
+            max-width: 500px;
+            margin: 0 auto 16px;
             line-height: 1.7;
         }
 
+        /* ===== أزرار ===== */
         .hero-section .hero-buttons {
             display: flex;
             gap: 12px;
@@ -348,10 +350,10 @@
         }
 
         .hero-section .hero-btn {
-            padding: 12px 28px;
+            padding: 12px 30px;
             border: none;
             border-radius: 12px;
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             font-weight: 800;
             cursor: pointer;
             transition: 0.3s;
@@ -380,14 +382,15 @@
             transform: translateY(-2px);
         }
 
+        /* ===== إحصائيات ===== */
         .hero-stats {
-            margin-top: 30px;
+            margin-top: 24px;
             display: flex;
             gap: 24px;
             justify-content: center;
             flex-wrap: wrap;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 24px;
+            padding-top: 20px;
         }
         .hero-stats .stat-item {
             text-align: center;
@@ -403,15 +406,187 @@
         }
 
         /* ============================================================
+           TESTIMONIALS SECTION - صفحة منفصلة
+           ============================================================ */
+        .testimonials-wrapper {
+            background: var(--gradient-hero);
+            border-radius: var(--radius-lg);
+            padding: 6px;
+            border: 1px solid rgba(212, 175, 55, 0.12);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 40px rgba(26, 58, 92, 0.15);
+            min-height: calc(100vh - var(--header-height) - 100px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .testimonials-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -20%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(ellipse, rgba(212, 175, 55, 0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .testimonials-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -20%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(ellipse, rgba(212, 175, 55, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .testimonials-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: calc(var(--radius-lg) - 4px);
+            padding: 28px 24px;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+
+        .testimonials-card .section-title {
+            text-align: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .testimonial-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 22px 20px;
+            text-align: center;
+            transition: 0.3s;
+            box-shadow: var(--shadow-sm);
+            border-top: 3px solid var(--gold);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--gold);
+        }
+
+        .testimonial-card .t-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--gold-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: 900;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .testimonial-card .t-stars {
+            color: var(--gold);
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+        }
+
+        .testimonial-card .t-name {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .testimonial-card .t-title {
+            font-size: 0.7rem;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        .testimonial-card .t-text {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-style: italic;
+        }
+
+        /* ============================================================
            SECTIONS
            ============================================================ */
+        .section-wrapper {
+            background: var(--gradient-hero);
+            border-radius: var(--radius-lg);
+            padding: 6px;
+            border: 1px solid rgba(212, 175, 55, 0.12);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 40px rgba(26, 58, 92, 0.15);
+            min-height: calc(100vh - var(--header-height) - 100px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -20%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(ellipse, rgba(212, 175, 55, 0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .section-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -20%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(ellipse, rgba(212, 175, 55, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .section-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: calc(var(--radius-lg) - 4px);
+            padding: 24px 20px;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+
         .section-content {
             display: none;
             animation: fadeUp 0.3s ease;
+            width: 100%;
         }
         .section-content.active {
             display: block;
         }
+
         @keyframes fadeUp {
             from {
                 opacity: 0;
@@ -423,61 +598,9 @@
             }
         }
 
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 20px;
-            margin-bottom: 14px;
-            box-shadow: var(--shadow-sm);
-        }
-
         /* ============================================================
            EVALUATE PAGE
            ============================================================ */
-        .evaluate-wrapper {
-            background: var(--gradient-evaluate);
-            border-radius: var(--radius-lg);
-            padding: 4px;
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 8px 40px rgba(26, 58, 92, 0.2);
-        }
-
-        .evaluate-wrapper::before {
-            content: '';
-            position: absolute;
-            top: -30%;
-            right: -20%;
-            width: 60%;
-            height: 60%;
-            background: radial-gradient(ellipse, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .evaluate-wrapper::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -20%;
-            width: 60%;
-            height: 60%;
-            background: radial-gradient(ellipse, rgba(212, 175, 55, 0.03) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .evaluate-card {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: calc(var(--radius-lg) - 4px);
-            padding: 16px 14px;
-            position: relative;
-            z-index: 1;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
         .evaluate-hero {
             background: linear-gradient(135deg, rgba(26, 58, 92, 0.04) 0%, rgba(212, 175, 55, 0.04) 100%);
             border-color: rgba(212, 175, 55, 0.15);
@@ -850,17 +973,227 @@
         }
 
         /* ============================================================
-           ABOUT PAGE
+           ADD PAGE
            ============================================================ */
-        .about-wrapper {
-            background: linear-gradient(135deg, rgba(26, 58, 92, 0.02) 0%, rgba(212, 175, 55, 0.02) 100%);
-            border-radius: var(--radius-lg);
-            padding: 4px;
-            border: 1px solid rgba(212, 175, 55, 0.08);
+        .add-centered {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
         }
 
+        .upload-area {
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            background: rgba(255, 255, 255, 0.6);
+            margin: 6px 0;
+        }
+
+        .upload-area:hover {
+            border-color: var(--gold);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.04), rgba(26, 58, 92, 0.04));
+        }
+
+        .upload-area.dragover {
+            border-color: var(--success);
+            background: var(--success-light);
+        }
+
+        .upload-area i {
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 4px;
+        }
+
+        .upload-area p {
+            color: var(--muted);
+            font-size: 0.7rem;
+        }
+
+        .upload-area .file-name {
+            color: var(--primary);
+            font-weight: 700;
+            margin-top: 3px;
+        }
+
+        .upload-area input[type="file"] {
+            display: none;
+        }
+
+        /* ============================================================
+           CONTACT PAGE
+           ============================================================ */
+        .contact-centered {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .contact-header-centered {
+            text-align: center;
+            margin-bottom: 18px;
+        }
+
+        .contact-header-centered .contact-big-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--gold-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            font-size: 1.5rem;
+            color: var(--primary);
+            box-shadow: 0 8px 40px rgba(212, 175, 55, 0.25);
+        }
+
+        .contact-header-centered h2 {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .contact-header-centered p {
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        .contact-grid-enhanced {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .contact-card-enhanced {
+            background: linear-gradient(135deg, rgba(26, 58, 92, 0.02) 0%, rgba(212, 175, 55, 0.02) 100%);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 14px 12px;
+            text-align: center;
+            transition: 0.3s;
+            cursor: default;
+        }
+
+        .contact-card-enhanced:hover {
+            border-color: var(--gold);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.08);
+            transform: translateY(-4px);
+        }
+
+        .contact-card-enhanced .c-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--gold-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 6px;
+            font-size: 1rem;
+            color: var(--primary);
+            box-shadow: 0 4px 16px rgba(212, 175, 55, 0.15);
+            transition: 0.3s;
+        }
+
+        .contact-card-enhanced:hover .c-icon {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.25);
+        }
+
+        .contact-card-enhanced .c-label {
+            font-size: 0.55rem;
+            color: var(--muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .contact-card-enhanced .c-value {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-top: 2px;
+            word-break: break-word;
+        }
+
+        .contact-card-enhanced .c-value a {
+            color: var(--text);
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .contact-card-enhanced .c-value a:hover {
+            color: var(--gold);
+        }
+
+        .contact-card-enhanced .c-value .phone {
+            direction: ltr;
+            display: inline-block;
+        }
+
+        .contact-buttons-enhanced {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding-top: 14px;
+            border-top: 1px solid var(--border);
+        }
+
+        .contact-btn-enhanced {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .contact-btn-enhanced.whatsapp {
+            background: #25D366;
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.25);
+        }
+        .contact-btn-enhanced.whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.35);
+        }
+
+        .contact-btn-enhanced.gold {
+            background: var(--gold-gradient);
+            color: var(--primary);
+            box-shadow: 0 4px 16px rgba(212, 175, 55, 0.25);
+        }
+        .contact-btn-enhanced.gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(212, 175, 55, 0.4);
+        }
+
+        .contact-btn-enhanced.primary {
+            background: var(--gradient-primary);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(26, 58, 92, 0.2);
+        }
+        .contact-btn-enhanced.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(26, 58, 92, 0.3);
+        }
+
+        /* ============================================================
+           ABOUT PAGE
+           ============================================================ */
         .about-card {
-            background: var(--card);
+            background: rgba(255, 255, 255, 0.92);
             border-radius: var(--radius-lg);
             padding: 24px 20px;
             position: relative;
@@ -927,6 +1260,23 @@
 
         .about-card .about-description strong {
             color: var(--primary);
+        }
+
+        .data-source-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            margin-bottom: 12px;
+        }
+
+        .data-source-badge i {
+            color: var(--gold);
         }
 
         .section-title {
@@ -1017,7 +1367,7 @@
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            background: var(--bg);
+            background: rgba(255, 255, 255, 0.6);
             padding: 4px 10px;
             border-radius: 999px;
             font-size: 0.6rem;
@@ -1030,199 +1380,7 @@
         }
 
         /* ============================================================
-           CONTACT PAGE
-           ============================================================ */
-        .contact-wrapper {
-            background: linear-gradient(135deg, rgba(26, 58, 92, 0.02) 0%, rgba(212, 175, 55, 0.02) 100%);
-            border-radius: var(--radius-lg);
-            padding: 4px;
-            border: 1px solid rgba(212, 175, 55, 0.08);
-        }
-
-        .contact-card-main {
-            background: var(--card);
-            border-radius: var(--radius-lg);
-            padding: 24px 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .contact-card-main::before {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -20%;
-            width: 60%;
-            height: 60%;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.03) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .contact-card-main .contact-header {
-            text-align: center;
-            margin-bottom: 18px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .contact-card-main .contact-header .contact-big-icon {
-            width: 56px;
-            height: 56px;
-            background: var(--gold-gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 8px;
-            font-size: 1.5rem;
-            color: var(--primary);
-            box-shadow: 0 8px 40px rgba(212, 175, 55, 0.25);
-        }
-
-        .contact-card-main .contact-header h2 {
-            font-size: 1.1rem;
-            font-weight: 900;
-            color: var(--primary);
-        }
-
-        .contact-card-main .contact-header p {
-            font-size: 0.75rem;
-            color: var(--muted);
-        }
-
-        .contact-grid-enhanced {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 16px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .contact-card-enhanced {
-            background: linear-gradient(135deg, rgba(26, 58, 92, 0.02) 0%, rgba(212, 175, 55, 0.02) 100%);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 14px 12px;
-            text-align: center;
-            transition: 0.3s;
-            cursor: default;
-        }
-
-        .contact-card-enhanced:hover {
-            border-color: var(--gold);
-            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.08);
-            transform: translateY(-4px);
-        }
-
-        .contact-card-enhanced .c-icon {
-            width: 38px;
-            height: 38px;
-            background: var(--gold-gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 6px;
-            font-size: 1rem;
-            color: var(--primary);
-            box-shadow: 0 4px 16px rgba(212, 175, 55, 0.15);
-            transition: 0.3s;
-        }
-
-        .contact-card-enhanced:hover .c-icon {
-            transform: scale(1.05);
-            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.25);
-        }
-
-        .contact-card-enhanced .c-label {
-            font-size: 0.55rem;
-            color: var(--muted);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-        }
-
-        .contact-card-enhanced .c-value {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-top: 2px;
-            word-break: break-word;
-        }
-
-        .contact-card-enhanced .c-value a {
-            color: var(--text);
-            text-decoration: none;
-            transition: 0.2s;
-        }
-
-        .contact-card-enhanced .c-value a:hover {
-            color: var(--gold);
-        }
-
-        .contact-card-enhanced .c-value .phone {
-            direction: ltr;
-            display: inline-block;
-        }
-
-        .contact-buttons-enhanced {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding-top: 14px;
-            border-top: 1px solid var(--border);
-            position: relative;
-            z-index: 1;
-        }
-
-        .contact-btn-enhanced {
-            padding: 8px 18px;
-            border: none;
-            border-radius: 10px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-        }
-
-        .contact-btn-enhanced.whatsapp {
-            background: #25D366;
-            color: #fff;
-            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.25);
-        }
-        .contact-btn-enhanced.whatsapp:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.35);
-        }
-
-        .contact-btn-enhanced.gold {
-            background: var(--gold-gradient);
-            color: var(--primary);
-            box-shadow: 0 4px 16px rgba(212, 175, 55, 0.25);
-        }
-        .contact-btn-enhanced.gold:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(212, 175, 55, 0.4);
-        }
-
-        .contact-btn-enhanced.primary {
-            background: var(--gradient-primary);
-            color: #fff;
-            box-shadow: 0 4px 16px rgba(26, 58, 92, 0.2);
-        }
-        .contact-btn-enhanced.primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(26, 58, 92, 0.3);
-        }
-
-        /* ============================================================
-           OTHER SECTIONS
+           DATABASE PAGE
            ============================================================ */
         .table-wrap {
             overflow-x: auto;
@@ -1296,46 +1454,89 @@
             line-height: 1.5;
         }
 
-        .upload-area {
-            border: 2px dashed var(--border);
-            border-radius: var(--radius);
-            padding: 16px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.3s;
-            background: var(--bg);
-            margin: 6px 0;
+        /* ============================================================
+           LEGAL PAGES
+           ============================================================ */
+        .legal-page {
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: var(--radius-lg);
+            padding: 28px 24px;
+            border: 1px solid var(--border);
         }
 
-        .upload-area:hover {
-            border-color: var(--gold);
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.04), rgba(26, 58, 92, 0.04));
-        }
-
-        .upload-area.dragover {
-            border-color: var(--success);
-            background: var(--success-light);
-        }
-
-        .upload-area i {
+        .legal-page h1 {
             font-size: 1.5rem;
-            color: var(--gold);
-            margin-bottom: 4px;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 6px;
         }
 
-        .upload-area p {
+        .legal-page .legal-meta {
+            font-size: 0.7rem;
+            color: var(--muted);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+        }
+
+        .legal-page h2 {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 16px 0 6px;
+        }
+
+        .legal-page p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .legal-page ul {
+            padding-right: 20px;
+            margin-bottom: 12px;
+        }
+
+        .legal-page ul li {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        .footer {
+            text-align: center;
+            padding: 16px 0 8px;
             color: var(--muted);
             font-size: 0.7rem;
+            border-top: 1px solid var(--border);
+            margin-top: 10px;
         }
 
-        .upload-area .file-name {
-            color: var(--primary);
-            font-weight: 700;
-            margin-top: 3px;
+        .footer .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
         }
 
-        .upload-area input[type="file"] {
-            display: none;
+        .footer .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: 0.2s;
+        }
+
+        .footer .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .footer .footer-links .sep {
+            color: var(--border);
         }
 
         .bottom-nav-wrap {
@@ -1469,13 +1670,6 @@
             opacity: 1;
         }
 
-        .footer {
-            text-align: center;
-            padding: 12px 0 8px;
-            color: var(--muted);
-            font-size: 0.65rem;
-        }
-
         /* ============================================================
            RESPONSIVE
            ============================================================ */
@@ -1552,43 +1746,19 @@
                 height: 70px;
                 font-size: 2.2rem;
             }
-            .hero-section .hero-subtitle {
-                font-size: 0.85rem;
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
             }
 
             .results,
             .contact-grid-enhanced {
                 grid-template-columns: 1fr;
             }
-            .card {
-                padding: 14px 12px;
-            }
-            .details-grid {
-                grid-template-columns: 1fr;
-            }
+
             .form-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 6px;
-            }
-            .chips {
-                gap: 4px;
-            }
-            .chip-label {
-                padding: 3px 8px;
-                font-size: 0.55rem;
-            }
-            .btn {
-                padding: 0 12px;
-                height: 30px;
-                font-size: 0.65rem;
-            }
-            .disclaimer {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-            .results-wrapper {
-                padding: 6px;
             }
 
             .methodology-grid {
@@ -1600,28 +1770,46 @@
                 text-align: center;
             }
 
-            .contact-card-main .contact-header {
+            .section-wrapper {
+                min-height: auto;
+                padding: 4px;
+            }
+
+            .section-card {
+                padding: 16px 12px;
+            }
+
+            .add-centered,
+            .contact-centered {
+                max-width: 100%;
+            }
+
+            .contact-header-centered {
                 text-align: center;
             }
 
-            .about-card .about-footer {
-                flex-direction: column;
-                text-align: center;
+            .legal-page {
+                padding: 20px 16px;
+            }
+            .legal-page h1 {
+                font-size: 1.2rem;
             }
 
-            .evaluate-card {
-                padding: 12px 10px;
+            .footer .footer-links {
+                gap: 10px;
+            }
+            .footer .footer-links .sep {
+                display: none;
+            }
+            .footer .footer-links a {
+                font-size: 0.6rem;
             }
 
-            .evaluate-wrapper {
-                padding: 3px;
+            .testimonials-card {
+                padding: 16px 12px;
             }
-
-            .evaluate-hero h2 {
-                font-size: 0.9rem;
-            }
-            .evaluate-hero p {
-                font-size: 0.65rem;
+            .testimonials-card .section-title {
+                font-size: 1rem;
             }
         }
 
@@ -1653,13 +1841,6 @@
                 height: 55px;
                 font-size: 1.8rem;
             }
-            .hero-section .hero-desc {
-                font-size: 0.78rem;
-            }
-            .hero-section .hero-btn {
-                padding: 8px 18px;
-                font-size: 0.75rem;
-            }
 
             .result-box .value {
                 font-size: 0.75rem;
@@ -1671,24 +1852,36 @@
                 gap: 4px;
             }
 
+            .section-card {
+                padding: 12px 10px;
+            }
+
             .about-card {
                 padding: 16px 12px;
             }
-            .contact-card-main {
-                padding: 16px 12px;
-            }
+
             .contact-card-enhanced {
                 padding: 12px 10px;
             }
 
-            .evaluate-card {
-                padding: 10px 8px;
+            .legal-page {
+                padding: 16px 12px;
             }
-            .evaluate-hero h2 {
-                font-size: 0.8rem;
+            .legal-page h1 {
+                font-size: 1rem;
             }
-            .evaluate-hero p {
-                font-size: 0.6rem;
+            .legal-page p,
+            .legal-page ul li {
+                font-size: 0.72rem;
+            }
+
+            .testimonials-card {
+                padding: 12px 10px;
+            }
+            .testimonial-card .t-avatar {
+                width: 48px;
+                height: 48px;
+                font-size: 1.4rem;
             }
         }
     </style>
@@ -1731,6 +1924,10 @@
                     <i class="fa-solid fa-circle-info"></i>
                     <span class="nav-label" data-i18n="nav_about">عن المنصة</span>
                 </button>
+                <button class="nav-link" data-tab="testimonials">
+                    <i class="fa-solid fa-quote-right"></i>
+                    <span class="nav-label" data-i18n="nav_testimonials">آراء الخبراء</span>
+                </button>
                 <button class="nav-link" data-tab="contact">
                     <i class="fa-solid fa-address-card"></i>
                     <span class="nav-label" data-i18n="nav_contact">تواصل</span>
@@ -1767,7 +1964,7 @@
     <div class="container">
 
         <!-- ==========================================================
-        HOME
+        HOME - بدون تقييم سريع
         ========================================================== -->
         <div class="hero-section active" id="section-home">
             <div class="hero-content">
@@ -1782,6 +1979,9 @@
                     منصتك الذكية لتقدير القيم السوقية للعقارات في المملكة<br>
                     بدقة وسرعة باستخدام أحدث خوارزميات الذكاء الاصطناعي
                 </p>
+
+                <!-- تم إزالة التقييم السريع هنا -->
+
                 <div class="hero-buttons">
                     <button class="hero-btn hero-btn-primary" onclick="switchTab('evaluate')">
                         <i class="fa-solid fa-robot"></i> <span data-i18n="hero_btn_start">ابدأ التقييم الآن</span>
@@ -1790,6 +1990,7 @@
                         <i class="fa-solid fa-circle-info"></i> <span data-i18n="hero_btn_about">تعرف على المنصة</span>
                     </button>
                 </div>
+
                 <div class="hero-stats">
                     <div class="stat-item">
                         <div class="stat-number">5+</div>
@@ -1812,12 +2013,48 @@
         </div>
 
         <!-- ==========================================================
+        TESTIMONIALS
+        ========================================================== -->
+        <div class="section-content" id="section-testimonials">
+            <div class="testimonials-wrapper">
+                <div class="testimonials-card">
+                    <div class="section-title">
+                        <i class="fa-solid fa-quote-right" style="color:var(--gold);"></i>
+                        <span data-i18n="testimonials_title">آراء الخبراء</span>
+                    </div>
+                    <div class="testimonials-grid">
+                        <div class="testimonial-card">
+                            <div class="t-avatar">أ</div>
+                            <div class="t-stars">★★★★★</div>
+                            <div class="t-name" data-i18n="t1_name">أ. خالد العتيبي</div>
+                            <div class="t-title" data-i18n="t1_title">خبير عقاري معتمد</div>
+                            <div class="t-text" data-i18n="t1_text">"منصة رائدة في تقدير القيم السوقية، دقة عالية وسرعة في النتائج. أنصح بها كل مستثمر عقاري."</div>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="t-avatar">ن</div>
+                            <div class="t-stars">★★★★★</div>
+                            <div class="t-name" data-i18n="t2_name">د. نورة الحسين</div>
+                            <div class="t-title" data-i18n="t2_title">خبيرة اقتصاد عقاري</div>
+                            <div class="t-text" data-i18n="t2_text">"أداة ذكية تسهل على المشترين والبائعين معرفة القيمة العادلة للعقار. نقلة نوعية في السوق السعودي."</div>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="t-avatar">س</div>
+                            <div class="t-stars">★★★★★</div>
+                            <div class="t-name" data-i18n="t3_name">م. سامي الغامدي</div>
+                            <div class="t-title" data-i18n="t3_title">مدير صندوق استثمار عقاري</div>
+                            <div class="t-text" data-i18n="t3_text">"نعتمد على SaudiAqarAI في تقييم الفرص الاستثمارية، دقة النموذج تفوق التوقعات."</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================================
         EVALUATE
         ========================================================== -->
         <div class="section-content" id="section-evaluate">
-            <div class="evaluate-wrapper">
-                <div class="evaluate-card">
-
+            <div class="section-wrapper">
+                <div class="section-card">
                     <div class="evaluate-hero">
                         <div class="badge-top"><i class="fa-solid fa-sparkles"></i> <span data-i18n="badge_instant">🤖 تقييم فوري</span></div>
                         <h2 data-i18n="eval_title">المُقيّم العقاري الذكي</h2>
@@ -1960,54 +2197,60 @@
         ADD
         ========================================================== -->
         <div class="section-content" id="section-add">
-            <div class="card">
-                <div class="section-title"><i class="fa-solid fa-plus-circle"></i> <span data-i18n="add_title">إضافة عقار جديد</span></div>
-
-                <div class="upload-area" id="uploadArea">
-                    <i class="fa-solid fa-file-excel"></i>
-                    <p><strong data-i18n="import_excel">📂 اسحب ملف Excel هنا أو اضغط للاختيار</strong></p>
-                    <p style="font-size:0.6rem; color:var(--muted);" data-i18n="import_hint">يدعم: .xlsx, .xls — الأعمدة: المدينة, الحي, النوع, السعر, المساحة</p>
-                    <div class="file-name" id="fileName"></div>
-                    <input type="file" id="excelFile" accept=".xlsx,.xls">
-                </div>
-
-                <div style="text-align:center; margin:4px 0 8px;">
-                    <span style="color:var(--muted); font-size:0.65rem;" data-i18n="or_manual">— أو أدخل البيانات يدوياً —</span>
-                </div>
-
-                <form id="addPropertyForm">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label data-i18n="city">المدينة</label>
-                            <select id="addCity">
-                                <option value="الرياض">الرياض</option>
-                                <option value="جدة">جدة</option>
-                                <option value="الدمام">الدمام</option>
-                                <option value="مكة المكرمة">مكة المكرمة</option>
-                                <option value="المدينة المنورة">المدينة المنورة</option>
-                            </select>
+            <div class="section-wrapper">
+                <div class="section-card">
+                    <div class="add-centered">
+                        <div class="section-title" style="justify-content:center; font-size:1.1rem;">
+                            <i class="fa-solid fa-plus-circle"></i> <span data-i18n="add_title">إضافة عقار جديد</span>
                         </div>
-                        <div class="form-group"><label data-i18n="district">الحي</label><input type="text" id="addLocation" required></div>
-                        <div class="form-group">
-                            <label data-i18n="type">نوع العقار</label>
-                            <select id="addPropertyType">
-                                <option value="شقة سكنية">شقة سكنية</option>
-                                <option value="فيلا">فيلا</option>
-                                <option value="أرض">أرض</option>
-                                <option value="دوبلكس">دوبلكس</option>
-                            </select>
+
+                        <div class="upload-area" id="uploadArea">
+                            <i class="fa-solid fa-file-excel"></i>
+                            <p><strong data-i18n="import_excel">📂 اسحب ملف Excel هنا أو اضغط للاختيار</strong></p>
+                            <p style="font-size:0.6rem; color:var(--muted);" data-i18n="import_hint">يدعم: .xlsx, .xls — الأعمدة: المدينة, الحي, النوع, السعر, المساحة</p>
+                            <div class="file-name" id="fileName"></div>
+                            <input type="file" id="excelFile" accept=".xlsx,.xls">
                         </div>
-                        <div class="form-group"><label data-i18n="price">السعر (ر.س)</label><input type="number" id="addPrice" required min="10000"></div>
-                        <div class="form-group"><label data-i18n="area">المساحة (م²)</label><input type="number" id="addAreaAdd" required min="20"></div>
+
+                        <div style="text-align:center; margin:4px 0 8px;">
+                            <span style="color:var(--muted); font-size:0.65rem;" data-i18n="or_manual">— أو أدخل البيانات يدوياً —</span>
+                        </div>
+
+                        <form id="addPropertyForm">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label data-i18n="city">المدينة</label>
+                                    <select id="addCity">
+                                        <option value="الرياض">الرياض</option>
+                                        <option value="جدة">جدة</option>
+                                        <option value="الدمام">الدمام</option>
+                                        <option value="مكة المكرمة">مكة المكرمة</option>
+                                        <option value="المدينة المنورة">المدينة المنورة</option>
+                                    </select>
+                                </div>
+                                <div class="form-group"><label data-i18n="district">الحي</label><input type="text" id="addLocation" required></div>
+                                <div class="form-group">
+                                    <label data-i18n="type">نوع العقار</label>
+                                    <select id="addPropertyType">
+                                        <option value="شقة سكنية">شقة سكنية</option>
+                                        <option value="فيلا">فيلا</option>
+                                        <option value="أرض">أرض</option>
+                                        <option value="دوبلكس">دوبلكس</option>
+                                    </select>
+                                </div>
+                                <div class="form-group"><label data-i18n="price">السعر (ر.س)</label><input type="number" id="addPrice" required min="10000"></div>
+                                <div class="form-group"><label data-i18n="area">المساحة (م²)</label><input type="number" id="addAreaAdd" required min="20"></div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width:100%; margin-top:4px;">
+                                <i class="fa-solid fa-plus"></i> <span data-i18n="btn_add">إدراج وتقييم</span>
+                            </button>
+                        </form>
+
+                        <div id="excelStatus" style="margin-top:6px; display:none; padding:6px; border-radius:var(--radius); background:var(--success-light); border:1px solid var(--success);">
+                            <i class="fa-solid fa-check-circle" style="color:var(--success);"></i>
+                            <span id="excelStatusText">تم استيراد 0 عقار</span>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width:100%; margin-top:4px;">
-                        <i class="fa-solid fa-plus"></i> <span data-i18n="btn_add">إدراج وتقييم</span>
-                    </button>
-                </form>
-
-                <div id="excelStatus" style="margin-top:6px; display:none; padding:6px; border-radius:var(--radius); background:var(--success-light); border:1px solid var(--success);">
-                    <i class="fa-solid fa-check-circle" style="color:var(--success);"></i>
-                    <span id="excelStatusText">تم استيراد 0 عقار</span>
                 </div>
             </div>
         </div>
@@ -2016,34 +2259,36 @@
         DATABASE
         ========================================================== -->
         <div class="section-content" id="section-database">
-            <div class="card">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:8px;">
-                    <div class="section-title" style="margin:0;"><i class="fa-solid fa-chart-bar"></i> <span data-i18n="db_title">التحليلات وقاعدة البيانات</span></div>
-                    <div class="btn-row">
-                        <button class="btn btn-success btn-sm" id="exportCsvBtn"><i class="fa-solid fa-table"></i> CSV</button>
-                        <button class="btn btn-gold btn-sm" id="refreshDataBtn"><i class="fa-solid fa-rotate"></i> <span data-i18n="btn_refresh">تحديث</span></button>
-                        <button class="btn btn-danger btn-sm" id="clearDataBtn"><i class="fa-solid fa-trash"></i> <span data-i18n="clear">مسح</span></button>
+            <div class="section-wrapper">
+                <div class="section-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:8px;">
+                        <div class="section-title" style="margin:0;"><i class="fa-solid fa-chart-bar"></i> <span data-i18n="db_title">التحليلات وقاعدة البيانات</span></div>
+                        <div class="btn-row">
+                            <button class="btn btn-success btn-sm" id="exportCsvBtn"><i class="fa-solid fa-table"></i> CSV</button>
+                            <button class="btn btn-gold btn-sm" id="refreshDataBtn"><i class="fa-solid fa-rotate"></i> <span data-i18n="btn_refresh">تحديث</span></button>
+                            <button class="btn btn-danger btn-sm" id="clearDataBtn"><i class="fa-solid fa-trash"></i> <span data-i18n="clear">مسح</span></button>
+                        </div>
                     </div>
+                    <div class="chart-box"><canvas id="analyticsChart"></canvas></div>
+                    <div class="section-title" style="font-size:0.7rem; margin-top:10px; color:var(--warning);">
+                        <i class="fa-solid fa-magnifying-glass-chart"></i> <span data-i18n="review_title">قيم البحث — تحتاج مراجعة</span>
+                    </div>
+                    <p class="review-note" id="reviewMeta"></p>
+                    <div class="table-wrap">
+                        <table class="data-table"><thead><tr>
+                            <th data-i18n="review_param">المعامل</th><th data-i18n="review_value">القيمة</th><th data-i18n="review_status">الحالة</th>
+                        </tr></thead><tbody id="reviewTableBody"></tbody></table>
+                    </div>
+                    <div class="section-title" style="font-size:0.7rem; margin-top:10px;"><i class="fa-solid fa-list"></i> <span data-i18n="props_list">العقارات المسجّلة</span></div>
+                    <div class="table-wrap">
+                        <table class="data-table"><thead><tr>
+                            <th data-i18n="city">المدينة</th><th data-i18n="district">الحي</th>
+                            <th data-i18n="price">السعر</th><th data-i18n="ai_estimate">تقدير AI</th>
+                            <th data-i18n="date">التاريخ</th>
+                        </tr></thead><tbody id="propsTableBody"></tbody></table>
+                    </div>
+                    <div class="empty-msg" id="propsEmpty" data-i18n="props_empty">لا توجد عقارات مسجّلة بعد</div>
                 </div>
-                <div class="chart-box"><canvas id="analyticsChart"></canvas></div>
-                <div class="section-title" style="font-size:0.7rem; margin-top:10px; color:var(--warning);">
-                    <i class="fa-solid fa-magnifying-glass-chart"></i> <span data-i18n="review_title">قيم البحث — تحتاج مراجعة</span>
-                </div>
-                <p class="review-note" id="reviewMeta"></p>
-                <div class="table-wrap">
-                    <table class="data-table"><thead><tr>
-                        <th data-i18n="review_param">المعامل</th><th data-i18n="review_value">القيمة</th><th data-i18n="review_status">الحالة</th>
-                    </tr></thead><tbody id="reviewTableBody"></tbody></table>
-                </div>
-                <div class="section-title" style="font-size:0.7rem; margin-top:10px;"><i class="fa-solid fa-list"></i> <span data-i18n="props_list">العقارات المسجّلة</span></div>
-                <div class="table-wrap">
-                    <table class="data-table"><thead><tr>
-                        <th data-i18n="city">المدينة</th><th data-i18n="district">الحي</th>
-                        <th data-i18n="price">السعر</th><th data-i18n="ai_estimate">تقدير AI</th>
-                        <th data-i18n="date">التاريخ</th>
-                    </tr></thead><tbody id="propsTableBody"></tbody></table>
-                </div>
-                <div class="empty-msg" id="propsEmpty" data-i18n="props_empty">لا توجد عقارات مسجّلة بعد</div>
             </div>
         </div>
 
@@ -2051,79 +2296,84 @@
         ABOUT
         ========================================================== -->
         <div class="section-content" id="section-about">
-            <div class="about-wrapper">
-                <div class="about-card">
-
-                    <div class="about-header">
-                        <div class="about-icon">
-                            <i class="fa-solid fa-circle-info"></i>
-                        </div>
-                        <div>
-                            <div class="about-title"><span data-i18n="about_title">عن منصة</span> <span class="gold">SaudiAqarAI</span></div>
-                            <div class="about-subtitle" data-i18n="about_subtitle">🕌 منصة الذكاء الاصطناعي العقاري في المملكة</div>
-                        </div>
-                    </div>
-
-                    <div class="about-description" data-i18n="about_text">
-                        <strong>SaudiAqarAI</strong> مشروع تقني ريادي يُقدّم تقديرات سوقية للعقارات في المملكة العربية السعودية،
-                        مستنداً إلى <strong>خوارزميات ذكية</strong> تحلل مؤشرات السوق الفعلية.
-                        نهدف إلى تمكين المستثمرين والمشترين والبائعين من <strong>اتخاذ قرارات مدروسة</strong>
-                        بناءً على تحليل دقيق وموثوق.
-                    </div>
-
-                    <div class="section-title" style="margin-bottom:6px;">
-                        <i class="fa-solid fa-cogs"></i> <span data-i18n="methodology">منهجية التقييم</span>
-                    </div>
-
-                    <div class="methodology-grid">
-                        <div class="methodology-item">
-                            <div class="m-icon"><i class="fa-solid fa-calculator"></i></div>
-                            <div class="m-content">
-                                <div class="m-title" data-i18n="m1_title">السعر الأساسي</div>
-                                <div class="m-desc" data-i18n="m1_desc">يُحتسب بناءً على سعر المتر في المدينة مضروباً في المساحة</div>
+            <div class="section-wrapper">
+                <div class="section-card">
+                    <div class="about-card">
+                        <div class="about-header">
+                            <div class="about-icon">
+                                <i class="fa-solid fa-circle-info"></i>
+                            </div>
+                            <div>
+                                <div class="about-title"><span data-i18n="about_title">عن منصة</span> <span class="gold">SaudiAqarAI</span></div>
+                                <div class="about-subtitle" data-i18n="about_subtitle">🕌 منصة الذكاء الاصطناعي العقاري في المملكة</div>
                             </div>
                         </div>
-                        <div class="methodology-item">
-                            <div class="m-icon"><i class="fa-solid fa-sliders-h"></i></div>
-                            <div class="m-content">
-                                <div class="m-title" data-i18n="m2_title">معاملات التعديل</div>
-                                <div class="m-desc" data-i18n="m2_desc">تشمل نوع العقار، العمر، عدد الغرف، وعرض الشارع</div>
-                            </div>
-                        </div>
-                        <div class="methodology-item">
-                            <div class="m-icon"><i class="fa-solid fa-star"></i></div>
-                            <div class="m-content">
-                                <div class="m-title" data-i18n="m3_title">المكافآت</div>
-                                <div class="m-desc" data-i18n="m3_desc">تُمنح للأحياء المميزة، الواجهات الجيدة، والمرافق الإضافية</div>
-                            </div>
-                        </div>
-                        <div class="methodology-item">
-                            <div class="m-icon"><i class="fa-solid fa-tag"></i></div>
-                            <div class="m-content">
-                                <div class="m-title" data-i18n="m4_title">الخصومات</div>
-                                <div class="m-desc" data-i18n="m4_desc">تُطبق على العقارات القديمة والواجهات الأقل تفضيلاً</div>
-                            </div>
-                        </div>
-                        <div class="methodology-item" style="grid-column: 1 / -1;">
-                            <div class="m-icon"><i class="fa-solid fa-sync-alt"></i></div>
-                            <div class="m-content">
-                                <div class="m-title" data-i18n="m5_title">التحديث الدوري</div>
-                                <div class="m-desc" data-i18n="m5_desc">يتم مراجعة المؤشرات دورياً لتعكس تغيرات السوق</div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="about-footer">
-                        <div class="data-badge">
+                        <div class="data-source-badge">
                             <i class="fa-solid fa-database"></i>
-                            <span data-i18n="about_sources">مصادر البيانات: مؤشرات السوق العقارية 2025-2026</span>
+                            <span data-i18n="data_source">📊 البيانات مأخوذة من: مؤشرات السوق العقاري السعودي 2025-2026</span>
                         </div>
-                        <div class="data-badge">
-                            <i class="fa-solid fa-calendar-check"></i>
-                            <span data-i18n="last_update">آخر تحديث: مارس 2026</span>
+
+                        <div class="about-description" data-i18n="about_text">
+                            <strong>SaudiAqarAI</strong> مشروع تقني ريادي يُقدّم تقديرات سوقية للعقارات في المملكة العربية السعودية،
+                            مستنداً إلى <strong>خوارزميات ذكية</strong> تحلل مؤشرات السوق الفعلية.
+                            نهدف إلى تمكين المستثمرين والمشترين والبائعين من <strong>اتخاذ قرارات مدروسة</strong>
+                            بناءً على تحليل دقيق وموثوق.
+                        </div>
+
+                        <div class="section-title" style="margin-bottom:6px;">
+                            <i class="fa-solid fa-cogs"></i> <span data-i18n="methodology">منهجية التقييم</span>
+                        </div>
+
+                        <div class="methodology-grid">
+                            <div class="methodology-item">
+                                <div class="m-icon"><i class="fa-solid fa-calculator"></i></div>
+                                <div class="m-content">
+                                    <div class="m-title" data-i18n="m1_title">السعر الأساسي</div>
+                                    <div class="m-desc" data-i18n="m1_desc">يُحتسب بناءً على سعر المتر في المدينة مضروباً في المساحة</div>
+                                </div>
+                            </div>
+                            <div class="methodology-item">
+                                <div class="m-icon"><i class="fa-solid fa-sliders-h"></i></div>
+                                <div class="m-content">
+                                    <div class="m-title" data-i18n="m2_title">معاملات التعديل</div>
+                                    <div class="m-desc" data-i18n="m2_desc">تشمل نوع العقار، العمر، عدد الغرف، وعرض الشارع</div>
+                                </div>
+                            </div>
+                            <div class="methodology-item">
+                                <div class="m-icon"><i class="fa-solid fa-star"></i></div>
+                                <div class="m-content">
+                                    <div class="m-title" data-i18n="m3_title">المكافآت</div>
+                                    <div class="m-desc" data-i18n="m3_desc">تُمنح للأحياء المميزة، الواجهات الجيدة، والمرافق الإضافية</div>
+                                </div>
+                            </div>
+                            <div class="methodology-item">
+                                <div class="m-icon"><i class="fa-solid fa-tag"></i></div>
+                                <div class="m-content">
+                                    <div class="m-title" data-i18n="m4_title">الخصومات</div>
+                                    <div class="m-desc" data-i18n="m4_desc">تُطبق على العقارات القديمة والواجهات الأقل تفضيلاً</div>
+                                </div>
+                            </div>
+                            <div class="methodology-item" style="grid-column: 1 / -1;">
+                                <div class="m-icon"><i class="fa-solid fa-sync-alt"></i></div>
+                                <div class="m-content">
+                                    <div class="m-title" data-i18n="m5_title">التحديث الدوري</div>
+                                    <div class="m-desc" data-i18n="m5_desc">يتم مراجعة المؤشرات دورياً لتعكس تغيرات السوق</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="about-footer">
+                            <div class="data-badge">
+                                <i class="fa-solid fa-database"></i>
+                                <span data-i18n="about_sources">مصادر البيانات: مؤشرات السوق العقارية 2025-2026</span>
+                            </div>
+                            <div class="data-badge">
+                                <i class="fa-solid fa-calendar-check"></i>
+                                <span data-i18n="last_update">آخر تحديث: مارس 2026</span>
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -2132,53 +2382,136 @@
         CONTACT
         ========================================================== -->
         <div class="section-content" id="section-contact">
-            <div class="contact-wrapper">
-                <div class="contact-card-main">
-
-                    <div class="contact-header">
-                        <div class="contact-big-icon">
-                            <i class="fa-solid fa-address-card"></i>
-                        </div>
-                        <h2 data-i18n="contact_heading">تواصل معنا</h2>
-                        <p data-i18n="contact_sub">📬 فريقنا في انتظارك — تواصل معنا لأي استفسار أو اقتراح</p>
-                    </div>
-
-                    <div class="contact-grid-enhanced">
-                        <div class="contact-card-enhanced">
-                            <div class="c-icon"><i class="fa-solid fa-location-dot"></i></div>
-                            <div class="c-label" data-i18n="contact_location">📍 الموقع</div>
-                            <div class="c-value" data-i18n="location_value">الدوحة، قطر</div>
+            <div class="section-wrapper">
+                <div class="section-card">
+                    <div class="contact-centered">
+                        <div class="contact-header-centered">
+                            <div class="contact-big-icon">
+                                <i class="fa-solid fa-address-card"></i>
+                            </div>
+                            <h2 data-i18n="contact_heading">تواصل معنا</h2>
+                            <p data-i18n="contact_sub">📬 فريقنا في انتظارك — تواصل معنا لأي استفسار أو اقتراح</p>
                         </div>
 
-                        <div class="contact-card-enhanced">
-                            <div class="c-icon"><i class="fa-solid fa-envelope"></i></div>
-                            <div class="c-label" data-i18n="contact_email">📧 البريد الإلكتروني</div>
-                            <div class="c-value">
-                                <a href="mailto:ahmedvalljemaldine@gmail.com">ahmedvalljemaldine@gmail.com</a>
+                        <div class="contact-grid-enhanced">
+                            <div class="contact-card-enhanced">
+                                <div class="c-icon"><i class="fa-solid fa-location-dot"></i></div>
+                                <div class="c-label" data-i18n="contact_location">📍 الموقع</div>
+                                <div class="c-value" data-i18n="location_value">الدوحة، قطر</div>
+                            </div>
+
+                            <div class="contact-card-enhanced">
+                                <div class="c-icon"><i class="fa-solid fa-envelope"></i></div>
+                                <div class="c-label" data-i18n="contact_email">📧 البريد الإلكتروني</div>
+                                <div class="c-value">
+                                    <a href="mailto:ahmedvalljemaldine@gmail.com">ahmedvalljemaldine@gmail.com</a>
+                                </div>
+                            </div>
+
+                            <div class="contact-card-enhanced">
+                                <div class="c-icon"><i class="fa-solid fa-phone"></i></div>
+                                <div class="c-label" data-i18n="contact_phone">📞 الهاتف</div>
+                                <div class="c-value">
+                                    <a href="tel:+97474736271" class="phone">+974 7473 6271</a>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="contact-card-enhanced">
-                            <div class="c-icon"><i class="fa-solid fa-phone"></i></div>
-                            <div class="c-label" data-i18n="contact_phone">📞 الهاتف</div>
-                            <div class="c-value">
-                                <a href="tel:+97474736271" class="phone">+974 7473 6271</a>
-                            </div>
+                        <div class="contact-buttons-enhanced">
+                            <a href="https://wa.me/97474736271" target="_blank" rel="noopener" class="contact-btn-enhanced whatsapp">
+                                <i class="fa-brands fa-whatsapp"></i> <span data-i18n="contact_whatsapp">واتساب</span>
+                            </a>
+                            <a href="https://ahmedvall70.github.io/ahmed-vall-cv/" target="_blank" rel="noopener" class="contact-btn-enhanced gold">
+                                <i class="fa-solid fa-file-pdf"></i> <span data-i18n="contact_cv">السيرة الذاتية</span>
+                            </a>
+                            <a href="https://ahmedvall70.github.io/Innovision/" target="_blank" rel="noopener" class="contact-btn-enhanced primary">
+                                <i class="fa-solid fa-rocket"></i> <span data-i18n="contact_innovision">Innovision Hub</span>
+                            </a>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
 
-                    <div class="contact-buttons-enhanced">
-                        <a href="https://wa.me/97474736271" target="_blank" rel="noopener" class="contact-btn-enhanced whatsapp">
-                            <i class="fa-brands fa-whatsapp"></i> <span data-i18n="contact_whatsapp">واتساب</span>
-                        </a>
-                        <a href="https://ahmedvall70.github.io/ahmed-vall-cv/" target="_blank" rel="noopener" class="contact-btn-enhanced gold">
-                            <i class="fa-solid fa-file-pdf"></i> <span data-i18n="contact_cv">السيرة الذاتية</span>
-                        </a>
-                        <a href="https://ahmedvall70.github.io/Innovision/" target="_blank" rel="noopener" class="contact-btn-enhanced primary">
-                            <i class="fa-solid fa-rocket"></i> <span data-i18n="contact_innovision">Innovision Hub</span>
-                        </a>
+        <!-- ==========================================================
+        PRIVACY & TERMS
+        ========================================================== -->
+        <div class="section-content" id="section-privacy">
+            <div class="section-wrapper">
+                <div class="section-card">
+                    <div class="legal-page">
+                        <h1 data-i18n="privacy_title">🔒 سياسة الخصوصية</h1>
+                        <div class="legal-meta" data-i18n="privacy_meta">آخر تحديث: 23 أغسطس 2026</div>
+                        <p data-i18n="privacy_intro">نحن في <strong>SaudiAqarAI</strong> نلتزم بحماية خصوصية مستخدمينا. توضح هذه السياسة كيفية جمع واستخدام وحماية المعلومات التي تقدمها عند استخدام منصتنا.</p>
+                        <h2 data-i18n="privacy_h1">1. المعلومات التي نجمعها</h2>
+                        <p data-i18n="privacy_p1">عند استخدام منصة SaudiAqarAI، قد نقوم بجمع المعلومات التالية:</p>
+                        <ul>
+                            <li data-i18n="privacy_l1">• بيانات العقار التي تدخلها (المدينة، الحي، المساحة، نوع العقار، إلخ)</li>
+                            <li data-i18n="privacy_l2">• عنوان IP الخاص بك لتحديد الموقع الجغرافي التقريبي</li>
+                            <li data-i18n="privacy_l3">• بيانات الاستخدام مثل الصفحات التي تزورها والوقت الذي تقضيه على المنصة</li>
+                        </ul>
+                        <h2 data-i18n="privacy_h2">2. كيفية استخدام المعلومات</h2>
+                        <p data-i18n="privacy_p2">نستخدم المعلومات التي نجمعها للأغراض التالية:</p>
+                        <ul>
+                            <li data-i18n="privacy_l4">• تقديم التقييمات العقارية وتحسين دقتها</li>
+                            <li data-i18n="privacy_l5">• تحسين تجربة المستخدم وتطوير المنصة</li>
+                            <li data-i18n="privacy_l6">• إرسال تحديثات وإشعارات حول المنصة (بموافقتك)</li>
+                        </ul>
+                        <h2 data-i18n="privacy_h3">3. حماية المعلومات</h2>
+                        <p data-i18n="privacy_p3">نحن نتخذ إجراءات أمنية لحماية بياناتك من الوصول غير المصرح به أو التعديل أو الإفصاح. يتم تخزين البيانات في خوادم آمنة مع تشفير متقدم.</p>
+                        <h2 data-i18n="privacy_h4">4. مشاركة المعلومات</h2>
+                        <p data-i18n="privacy_p4">لا نبيع أو نؤجر أو نشارك معلوماتك الشخصية مع أطراف ثالثة، إلا في الحالات التالية:</p>
+                        <ul>
+                            <li data-i18n="privacy_l7">• بموافقتك الصريحة</li>
+                            <li data-i18n="privacy_l8">• للامتثال للمتطلبات القانونية</li>
+                            <li data-i18n="privacy_l9">• لحماية حقوق وممتلكات المنصة</li>
+                        </ul>
+                        <h2 data-i18n="privacy_h5">5. حقوقك</h2>
+                        <p data-i18n="privacy_p5">لديك الحق في:</p>
+                        <ul>
+                            <li data-i18n="privacy_l10">• الوصول إلى بياناتك الشخصية المخزنة</li>
+                            <li data-i18n="privacy_l11">• طلب تصحيح أو حذف بياناتك</li>
+                            <li data-i18n="privacy_l12">• سحب موافقتك في أي وقت</li>
+                        </ul>
+                        <h2 data-i18n="privacy_h6">6. التواصل</h2>
+                        <p data-i18n="privacy_p6">للاستفسار حول سياسة الخصوصية، يرجى التواصل معنا عبر البريد الإلكتروني: <a href="mailto:ahmedvalljemaldine@gmail.com">ahmedvalljemaldine@gmail.com</a></p>
                     </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="section-content" id="section-terms">
+            <div class="section-wrapper">
+                <div class="section-card">
+                    <div class="legal-page">
+                        <h1 data-i18n="terms_title">📋 شروط الاستخدام</h1>
+                        <div class="legal-meta" data-i18n="terms_meta">آخر تحديث: 23 أغسطس 2026</div>
+                        <p data-i18n="terms_intro">مرحباً بك في <strong>SaudiAqarAI</strong>. باستخدامك لهذه المنصة، فإنك توافق على الالتزام بالشروط والأحكام التالية. يرجى قراءتها بعناية.</p>
+                        <h2 data-i18n="terms_h1">1. قبول الشروط</h2>
+                        <p data-i18n="terms_p1">باستخدام منصة SaudiAqarAI، فإنك توافق على هذه الشروط. إذا كنت لا توافق على أي جزء من هذه الشروط، يرجى عدم استخدام المنصة.</p>
+                        <h2 data-i18n="terms_h2">2. استخدام المنصة</h2>
+                        <p data-i18n="terms_p2">تقدم المنصة تقييمات عقارية استرشادية تعتمد على خوارزميات الذكاء الاصطناعي. يسمح باستخدام المنصة للأغراض التالية:</p>
+                        <ul>
+                            <li data-i18n="terms_l1">• التقييم العقاري الشخصي والاستثماري</li>
+                            <li data-i18n="terms_l2">• التحليل السوقي والبحث العقاري</li>
+                            <li data-i18n="terms_l3">• الاستخدام الأكاديمي والبحثي</li>
+                        </ul>
+                        <h2 data-i18n="terms_h3">3. إخلاء المسؤولية</h2>
+                        <p data-i18n="terms_p3">جميع التقييمات المقدمة من المنصة هي <strong>تقديرات استرشادية</strong> فقط وليست وثائق تثمين رسمية. لا تتحمل المنصة أي مسؤولية عن القرارات المتخذة بناءً على هذه التقديرات.</p>
+                        <h2 data-i18n="terms_h4">4. حقوق الملكية الفكرية</h2>
+                        <p data-i18n="terms_p4">جميع المحتويات على هذه المنصة، بما في ذلك النصوص والتصميم والخوارزميات، هي ملكية فكرية لـ SaudiAqarAI. لا يسمح بنسخ أو إعادة إنتاج أي جزء دون إذن مسبق.</p>
+                        <h2 data-i18n="terms_h5">5. السلوك المقبول</h2>
+                        <p data-i18n="terms_p5">تتوقع المنصة من المستخدمين الالتزام بالسلوك التالي:</p>
+                        <ul>
+                            <li data-i18n="terms_l4">• استخدام المنصة لأغراض قانونية فقط</li>
+                            <li data-i18n="terms_l5">• عدم محاولة اختراق أو تعطيل المنصة</li>
+                            <li data-i18n="terms_l6">• تقديم بيانات دقيقة عند استخدام التقييم</li>
+                        </ul>
+                        <h2 data-i18n="terms_h6">6. تعديل الشروط</h2>
+                        <p data-i18n="terms_p6">تحتفظ المنصة بالحق في تعديل هذه الشروط في أي وقت. سنقوم بإعلامك بأي تغييرات جوهرية عبر البريد الإلكتروني أو من خلال المنصة.</p>
+                        <h2 data-i18n="terms_h7">7. التواصل</h2>
+                        <p data-i18n="terms_p7">للاستفسار حول شروط الاستخدام، يرجى التواصل معنا عبر البريد الإلكتروني: <a href="mailto:ahmedvalljemaldine@gmail.com">ahmedvalljemaldine@gmail.com</a></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2186,7 +2519,16 @@
         <!-- ==========================================================
         FOOTER
         ========================================================== -->
-        <div class="footer">© 2026 <strong>SaudiAqarAI</strong> — <span data-i18n="dev_by">تطوير:</span> <strong>أحمد فال جمال الدين سيدنا</strong></div>
+        <div class="footer">
+            <div class="footer-links">
+                <a href="#" onclick="switchTab('privacy')" data-i18n="footer_privacy">🔒 سياسة الخصوصية</a>
+                <span class="sep">|</span>
+                <a href="#" onclick="switchTab('terms')" data-i18n="footer_terms">📋 شروط الاستخدام</a>
+                <span class="sep">|</span>
+                <a href="#" onclick="switchTab('contact')" data-i18n="footer_contact">📞 اتصل بنا</a>
+            </div>
+            <div>© 2026 <strong>SaudiAqarAI</strong> — <span data-i18n="dev_by">تطوير:</span> <strong>أحمد فال جمال الدين سيدنا</strong></div>
+        </div>
 
     </div>
 
@@ -2200,6 +2542,7 @@
             <button class="nav-item" data-tab="add"><i class="fa-solid fa-plus-circle"></i><span data-i18n="nav_add">إضافة</span></button>
             <button class="nav-item" data-tab="database"><i class="fa-solid fa-chart-bar"></i><span data-i18n="nav_db">البيانات</span></button>
             <button class="nav-item" data-tab="about"><i class="fa-solid fa-circle-info"></i><span data-i18n="nav_about">عن</span></button>
+            <button class="nav-item" data-tab="testimonials"><i class="fa-solid fa-quote-right"></i><span data-i18n="nav_testimonials">الخبراء</span></button>
             <button class="nav-item" data-tab="contact"><i class="fa-solid fa-address-card"></i><span data-i18n="nav_contact">تواصل</span></button>
         </nav>
     </div>
@@ -2224,10 +2567,7 @@
         // 1. CONFIGURATION
         // ============================================================
 
-        // ===== تحديد رابط API (يعمل مع Render.com) =====
-        // تغيير هذا الرابط إلى رابط Render.com الخاص بك بعد رفع السيرفر
-        const API_BASE = 'https://saudiaqarai.onrender.com'; // استخدم رابط Render.com الخاص بك
-        // للاختبار المحلي: const API_BASE = 'http://localhost:3000';
+        const API_BASE = '';
 
         const MARKET_CONFIG = {
             city_base_rates: { riyadh: 4800, jeddah: 4500, dammam: 3900, makkah: 5200, madinah: 4100 },
@@ -2266,7 +2606,6 @@
         // 2. STATE
         // ============================================================
         let currentLang = 'ar';
-        let apiOnline = false;
         let analyticsChart = null;
         let debounceTimer = null;
         let lastCalculation = null;
@@ -2274,7 +2613,7 @@
         let importedProperties = [];
 
         // ============================================================
-        // 3. TRANSLATIONS - FULLY COMPLETE
+        // 3. TRANSLATIONS
         // ============================================================
         const translations = {
             ar: {
@@ -2284,6 +2623,7 @@
                 nav_add: "إضافة",
                 nav_db: "البيانات",
                 nav_about: "عن المنصة",
+                nav_testimonials: "آراء الخبراء",
                 nav_contact: "تواصل",
                 hero_subtitle: "🏛️ الذكاء الاصطناعي العقاري السعودي",
                 hero_desc: "منصتك الذكية لتقدير القيم السوقية للعقارات في المملكة<br>بدقة وسرعة باستخدام أحدث خوارزميات الذكاء الاصطناعي",
@@ -2293,6 +2633,16 @@
                 stat_factors: "عامل تقييم",
                 stat_auto: "تلقائي",
                 stat_instant: "تحليل فوري",
+                testimonials_title: "آراء الخبراء",
+                t1_name: "أ. خالد العتيبي",
+                t1_title: "خبير عقاري معتمد",
+                t1_text: '"منصة رائدة في تقدير القيم السوقية، دقة عالية وسرعة في النتائج. أنصح بها كل مستثمر عقاري."',
+                t2_name: "د. نورة الحسين",
+                t2_title: "خبيرة اقتصاد عقاري",
+                t2_text: '"أداة ذكية تسهل على المشترين والبائعين معرفة القيمة العادلة للعقار. نقلة نوعية في السوق السعودي."',
+                t3_name: "م. سامي الغامدي",
+                t3_title: "مدير صندوق استثمار عقاري",
+                t3_text: '"نعتمد على SaudiAqarAI في تقييم الفرص الاستثمارية، دقة النموذج تفوق التوقعات."',
                 badge_instant: "🤖 تقييم فوري",
                 eval_title: "المُقيّم العقاري الذكي",
                 eval_sub: "أدخل بيانات العقار ليُقدّر الذكاء الاصطناعي القيمة السوقية العادلة",
@@ -2346,6 +2696,7 @@
                 date: "التاريخ",
                 about_title: "عن منصة",
                 about_subtitle: "🕌 منصة الذكاء الاصطناعي العقاري في المملكة",
+                data_source: "📊 البيانات مأخوذة من: مؤشرات السوق العقاري السعودي 2025-2026",
                 about_text: "<strong>SaudiAqarAI</strong> مشروع تقني ريادي يُقدّم تقديرات سوقية للعقارات في المملكة العربية السعودية، مستنداً إلى <strong>خوارزميات ذكية</strong> تحلل مؤشرات السوق الفعلية. نهدف إلى تمكين المستثمرين والمشترين والبائعين من <strong>اتخاذ قرارات مدروسة</strong> بناءً على تحليل دقيق وموثوق.",
                 about_sources: "مصادر البيانات: مؤشرات السوق العقارية 2025-2026",
                 methodology: "منهجية التقييم",
@@ -2369,6 +2720,9 @@
                 contact_innovision: "Innovision Hub",
                 location_value: "الدوحة، قطر",
                 dev_by: "تطوير:",
+                footer_privacy: "🔒 سياسة الخصوصية",
+                footer_terms: "📋 شروط الاستخدام",
+                footer_contact: "📞 اتصل بنا",
                 modal_ok: "حسناً",
                 modal_add_ok: "تمت الإضافة!",
                 modal_add_msg: "تم إدراج العقار بنجاح.",
@@ -2386,6 +2740,56 @@
                 error_occurred: "حدث خطأ",
                 refreshed: "تم التحديث",
                 reset_done: "تم إعادة التعيين",
+                privacy_title: "🔒 سياسة الخصوصية",
+                privacy_meta: "آخر تحديث: 23 أغسطس 2026",
+                privacy_intro: "نحن في <strong>SaudiAqarAI</strong> نلتزم بحماية خصوصية مستخدمينا. توضح هذه السياسة كيفية جمع واستخدام وحماية المعلومات التي تقدمها عند استخدام منصتنا.",
+                privacy_h1: "1. المعلومات التي نجمعها",
+                privacy_p1: "عند استخدام منصة SaudiAqarAI، قد نقوم بجمع المعلومات التالية:",
+                privacy_l1: "• بيانات العقار التي تدخلها (المدينة، الحي، المساحة، نوع العقار، إلخ)",
+                privacy_l2: "• عنوان IP الخاص بك لتحديد الموقع الجغرافي التقريبي",
+                privacy_l3: "• بيانات الاستخدام مثل الصفحات التي تزورها والوقت الذي تقضيه على المنصة",
+                privacy_h2: "2. كيفية استخدام المعلومات",
+                privacy_p2: "نستخدم المعلومات التي نجمعها للأغراض التالية:",
+                privacy_l4: "• تقديم التقييمات العقارية وتحسين دقتها",
+                privacy_l5: "• تحسين تجربة المستخدم وتطوير المنصة",
+                privacy_l6: "• إرسال تحديثات وإشعارات حول المنصة (بموافقتك)",
+                privacy_h3: "3. حماية المعلومات",
+                privacy_p3: "نحن نتخذ إجراءات أمنية لحماية بياناتك من الوصول غير المصرح به أو التعديل أو الإفصاح. يتم تخزين البيانات في خوادم آمنة مع تشفير متقدم.",
+                privacy_h4: "4. مشاركة المعلومات",
+                privacy_p4: "لا نبيع أو نؤجر أو نشارك معلوماتك الشخصية مع أطراف ثالثة، إلا في الحالات التالية:",
+                privacy_l7: "• بموافقتك الصريحة",
+                privacy_l8: "• للامتثال للمتطلبات القانونية",
+                privacy_l9: "• لحماية حقوق وممتلكات المنصة",
+                privacy_h5: "5. حقوقك",
+                privacy_p5: "لديك الحق في:",
+                privacy_l10: "• الوصول إلى بياناتك الشخصية المخزنة",
+                privacy_l11: "• طلب تصحيح أو حذف بياناتك",
+                privacy_l12: "• سحب موافقتك في أي وقت",
+                privacy_h6: "6. التواصل",
+                privacy_p6: "للاستفسار حول سياسة الخصوصية، يرجى التواصل معنا عبر البريد الإلكتروني:",
+                terms_title: "📋 شروط الاستخدام",
+                terms_meta: "آخر تحديث: 23 أغسطس 2026",
+                terms_intro: "مرحباً بك في <strong>SaudiAqarAI</strong>. باستخدامك لهذه المنصة، فإنك توافق على الالتزام بالشروط والأحكام التالية. يرجى قراءتها بعناية.",
+                terms_h1: "1. قبول الشروط",
+                terms_p1: "باستخدام منصة SaudiAqarAI، فإنك توافق على هذه الشروط. إذا كنت لا توافق على أي جزء من هذه الشروط، يرجى عدم استخدام المنصة.",
+                terms_h2: "2. استخدام المنصة",
+                terms_p2: "تقدم المنصة تقييمات عقارية استرشادية تعتمد على خوارزميات الذكاء الاصطناعي. يسمح باستخدام المنصة للأغراض التالية:",
+                terms_l1: "• التقييم العقاري الشخصي والاستثماري",
+                terms_l2: "• التحليل السوقي والبحث العقاري",
+                terms_l3: "• الاستخدام الأكاديمي والبحثي",
+                terms_h3: "3. إخلاء المسؤولية",
+                terms_p3: "جميع التقييمات المقدمة من المنصة هي <strong>تقديرات استرشادية</strong> فقط وليست وثائق تثمين رسمية. لا تتحمل المنصة أي مسؤولية عن القرارات المتخذة بناءً على هذه التقديرات.",
+                terms_h4: "4. حقوق الملكية الفكرية",
+                terms_p4: "جميع المحتويات على هذه المنصة، بما في ذلك النصوص والتصميم والخوارزميات، هي ملكية فكرية لـ SaudiAqarAI. لا يسمح بنسخ أو إعادة إنتاج أي جزء دون إذن مسبق.",
+                terms_h5: "5. السلوك المقبول",
+                terms_p5: "تتوقع المنصة من المستخدمين الالتزام بالسلوك التالي:",
+                terms_l4: "• استخدام المنصة لأغراض قانونية فقط",
+                terms_l5: "• عدم محاولة اختراق أو تعطيل المنصة",
+                terms_l6: "• تقديم بيانات دقيقة عند استخدام التقييم",
+                terms_h6: "6. تعديل الشروط",
+                terms_p6: "تحتفظ المنصة بالحق في تعديل هذه الشروط في أي وقت. سنقوم بإعلامك بأي تغييرات جوهرية عبر البريد الإلكتروني أو من خلال المنصة.",
+                terms_h7: "7. التواصل",
+                terms_p7: "للاستفسار حول شروط الاستخدام، يرجى التواصل معنا عبر البريد الإلكتروني:",
                 cities: { "الرياض": "الرياض", "جدة": "جدة", "الدمام": "الدمام", "مكة المكرمة": "مكة المكرمة",
                     "المدينة المنورة": "المدينة المنورة" },
                 types: { "فيلا": "فيلا", "شقة سكنية": "شقة سكنية", "أرض": "أرض", "دوبلكس": "دوبلكس" },
@@ -2402,6 +2806,7 @@
                 nav_add: "Add",
                 nav_db: "Analytics",
                 nav_about: "About",
+                nav_testimonials: "Testimonials",
                 nav_contact: "Contact",
                 hero_subtitle: "🏛️ Saudi Real Estate AI",
                 hero_desc: "Your smart platform to estimate market values for properties in the Kingdom<br>with accuracy and speed using the latest AI algorithms",
@@ -2411,6 +2816,16 @@
                 stat_factors: "Factors",
                 stat_auto: "Automatic",
                 stat_instant: "Instant Analysis",
+                testimonials_title: "Expert Testimonials",
+                t1_name: "Mr. Khaled Al-Otaibi",
+                t1_title: "Certified Real Estate Expert",
+                t1_text: '"A leading platform in estimating market values, high accuracy and speed in results. I recommend it to every real estate investor."',
+                t2_name: "Dr. Noura Al-Hussein",
+                t2_title: "Real Estate Economics Expert",
+                t2_text: '"An intelligent tool that makes it easy for buyers and sellers to know the fair value of the property. A qualitative leap in the Saudi market."',
+                t3_name: "Eng. Sami Al-Ghamdi",
+                t3_title: "Real Estate Investment Fund Manager",
+                t3_text: '"We rely on SaudiAqarAI in evaluating investment opportunities, the accuracy of the model exceeds expectations."',
                 badge_instant: "🤖 Instant Valuation",
                 eval_title: "Smart Property Valuator",
                 eval_sub: "Enter property details for AI to estimate fair market value",
@@ -2464,6 +2879,7 @@
                 date: "Date",
                 about_title: "About",
                 about_subtitle: "🕌 AI Real Estate Platform in the Kingdom",
+                data_source: "📊 Data source: Saudi Real Estate Market Indicators 2025-2026",
                 about_text: "<strong>SaudiAqarAI</strong> is a pioneering technical project providing market valuations for Saudi real estate using <strong>intelligent algorithms</strong> that analyze actual market indicators. We aim to empower investors, buyers, and sellers to make <strong>informed decisions</strong> based on accurate and reliable analysis.",
                 about_sources: "Data sources: Real Estate Market Indicators 2025-2026",
                 methodology: "Valuation Methodology",
@@ -2487,6 +2903,9 @@
                 contact_innovision: "Innovision Hub",
                 location_value: "Doha, Qatar",
                 dev_by: "Developed by:",
+                footer_privacy: "🔒 Privacy Policy",
+                footer_terms: "📋 Terms of Service",
+                footer_contact: "📞 Contact Us",
                 modal_ok: "OK",
                 modal_add_ok: "Added!",
                 modal_add_msg: "Property saved successfully.",
@@ -2504,6 +2923,56 @@
                 error_occurred: "An error occurred",
                 refreshed: "Refreshed",
                 reset_done: "Form reset",
+                privacy_title: "🔒 Privacy Policy",
+                privacy_meta: "Last updated: August 23, 2026",
+                privacy_intro: "At <strong>SaudiAqarAI</strong>, we are committed to protecting your privacy. This policy explains how we collect, use, and protect the information you provide when using our platform.",
+                privacy_h1: "1. Information We Collect",
+                privacy_p1: "When using SaudiAqarAI, we may collect the following information:",
+                privacy_l1: "• Property data you enter (city, district, area, property type, etc.)",
+                privacy_l2: "• Your IP address to determine approximate geographic location",
+                privacy_l3: "• Usage data such as pages you visit and time spent on the platform",
+                privacy_h2: "2. How We Use Information",
+                privacy_p2: "We use the information we collect for the following purposes:",
+                privacy_l4: "• Providing real estate valuations and improving their accuracy",
+                privacy_l5: "• Improving user experience and developing the platform",
+                privacy_l6: "• Sending updates and notifications about the platform (with your consent)",
+                privacy_h3: "3. Information Protection",
+                privacy_p3: "We take security measures to protect your data from unauthorized access, modification, or disclosure. Data is stored on secure servers with advanced encryption.",
+                privacy_h4: "4. Information Sharing",
+                privacy_p4: "We do not sell, rent, or share your personal information with third parties, except in the following cases:",
+                privacy_l7: "• With your explicit consent",
+                privacy_l8: "• To comply with legal requirements",
+                privacy_l9: "• To protect the rights and property of the platform",
+                privacy_h5: "5. Your Rights",
+                privacy_p5: "You have the right to:",
+                privacy_l10: "• Access your stored personal data",
+                privacy_l11: "• Request correction or deletion of your data",
+                privacy_l12: "• Withdraw your consent at any time",
+                privacy_h6: "6. Contact",
+                privacy_p6: "For inquiries about the privacy policy, please contact us via email:",
+                terms_title: "📋 Terms of Service",
+                terms_meta: "Last updated: August 23, 2026",
+                terms_intro: "Welcome to <strong>SaudiAqarAI</strong>. By using this platform, you agree to comply with the following terms and conditions. Please read them carefully.",
+                terms_h1: "1. Acceptance of Terms",
+                terms_p1: "By using SaudiAqarAI, you agree to these terms. If you do not agree to any part of these terms, please do not use the platform.",
+                terms_h2: "2. Platform Use",
+                terms_p2: "The platform provides advisory real estate valuations based on AI algorithms. Use of the platform is permitted for the following purposes:",
+                terms_l1: "• Personal and investment real estate valuation",
+                terms_l2: "• Market analysis and real estate research",
+                terms_l3: "• Academic and research use",
+                terms_h3: "3. Disclaimer",
+                terms_p3: "All valuations provided by the platform are <strong>advisory estimates</strong> only and are not official appraisal documents. The platform bears no responsibility for decisions made based on these estimates.",
+                terms_h4: "4. Intellectual Property",
+                terms_p4: "All content on this platform, including text, design, and algorithms, is the intellectual property of SaudiAqarAI. Copying or reproducing any part without prior permission is prohibited.",
+                terms_h5: "5. Acceptable Behavior",
+                terms_p5: "The platform expects users to adhere to the following behavior:",
+                terms_l4: "• Use the platform for lawful purposes only",
+                terms_l5: "• Do not attempt to hack or disrupt the platform",
+                terms_l6: "• Provide accurate data when using the valuation",
+                terms_h6: "6. Modification of Terms",
+                terms_p6: "The platform reserves the right to modify these terms at any time. We will notify you of any material changes via email or through the platform.",
+                terms_h7: "7. Contact",
+                terms_p7: "For inquiries about the terms of service, please contact us via email:",
                 cities: { "الرياض": "Riyadh", "جدة": "Jeddah", "الدمام": "Dammam", "مكة المكرمة": "Makkah",
                     "المدينة المنورة": "Madinah" },
                 types: { "فيلا": "Villa", "شقة سكنية": "Apartment", "أرض": "Land", "دوبلكس": "Duplex" },
@@ -2521,6 +2990,7 @@
                 nav_add: "Ajouter",
                 nav_db: "Données",
                 nav_about: "À propos",
+                nav_testimonials: "Témoignages",
                 nav_contact: "Contact",
                 hero_subtitle: "🏛️ IA Immobilière Saoudienne",
                 hero_desc: "Votre plateforme intelligente pour estimer les valeurs du marché immobilier au Royaume<br>avec précision et rapidité grâce aux derniers algorithmes d'IA",
@@ -2530,6 +3000,16 @@
                 stat_factors: "Facteurs",
                 stat_auto: "Automatique",
                 stat_instant: "Analyse instantanée",
+                testimonials_title: "Témoignages d'experts",
+                t1_name: "M. Khaled Al-Otaibi",
+                t1_title: "Expert immobilier certifié",
+                t1_text: '"Une plateforme de référence pour l\'estimation des valeurs de marché, grande précision et rapidité. Je la recommande à tout investisseur immobilier."',
+                t2_name: "Dre Noura Al-Hussein",
+                t2_title: "Experte en économie immobilière",
+                t2_text: '"Un outil intelligent qui facilite l\'évaluation immobilière. Une avancée majeure pour le marché saoudien."',
+                t3_name: "M. Sami Al-Ghamdi",
+                t3_title: "Gestionnaire de fonds d'investissement",
+                t3_text: '"Nous utilisons SaudiAqarAI pour évaluer les opportunités d\'investissement, la précision du modèle dépasse les attentes."',
                 badge_instant: "🤖 Évaluation instantanée",
                 eval_title: "Évaluateur Immobilier Intelligent",
                 eval_sub: "Entrez les détails du bien pour une estimation en temps réel",
@@ -2583,6 +3063,7 @@
                 date: "Date",
                 about_title: "À propos de",
                 about_subtitle: "🕌 Plateforme d'IA Immobilière au Royaume",
+                data_source: "📊 Source: Indicateurs du marché immobilier saoudien 2025-2026",
                 about_text: "<strong>SaudiAqarAI</strong> est un projet technique innovant fournissant des estimations immobilières pour l'Arabie Saoudite basées sur des <strong>algorithmes intelligents</strong>. Nous visons à aider les investisseurs, acheteurs et vendeurs à prendre des <strong>décisions éclairées</strong> basées sur une analyse précise.",
                 about_sources: "Sources: Indicateurs du marché 2025-2026",
                 methodology: "Méthodologie d'évaluation",
@@ -2606,6 +3087,9 @@
                 contact_innovision: "Innovision Hub",
                 location_value: "Doha, Qatar",
                 dev_by: "Développé par:",
+                footer_privacy: "🔒 Politique de confidentialité",
+                footer_terms: "📋 Conditions d'utilisation",
+                footer_contact: "📞 Contactez-nous",
                 modal_ok: "OK",
                 modal_add_ok: "Ajouté!",
                 modal_add_msg: "Bien enregistré.",
@@ -2623,6 +3107,56 @@
                 error_occurred: "Erreur",
                 refreshed: "Actualisé",
                 reset_done: "Réinitialisé",
+                privacy_title: "🔒 Politique de confidentialité",
+                privacy_meta: "Dernière mise à jour: 23 août 2026",
+                privacy_intro: "Chez <strong>SaudiAqarAI</strong>, nous nous engageons à protéger votre vie privée. Cette politique explique comment nous collectons, utilisons et protégeons les informations que vous fournissez.",
+                privacy_h1: "1. Informations collectées",
+                privacy_p1: "Lors de l'utilisation de SaudiAqarAI, nous pouvons collecter les informations suivantes:",
+                privacy_l1: "• Données du bien (ville, quartier, surface, type, etc.)",
+                privacy_l2: "• Votre adresse IP pour déterminer la localisation géographique approximative",
+                privacy_l3: "• Données d'utilisation (pages visitées, temps passé)",
+                privacy_h2: "2. Utilisation des informations",
+                privacy_p2: "Nous utilisons les informations collectées pour:",
+                privacy_l4: "• Fournir des évaluations immobilières et améliorer leur précision",
+                privacy_l5: "• Améliorer l'expérience utilisateur et développer la plateforme",
+                privacy_l6: "• Envoyer des mises à jour et notifications (avec votre consentement)",
+                privacy_h3: "3. Protection des informations",
+                privacy_p3: "Nous prenons des mesures de sécurité pour protéger vos données contre tout accès non autorisé.",
+                privacy_h4: "4. Partage des informations",
+                privacy_p4: "Nous ne vendons, ne louons ni ne partageons vos informations personnelles avec des tiers, sauf:",
+                privacy_l7: "• Avec votre consentement explicite",
+                privacy_l8: "• Pour se conformer aux exigences légales",
+                privacy_l9: "• Pour protéger les droits et la propriété de la plateforme",
+                privacy_h5: "5. Vos droits",
+                privacy_p5: "Vous avez le droit de:",
+                privacy_l10: "• Accéder à vos données personnelles stockées",
+                privacy_l11: "• Demander la correction ou la suppression de vos données",
+                privacy_l12: "• Retirer votre consentement à tout moment",
+                privacy_h6: "6. Contact",
+                privacy_p6: "Pour toute question sur la politique de confidentialité, veuillez nous contacter par email:",
+                terms_title: "📋 Conditions d'utilisation",
+                terms_meta: "Dernière mise à jour: 23 août 2026",
+                terms_intro: "Bienvenue sur <strong>SaudiAqarAI</strong>. En utilisant cette plateforme, vous acceptez de vous conformer aux conditions suivantes.",
+                terms_h1: "1. Acceptation des conditions",
+                terms_p1: "En utilisant SaudiAqarAI, vous acceptez ces conditions. Si vous n'êtes pas d'accord, veuillez ne pas utiliser la plateforme.",
+                terms_h2: "2. Utilisation de la plateforme",
+                terms_p2: "La plateforme fournit des évaluations immobilières indicatives basées sur l'IA. L'utilisation est autorisée pour:",
+                terms_l1: "• Évaluation immobilière personnelle et d'investissement",
+                terms_l2: "• Analyse de marché et recherche immobilière",
+                terms_l3: "• Usage académique et de recherche",
+                terms_h3: "3. Avertissement",
+                terms_p3: "Toutes les évaluations sont des <strong>estimations indicatives</strong> uniquement. La plateforme n'est pas responsable des décisions prises sur la base de ces estimations.",
+                terms_h4: "4. Propriété intellectuelle",
+                terms_p4: "Tout le contenu de cette plateforme est la propriété intellectuelle de SaudiAqarAI.",
+                terms_h5: "5. Comportement acceptable",
+                terms_p5: "Les utilisateurs doivent:",
+                terms_l4: "• Utiliser la plateforme à des fins légales uniquement",
+                terms_l5: "• Ne pas tenter de pirater ou de perturber la plateforme",
+                terms_l6: "• Fournir des données précises",
+                terms_h6: "6. Modification des conditions",
+                terms_p6: "La plateforme se réserve le droit de modifier ces conditions à tout moment.",
+                terms_h7: "7. Contact",
+                terms_p7: "Pour toute question, veuillez nous contacter par email:",
                 cities: { "الرياض": "Riyad", "جدة": "Djeddah", "الدمام": "Dammam", "مكة المكرمة": "La Mecque",
                     "المدينة المنورة": "Médine" },
                 types: { "فيلا": "Villa", "شقة سكنية": "Appartement", "أرض": "Terrain", "دوبلكس": "Duplex" },
@@ -2868,6 +3402,10 @@
             };
         }
 
+        function quickValuate() {
+            // تم إزالة التقييم السريع
+        }
+
         function displayResults(r) {
             if (!r) return;
             const sar = t('sar');
@@ -2982,12 +3520,12 @@
             if (uploadStrong) uploadStrong.textContent = t('import_excel');
             const uploadHint = document.querySelector('.upload-area p:not(:first-child)');
             if (uploadHint) uploadHint.textContent = t('import_hint');
-            const orManual = document.querySelector('#section-add .card > div:not(.upload-area) > span');
+            const orManual = document.querySelector('.add-centered .card > div:not(.upload-area) > span');
             if (orManual) orManual.textContent = t('or_manual');
         }
 
         // ============================================================
-        // 8. DATA FUNCTIONS - مع دعم API و LocalStorage
+        // 8. DATA FUNCTIONS
         // ============================================================
         function getLocalProps() {
             try { return JSON.parse(localStorage.getItem('saudiaqarai_props') || '[]'); } catch (e) { return []; }
@@ -2997,104 +3535,8 @@
             localStorage.setItem('saudiaqarai_props', JSON.stringify(p));
         }
 
-        // دالة لجلب العقارات من API أو LocalStorage
-        async function fetchProperties() {
-            // محاولة جلب من API
-            if (apiOnline && API_BASE) {
-                try {
-                    const res = await fetch(`${API_BASE}/api/properties`);
-                    if (res.ok) {
-                        const data = await res.json();
-                        if (data.properties && data.properties.length > 0) {
-                            // تحديث LocalStorage بالبيانات من API
-                            saveLocalProps(data.properties);
-                            return data.properties;
-                        }
-                    }
-                } catch (e) {
-                    console.log('API fetch failed, using local data');
-                }
-            }
-            // الرجوع إلى LocalStorage
-            return getLocalProps();
-        }
-
-        // دالة لإضافة عقار عبر API أو LocalStorage
-        async function addPropertyToStorage(data) {
-            const val = calculateLocal({
-                city: data.city,
-                neighborhood: data.neighborhood,
-                property_type: data.property_type,
-                area: data.area,
-                rooms: 4,
-                age: 0,
-                facade: 'جنوبية',
-                street_width: 20,
-                location_grade: 'حي متوسط',
-                has_elevator: false,
-                has_pool: false,
-                has_driver_room: false,
-                is_furnished: false,
-                has_central_ac: false,
-                has_maid_room: false
-            });
-
-            const entry = {
-                id: Date.now().toString(36) + Math.random().toString(36).substr(2, 4),
-                ...data,
-                price: Math.round(data.price),
-                ai_estimate: val.predicted_price,
-                created_at: new Date().toISOString()
-            };
-
-            // محاولة الإضافة عبر API
-            if (apiOnline && API_BASE) {
-                try {
-                    const res = await fetch(`${API_BASE}/api/properties`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(entry)
-                    });
-                    if (res.ok) {
-                        return entry;
-                    }
-                } catch (e) {
-                    console.log('API add failed, saving locally');
-                }
-            }
-
-            // الرجوع إلى LocalStorage
-            const props = getLocalProps();
-            props.push(entry);
-            saveLocalProps(props);
-            return entry;
-        }
-
-        // دالة لحذف جميع العقارات
-        async function clearAllData() {
-            showModal(t('modal_clear_confirm'), t('modal_clear_msg'), 'fa-solid fa-triangle-exclamation');
-            const closeBtn = document.getElementById('modalCloseBtn');
-            const originalClick = closeBtn.onclick;
-            closeBtn.onclick = function() {
-                // محاولة الحذف عبر API
-                if (apiOnline && API_BASE) {
-                    fetch(`${API_BASE}/api/properties`, { method: 'DELETE' }).catch(() => {});
-                }
-                // حذف من LocalStorage
-                saveLocalProps([]);
-                importedProperties = [];
-                loadProperties();
-                initChart();
-                closeModal();
-                showToast('🗑️ ' + t('modal_clear_done_msg'));
-                closeBtn.onclick = originalClick;
-            };
-        }
-
-        // تحميل العقارات
         async function loadProperties() {
-            const props = await fetchProperties();
-            // دمج العقارات المستوردة
+            const props = getLocalProps();
             if (importedProperties.length > 0) {
                 const existingIds = new Set(props.map(p => p.id));
                 importedProperties.forEach(p => {
@@ -3126,9 +3568,50 @@
         }
 
         async function addProperty(data) {
-            const entry = await addPropertyToStorage(data);
+            const val = calculateLocal({
+                city: data.city,
+                neighborhood: data.neighborhood,
+                property_type: data.property_type,
+                area: data.area,
+                rooms: 4,
+                age: 0,
+                facade: 'جنوبية',
+                street_width: 20,
+                location_grade: 'حي متوسط',
+                has_elevator: false,
+                has_pool: false,
+                has_driver_room: false,
+                is_furnished: false,
+                has_central_ac: false,
+                has_maid_room: false
+            });
+            const entry = {
+                id: Date.now().toString(36) + Math.random().toString(36).substr(2, 4),
+                ...data,
+                price: Math.round(data.price),
+                ai_estimate: val.predicted_price,
+                created_at: new Date().toISOString()
+            };
+            const props = getLocalProps();
+            props.push(entry);
+            saveLocalProps(props);
             await loadProperties();
             return entry;
+        }
+
+        function clearAllData() {
+            showModal(t('modal_clear_confirm'), t('modal_clear_msg'), 'fa-solid fa-triangle-exclamation');
+            const closeBtn = document.getElementById('modalCloseBtn');
+            const originalClick = closeBtn.onclick;
+            closeBtn.onclick = function() {
+                saveLocalProps([]);
+                importedProperties = [];
+                loadProperties();
+                initChart();
+                closeModal();
+                showToast('🗑️ ' + t('modal_clear_done_msg'));
+                closeBtn.onclick = originalClick;
+            };
         }
 
         // ============================================================
@@ -3445,69 +3928,22 @@
         }
 
         // ============================================================
-        // 14. CHECK API
-        // ============================================================
-        async function checkApi() {
-            if (!API_BASE) {
-                apiOnline = false;
-                updateApiBadge();
-                return;
-            }
-            try {
-                const ctrl = new AbortController();
-                setTimeout(() => ctrl.abort(), 3000);
-                const res = await fetch(`${API_BASE}/api/health`, { signal: ctrl.signal });
-                apiOnline = res.ok;
-            } catch (e) {
-                apiOnline = false;
-            }
-            updateApiBadge();
-        }
-
-        function updateApiBadge() {
-            const dot = document.getElementById('apiDot');
-            const label = document.getElementById('apiLabel');
-            if (dot && label) {
-                if (apiOnline) {
-                    dot.className = 'api-dot online';
-                    label.textContent = '🟢 ' + (t('api_online') || 'Server Connected');
-                } else {
-                    dot.className = 'api-dot offline';
-                    label.textContent = '🟡 ' + (t('api_offline') || 'Local Mode');
-                }
-            }
-        }
-
-        // ============================================================
-        // 15. EVENT LISTENERS & INIT
+        // 14. EVENT LISTENERS & INIT
         // ============================================================
         document.addEventListener('DOMContentLoaded', () => {
-            // إضافة عنصر API في الهيدر إذا لم يكن موجوداً
-            const headerActions = document.querySelector('.header-actions');
-            if (headerActions) {
-                const apiBadge = document.createElement('div');
-                apiBadge.className = 'api-badge';
-                apiBadge.id = 'apiStatus';
-                apiBadge.innerHTML = `
-                            <span class="api-dot offline" id="apiDot"></span>
-                            <span id="apiLabel">🟡 جاري الاتصال...</span>
-                        `;
-                headerActions.prepend(apiBadge);
-            }
 
-            // Language
+            // تم إزالة مستمع التقييم السريع
+
             document.querySelectorAll('.lang-btn').forEach(b => {
                 b.addEventListener('click', () => setLanguage(b.dataset.lang));
             });
 
-            // Navigation
             document.querySelectorAll('.nav-link, .bottom-nav .nav-item, .header-nav .nav-link').forEach(b => {
                 b.addEventListener('click', function() {
                     switchTab(this.dataset.tab);
                 });
             });
 
-            // Mobile menu
             document.getElementById('menuToggle').addEventListener('click', () => {
                 document.getElementById('headerNav').classList.toggle('open');
             });
@@ -3520,7 +3956,6 @@
                 }
             });
 
-            // Scroll effect
             window.addEventListener('scroll', () => {
                 const header = document.getElementById('fixedHeader');
                 if (window.scrollY > 20) {
@@ -3530,20 +3965,17 @@
                 }
             });
 
-            // Modal
             document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
             document.getElementById('customModal').addEventListener('click', e => {
                 if (e.target.id === 'customModal') closeModal();
             });
             document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-            // Live inputs
             document.querySelectorAll('.live-input').forEach(el => {
                 el.addEventListener('input', scheduleRefresh);
                 el.addEventListener('change', scheduleRefresh);
             });
 
-            // Add property form
             document.getElementById('addPropertyForm').addEventListener('submit', async e => {
                 e.preventDefault();
                 const data = {
@@ -3562,7 +3994,6 @@
                 document.getElementById('addPropertyForm').reset();
             });
 
-            // Excel Upload
             const uploadArea = document.getElementById('uploadArea');
             const fileInput = document.getElementById('excelFile');
             const fileName = document.getElementById('fileName');
@@ -3603,10 +4034,8 @@
                 fileInput.value = '';
             });
 
-            // Export CSV
             document.getElementById('exportCsvBtn').addEventListener('click', exportCsv);
 
-            // Refresh data
             document.getElementById('refreshDataBtn').addEventListener('click', () => {
                 renderReview();
                 loadProperties();
@@ -3614,13 +4043,10 @@
                 showToast('🔄 ' + (t('refreshed') || 'Refreshed'), 2000);
             });
 
-            // Clear data
             document.getElementById('clearDataBtn').addEventListener('click', clearAllData);
 
-            // Share results
             document.getElementById('shareResultBtn').addEventListener('click', shareResults);
 
-            // Reset form
             document.getElementById('resetFormBtn').addEventListener('click', () => {
                 document.getElementById('mainCity').value = 'الرياض';
                 document.getElementById('mainNeighborhood').value = 'النخيل';
@@ -3637,7 +4063,6 @@
                 showToast('🔄 ' + (t('reset_done') || 'Form reset'), 2000);
             });
 
-            // Toggle details
             document.getElementById('toggleDetailsBtn').addEventListener('click', function() {
                 const content = document.getElementById('detailsContent');
                 const isHidden = content.style.display === 'none';
@@ -3647,15 +4072,11 @@
                     '<i class="fa-solid fa-chevron-down"></i> ' + t('show');
             });
 
-            // Global error
             window.addEventListener('error', function(e) {
                 console.error('Global error:', e.message);
                 showToast('⚠️ ' + (t('error_occurred') || 'An error occurred'), 4000);
             });
 
-            // ============================================================
-            // INIT
-            // ============================================================
             const savedLang = localStorage.getItem('saudiaqarai_lang') || 'ar';
             setLanguage(savedLang);
 
@@ -3664,22 +4085,18 @@
             loadProperties();
             setTimeout(initChart, 200);
 
-            // التحقق من الاتصال بالسيرفر
-            checkApi();
-
             document.querySelectorAll('.lang-btn').forEach(b => {
                 b.addEventListener('click', () => {
                     localStorage.setItem('saudiaqarai_lang', b.dataset.lang);
                 });
             });
 
-            console.log('🏠 SaudiAqarAI v2.1.0 loaded');
-            console.log('🔗 API_BASE:', API_BASE);
+            console.log('🏠 SaudiAqarAI v2.2.0 loaded');
             console.log('📊 Type window.SaudiAqarAI for debugging');
         });
 
         // ============================================================
-        // 16. EXPOSE
+        // 15. EXPOSE
         // ============================================================
         window.SaudiAqarAI = {
             calculate: calculateLocal,
@@ -3689,8 +4106,7 @@
             grades: GRADES,
             translations: translations,
             importExcel: handleExcelFile,
-            apiBase: API_BASE,
-            version: '2.1.0'
+            version: '2.2.0'
         };
     </script>
 
