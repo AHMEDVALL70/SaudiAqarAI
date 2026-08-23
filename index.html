@@ -2048,7 +2048,7 @@
         </div>
 
         <!-- ==========================================================
-        ABOUT - مترجمة بالكامل
+        ABOUT
         ========================================================== -->
         <div class="section-content" id="section-about">
             <div class="about-wrapper">
@@ -2129,7 +2129,7 @@
         </div>
 
         <!-- ==========================================================
-        CONTACT - مترجمة بالكامل
+        CONTACT
         ========================================================== -->
         <div class="section-content" id="section-contact">
             <div class="contact-wrapper">
@@ -2223,6 +2223,12 @@
         // ============================================================
         // 1. CONFIGURATION
         // ============================================================
+
+        // ===== تحديد رابط API (يعمل مع Render.com) =====
+        // تغيير هذا الرابط إلى رابط Render.com الخاص بك بعد رفع السيرفر
+        const API_BASE = 'https://saudiaqarai.onrender.com'; // استخدم رابط Render.com الخاص بك
+        // للاختبار المحلي: const API_BASE = 'http://localhost:3000';
+
         const MARKET_CONFIG = {
             city_base_rates: { riyadh: 4800, jeddah: 4500, dammam: 3900, makkah: 5200, madinah: 4100 },
             city_aliases: { "الرياض": "riyadh", "جدة": "jeddah", "الدمام": "dammam", "مكة المكرمة": "makkah",
@@ -2256,13 +2262,11 @@
             needs_study: { ar: "📋 يحتاج دراسة (C)", en: "📋 Needs Study (C)", fr: "📋 À étudier (C)", color: "#dc2626" }
         };
 
-        const API_BASE = (location.protocol === 'file:' || location.hostname === '127.0.0.1' || location.hostname ===
-            'localhost') ? 'http://127.0.0.1:8000' : '';
-
         // ============================================================
         // 2. STATE
         // ============================================================
         let currentLang = 'ar';
+        let apiOnline = false;
         let analyticsChart = null;
         let debounceTimer = null;
         let lastCalculation = null;
@@ -2274,7 +2278,6 @@
         // ============================================================
         const translations = {
             ar: {
-                // Header
                 header_sub: "الذكاء العقاري",
                 nav_home: "الرئيسية",
                 nav_eval: "التقييم",
@@ -2282,8 +2285,6 @@
                 nav_db: "البيانات",
                 nav_about: "عن المنصة",
                 nav_contact: "تواصل",
-
-                // Hero
                 hero_subtitle: "🏛️ الذكاء الاصطناعي العقاري السعودي",
                 hero_desc: "منصتك الذكية لتقدير القيم السوقية للعقارات في المملكة<br>بدقة وسرعة باستخدام أحدث خوارزميات الذكاء الاصطناعي",
                 hero_btn_start: "ابدأ التقييم الآن",
@@ -2292,8 +2293,6 @@
                 stat_factors: "عامل تقييم",
                 stat_auto: "تلقائي",
                 stat_instant: "تحليل فوري",
-
-                // Evaluate
                 badge_instant: "🤖 تقييم فوري",
                 eval_title: "المُقيّم العقاري الذكي",
                 eval_sub: "أدخل بيانات العقار ليُقدّر الذكاء الاصطناعي القيمة السوقية العادلة",
@@ -2329,15 +2328,11 @@
                 sar: "ر.س",
                 disclaimer_title: "⚠️ تنبيه:",
                 disclaimer_body: "تقدير استرشادي، ليس وثيقة تثمين رسمية.",
-
-                // Add
                 add_title: "إضافة عقار جديد",
                 import_excel: "📂 اسحب ملف Excel هنا أو اضغط للاختيار",
                 import_hint: "يدعم: .xlsx, .xls — الأعمدة: المدينة, الحي, النوع, السعر, المساحة",
                 import_status: "تم استيراد {count} عقار",
                 or_manual: "— أو أدخل البيانات يدوياً —",
-
-                // Database
                 db_title: "التحليلات وقاعدة البيانات",
                 review_title: "قيم البحث — تحتاج مراجعة",
                 review_param: "المعامل",
@@ -2349,8 +2344,6 @@
                 props_empty: "لا توجد عقارات مسجّلة بعد",
                 ai_estimate: "تقدير AI",
                 date: "التاريخ",
-
-                // About
                 about_title: "عن منصة",
                 about_subtitle: "🕌 منصة الذكاء الاصطناعي العقاري في المملكة",
                 about_text: "<strong>SaudiAqarAI</strong> مشروع تقني ريادي يُقدّم تقديرات سوقية للعقارات في المملكة العربية السعودية، مستنداً إلى <strong>خوارزميات ذكية</strong> تحلل مؤشرات السوق الفعلية. نهدف إلى تمكين المستثمرين والمشترين والبائعين من <strong>اتخاذ قرارات مدروسة</strong> بناءً على تحليل دقيق وموثوق.",
@@ -2366,8 +2359,6 @@
                 m4_desc: "تُطبق على العقارات القديمة والواجهات الأقل تفضيلاً",
                 m5_title: "التحديث الدوري",
                 m5_desc: "يتم مراجعة المؤشرات دورياً لتعكس تغيرات السوق",
-
-                // Contact
                 contact_heading: "تواصل معنا",
                 contact_sub: "📬 فريقنا في انتظارك — تواصل معنا لأي استفسار أو اقتراح",
                 contact_location: "📍 الموقع",
@@ -2378,8 +2369,6 @@
                 contact_innovision: "Innovision Hub",
                 location_value: "الدوحة، قطر",
                 dev_by: "تطوير:",
-
-                // Modal
                 modal_ok: "حسناً",
                 modal_add_ok: "تمت الإضافة!",
                 modal_add_msg: "تم إدراج العقار بنجاح.",
@@ -2393,14 +2382,10 @@
                 modal_clear_done_msg: "تم حذف جميع العقارات.",
                 modal_import_ok: "تم الاستيراد!",
                 modal_import_msg: "تم استيراد {count} عقار بنجاح.",
-
-                // Misc
                 copied: "تم النسخ",
                 error_occurred: "حدث خطأ",
                 refreshed: "تم التحديث",
                 reset_done: "تم إعادة التعيين",
-
-                // Cities and types
                 cities: { "الرياض": "الرياض", "جدة": "جدة", "الدمام": "الدمام", "مكة المكرمة": "مكة المكرمة",
                     "المدينة المنورة": "المدينة المنورة" },
                 types: { "فيلا": "فيلا", "شقة سكنية": "شقة سكنية", "أرض": "أرض", "دوبلكس": "دوبلكس" },
@@ -2984,7 +2969,6 @@
                 if (translations[lang]?.[k]) el.textContent = translations[lang][k];
             });
 
-            // Update about description
             const aboutDesc = document.querySelector('.about-description');
             if (aboutDesc) aboutDesc.innerHTML = t('about_text');
 
@@ -3003,7 +2987,7 @@
         }
 
         // ============================================================
-        // 8. DATA FUNCTIONS
+        // 8. DATA FUNCTIONS - مع دعم API و LocalStorage
         // ============================================================
         function getLocalProps() {
             try { return JSON.parse(localStorage.getItem('saudiaqarai_props') || '[]'); } catch (e) { return []; }
@@ -3013,8 +2997,104 @@
             localStorage.setItem('saudiaqarai_props', JSON.stringify(p));
         }
 
+        // دالة لجلب العقارات من API أو LocalStorage
+        async function fetchProperties() {
+            // محاولة جلب من API
+            if (apiOnline && API_BASE) {
+                try {
+                    const res = await fetch(`${API_BASE}/api/properties`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data.properties && data.properties.length > 0) {
+                            // تحديث LocalStorage بالبيانات من API
+                            saveLocalProps(data.properties);
+                            return data.properties;
+                        }
+                    }
+                } catch (e) {
+                    console.log('API fetch failed, using local data');
+                }
+            }
+            // الرجوع إلى LocalStorage
+            return getLocalProps();
+        }
+
+        // دالة لإضافة عقار عبر API أو LocalStorage
+        async function addPropertyToStorage(data) {
+            const val = calculateLocal({
+                city: data.city,
+                neighborhood: data.neighborhood,
+                property_type: data.property_type,
+                area: data.area,
+                rooms: 4,
+                age: 0,
+                facade: 'جنوبية',
+                street_width: 20,
+                location_grade: 'حي متوسط',
+                has_elevator: false,
+                has_pool: false,
+                has_driver_room: false,
+                is_furnished: false,
+                has_central_ac: false,
+                has_maid_room: false
+            });
+
+            const entry = {
+                id: Date.now().toString(36) + Math.random().toString(36).substr(2, 4),
+                ...data,
+                price: Math.round(data.price),
+                ai_estimate: val.predicted_price,
+                created_at: new Date().toISOString()
+            };
+
+            // محاولة الإضافة عبر API
+            if (apiOnline && API_BASE) {
+                try {
+                    const res = await fetch(`${API_BASE}/api/properties`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(entry)
+                    });
+                    if (res.ok) {
+                        return entry;
+                    }
+                } catch (e) {
+                    console.log('API add failed, saving locally');
+                }
+            }
+
+            // الرجوع إلى LocalStorage
+            const props = getLocalProps();
+            props.push(entry);
+            saveLocalProps(props);
+            return entry;
+        }
+
+        // دالة لحذف جميع العقارات
+        async function clearAllData() {
+            showModal(t('modal_clear_confirm'), t('modal_clear_msg'), 'fa-solid fa-triangle-exclamation');
+            const closeBtn = document.getElementById('modalCloseBtn');
+            const originalClick = closeBtn.onclick;
+            closeBtn.onclick = function() {
+                // محاولة الحذف عبر API
+                if (apiOnline && API_BASE) {
+                    fetch(`${API_BASE}/api/properties`, { method: 'DELETE' }).catch(() => {});
+                }
+                // حذف من LocalStorage
+                saveLocalProps([]);
+                importedProperties = [];
+                loadProperties();
+                initChart();
+                closeModal();
+                showToast('🗑️ ' + t('modal_clear_done_msg'));
+                closeBtn.onclick = originalClick;
+            };
+        }
+
+        // تحميل العقارات
         async function loadProperties() {
-            let props = getLocalProps();
+            const props = await fetchProperties();
+            // دمج العقارات المستوردة
             if (importedProperties.length > 0) {
                 const existingIds = new Set(props.map(p => p.id));
                 importedProperties.forEach(p => {
@@ -3025,6 +3105,7 @@
                 });
                 saveLocalProps(props);
             }
+
             const tbody = document.getElementById('propsTableBody');
             const empty = document.getElementById('propsEmpty');
             if (!props.length) {
@@ -3045,34 +3126,9 @@
         }
 
         async function addProperty(data) {
-            const val = calculateLocal({
-                city: data.city,
-                neighborhood: data.neighborhood,
-                property_type: data.property_type,
-                area: data.area,
-                rooms: 4,
-                age: 0,
-                facade: 'جنوبية',
-                street_width: 20,
-                location_grade: 'حي متوسط',
-                has_elevator: false,
-                has_pool: false,
-                has_driver_room: false,
-                is_furnished: false,
-                has_central_ac: false,
-                has_maid_room: false
-            });
-            const entry = {
-                id: Date.now().toString(36) + Math.random().toString(36).substr(2, 4),
-                ...data,
-                price: Math.round(data.price),
-                ai_estimate: val.predicted_price,
-                created_at: new Date().toISOString()
-            };
-            const props = getLocalProps();
-            props.push(entry);
-            saveLocalProps(props);
+            const entry = await addPropertyToStorage(data);
             await loadProperties();
+            return entry;
         }
 
         // ============================================================
@@ -3227,21 +3283,6 @@
         // ============================================================
         // 10. EXPORT FUNCTIONS
         // ============================================================
-        function clearAllData() {
-            showModal(t('modal_clear_confirm'), t('modal_clear_msg'), 'fa-solid fa-triangle-exclamation');
-            const closeBtn = document.getElementById('modalCloseBtn');
-            const originalClick = closeBtn.onclick;
-            closeBtn.onclick = function() {
-                saveLocalProps([]);
-                importedProperties = [];
-                loadProperties();
-                initChart();
-                closeModal();
-                showToast('🗑️ ' + t('modal_clear_done_msg'));
-                closeBtn.onclick = originalClick;
-            };
-        }
-
         function exportCsv() {
             const props = getLocalProps();
             if (!props.length) {
@@ -3404,9 +3445,56 @@
         }
 
         // ============================================================
-        // 14. EVENT LISTENERS & INIT
+        // 14. CHECK API
+        // ============================================================
+        async function checkApi() {
+            if (!API_BASE) {
+                apiOnline = false;
+                updateApiBadge();
+                return;
+            }
+            try {
+                const ctrl = new AbortController();
+                setTimeout(() => ctrl.abort(), 3000);
+                const res = await fetch(`${API_BASE}/api/health`, { signal: ctrl.signal });
+                apiOnline = res.ok;
+            } catch (e) {
+                apiOnline = false;
+            }
+            updateApiBadge();
+        }
+
+        function updateApiBadge() {
+            const dot = document.getElementById('apiDot');
+            const label = document.getElementById('apiLabel');
+            if (dot && label) {
+                if (apiOnline) {
+                    dot.className = 'api-dot online';
+                    label.textContent = '🟢 ' + (t('api_online') || 'Server Connected');
+                } else {
+                    dot.className = 'api-dot offline';
+                    label.textContent = '🟡 ' + (t('api_offline') || 'Local Mode');
+                }
+            }
+        }
+
+        // ============================================================
+        // 15. EVENT LISTENERS & INIT
         // ============================================================
         document.addEventListener('DOMContentLoaded', () => {
+            // إضافة عنصر API في الهيدر إذا لم يكن موجوداً
+            const headerActions = document.querySelector('.header-actions');
+            if (headerActions) {
+                const apiBadge = document.createElement('div');
+                apiBadge.className = 'api-badge';
+                apiBadge.id = 'apiStatus';
+                apiBadge.innerHTML = `
+                            <span class="api-dot offline" id="apiDot"></span>
+                            <span id="apiLabel">🟡 جاري الاتصال...</span>
+                        `;
+                headerActions.prepend(apiBadge);
+            }
+
             // Language
             document.querySelectorAll('.lang-btn').forEach(b => {
                 b.addEventListener('click', () => setLanguage(b.dataset.lang));
@@ -3501,7 +3589,7 @@
                         handleExcelFile(file);
                     } else {
                         showToast('⚠️ ' + (t('excel_only') || 'Please upload Excel file only (.xlsx, .xls)'),
-                        4000);
+                            4000);
                     }
                 }
             });
@@ -3576,6 +3664,9 @@
             loadProperties();
             setTimeout(initChart, 200);
 
+            // التحقق من الاتصال بالسيرفر
+            checkApi();
+
             document.querySelectorAll('.lang-btn').forEach(b => {
                 b.addEventListener('click', () => {
                     localStorage.setItem('saudiaqarai_lang', b.dataset.lang);
@@ -3583,11 +3674,12 @@
             });
 
             console.log('🏠 SaudiAqarAI v2.1.0 loaded');
+            console.log('🔗 API_BASE:', API_BASE);
             console.log('📊 Type window.SaudiAqarAI for debugging');
         });
 
         // ============================================================
-        // 15. EXPOSE
+        // 16. EXPOSE
         // ============================================================
         window.SaudiAqarAI = {
             calculate: calculateLocal,
@@ -3597,6 +3689,7 @@
             grades: GRADES,
             translations: translations,
             importExcel: handleExcelFile,
+            apiBase: API_BASE,
             version: '2.1.0'
         };
     </script>
